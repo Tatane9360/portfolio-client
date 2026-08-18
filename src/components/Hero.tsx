@@ -15,13 +15,13 @@ export default function Hero() {
       />
 
       <div className="hero-content relative z-20 text-center flex flex-col items-center parallax-element px-4" data-speed="1">
-        <div className="brutalist-border bg-white px-4 py-1 mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rotate-[-2deg]">
+        <div className="brutalist-border bg-white px-4 py-1 mb-8 md:mb-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rotate-[-2deg] relative z-30">
           <span className="font-bold uppercase text-sm md:text-base">Développeur Web & App Freelance</span>
         </div>
-        <h1 className="text-4xl md:text-[5rem] leading-none font-black uppercase tracking-tighter mb-4 text-center">
+        <h1 className="text-3xl md:text-[5rem] leading-tight md:leading-none font-black uppercase tracking-tighter mb-4 text-center">
           <span className="sr-only">Développeur web freelance, sites, applications et e-commerce</span>
-          <span className="block text-outline" aria-hidden="true">Je ne livre pas du code</span>
-          <span className="block bg-[#FFE800] px-4 py-2 brutalist-border mt-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] inline-block rotate-[1deg] text-3xl md:text-[3.5rem]">
+          <span className="block text-outline relative z-0" aria-hidden="true">Je ne livre pas du code</span>
+          <span className="block bg-[#FFE800] px-4 py-2 brutalist-border mt-6 md:mt-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] inline-block rotate-[1deg] text-2xl md:text-[3.5rem] relative z-10">
             Je construis ce dont vous avez vraiment besoin
           </span>
         </h1>
