@@ -12,8 +12,8 @@ const cards = [
     title: 'Je construis pour convertir',
     desc: "Un beau site, c'est bien. Un site qui transforme vos visiteurs en clients, c'est autre chose. Chaque choix de design est pensé pour votre croissance.",
     bg: 'bg-[#FF007F]',
-    titleColor: 'text-white',
-    descColor: 'text-white',
+    titleColor: 'text-black',
+    descColor: 'text-black',
   },
   {
     num: '03',
@@ -27,7 +27,7 @@ const cards = [
 
 export default function Expertise() {
   return (
-    <section className="relative w-full py-32 px-4 md:px-20 z-20 overflow-hidden">
+    <section id="expertise" className="relative w-full scroll-mt-24 py-32 px-4 md:px-20 z-20 overflow-hidden">
       <div className="w-full max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-20 text-center">
           <span className="text-outline">Ce que je fais</span>{' '}
@@ -38,11 +38,11 @@ export default function Expertise() {
           {cards.map((card) => (
             <div
               key={card.num}
-              className={`expertise-card brutalist-border ${card.bg} p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-6 opacity-0`}
+              className={`expertise-card brutalist-border ${card.bg} p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col gap-6`}
             >
               <span className="text-7xl font-black leading-none text-outline">{card.num}</span>
               <h3 className={`text-2xl font-black uppercase leading-tight ${card.titleColor}`}>{card.title}</h3>
-              <p className={`font-bold text-lg leading-relaxed ${card.descColor}`}>{card.desc}</p>
+              <p className={`font-medium text-lg leading-relaxed ${card.descColor}`}>{card.desc}</p>
             </div>
           ))}
         </div>

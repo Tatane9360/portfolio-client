@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable : état local machine (les snapshots de critique restent versionnés)
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+
+# Captures Playwright MCP
+.playwright-mcp

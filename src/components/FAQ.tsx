@@ -23,21 +23,30 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="relative w-full py-32 px-4 md:px-20 bg-[#6E00FF] text-white border-y-4 border-black z-30 overflow-hidden">
+    <section id="faq" className="relative w-full scroll-mt-24 py-32 px-4 md:px-20 bg-[#6E00FF] text-white border-y-4 border-black z-30 overflow-hidden">
       <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-20 text-center text-[#FFE800]">
         Questions fréquentes
       </h2>
 
-      <div className="max-w-4xl mx-auto flex flex-col gap-6">
+      {/* <details> natif : divulgation progressive sans JS, clavier et lecteurs d'écran gratuits. */}
+      <div className="max-w-3xl mx-auto flex flex-col gap-5">
         {faqs.map((item) => (
-          <div
+          <details
             key={item.q}
-            className="faq-item brutalist-border bg-white text-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] parallax-element"
+            className="faq-item group brutalist-border bg-white text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] parallax-element"
             data-speed={item.speed}
           >
-            <h3 className="text-xl font-black uppercase mb-2">{item.q}</h3>
-            <p className="font-bold text-lg">{item.a}</p>
-          </div>
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 text-xl font-black uppercase [&::-webkit-details-marker]:hidden">
+              <h3 className="text-xl font-black uppercase">{item.q}</h3>
+              <span
+                aria-hidden="true"
+                className="shrink-0 text-3xl leading-none transition-transform duration-200 group-open:rotate-45"
+              >
+                +
+              </span>
+            </summary>
+            <p className="max-w-[65ch] px-6 pb-6 text-lg font-medium leading-relaxed">{item.a}</p>
+          </details>
         ))}
       </div>
     </section>
