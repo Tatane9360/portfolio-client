@@ -1,67 +1,53 @@
-const projects = [
-  {
-    title: 'Domifée',
-    desc: 'Site vitrine aide à domicile, Next.js',
-    img: '/domifee-screenshot.jpg',
-    alt: 'Page d\'accueil du site Domifée, aide à domicile à Aubervilliers',
-    url: 'https://domifee.fr/',
-    shadow: 'shadow-[12px_12px_0px_0px_#FFE800]',
-    btnHover: 'hover:bg-[#FF007F]',
-    align: '',
-    speed: '1.1',
-  },
-  {
-    title: 'Et si c\'était vous ?',
-    desc: 'Votre projet pourrait être ici, sites vitrines, apps, e-commerce.',
-    img: undefined,
-    alt: '',
-    url: '#contact',
-    shadow: 'shadow-[12px_12px_0px_0px_#00E5FF]',
-    btnHover: 'hover:bg-[#00E5FF]',
-    align: 'md:self-end',
-    speed: '0.9',
-  },
-];
-
 export default function Projects() {
   return (
-    <section id="projets" className="relative w-full scroll-mt-24 py-20 px-4 md:px-20 z-20">
-      <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-20 text-center parallax-element" data-speed="1">
-        <span className="text-outline">Projets</span>{' '}
-        <span className="bg-[#FF007F] text-white px-3 brutalist-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] inline-block rotate-[1deg]">livrés</span>
+    <section id="projets" className="relative px-4 py-32 md:px-10">
+      <h2 className="title reveal text-[18vw] md:text-[10vw]">
+        pr
+        <span className="relative inline-block">
+          <span className="opacity-[calc(1-var(--dock,0))]">o</span>
+          <span data-dot className="absolute left-1/2 top-[0.53em] block size-[0.5em] -translate-1/2" />
+        </span>
+        jets
       </h2>
 
-      <div className="flex flex-col gap-32 max-w-6xl mx-auto">
-        {projects.map((p) => (
-          <div
-            key={p.title}
-            className={`project-item relative w-full md:w-3/4 bg-white brutalist-border p-4 ${p.shadow} text-black parallax-element ${p.align}`}
-            data-speed={p.speed}
-          >
-            <div className="aspect-video bg-gray-200 brutalist-border w-full flex items-center justify-center overflow-hidden">
-              {p.img ? (
-                <img src={p.img} alt={p.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-              ) : (
-                <span className="text-6xl font-black text-gray-400">?</span>
-              )}
-            </div>
-            <div className="mt-6 flex justify-between items-end">
-              <div>
-                <h3 className="text-3xl font-black uppercase">{p.title}</h3>
-                <p className="font-medium text-gray-700">{p.desc}</p>
-              </div>
-              <a
-                href={p.url}
-                target={p.url.startsWith('#') ? undefined : '_blank'}
-                rel={p.url.startsWith('#') ? undefined : 'noopener noreferrer'}
-                className={`bg-black text-white px-6 py-2 font-bold uppercase brutalist-border ${p.btnHover} shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-x-2 active:translate-y-2 active:shadow-none transition-all duration-150`}
-              >
-                {p.url.startsWith('#') ? 'Discutons' : 'Voir'}
-              </a>
-            </div>
+      <article className="mt-20 grid grid-cols-12 gap-x-4 gap-y-8">
+        <div className="relative col-span-12 md:col-span-7">
+          <div className="reveal-img aspect-[16/10] overflow-hidden">
+            <img className="photo" loading="lazy" src="https://images.unsplash.com/photo-1765896387387-0538bc9f997e?w=1400&q=80&auto=format" alt="Aide-soignante souriante aux côtés d'une personne âgée" />
           </div>
-        ))}
-      </div>
+        </div>
+        <div className="col-span-12 flex flex-col md:col-span-5">
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="title reveal text-6xl md:text-7xl">domifée</h3>
+            <span className="title text-6xl md:text-8xl">1<span data-dot className="ml-[0.04em] inline-block size-[0.17em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" /></span>
+          </div>
+          <div className="reveal mt-6 max-w-[42ch] space-y-4 leading-relaxed">
+            <p className="label text-ink/60">Site vitrine · Next.js · Aide à domicile</p>
+            <p>
+              Un site pour une agence d'aide à domicile à Aubervilliers : rassurer les familles, présenter clairement les services et faciliter la prise de contact.
+            </p>
+          </div>
+          <div className="mt-auto flex items-end gap-4 pt-8">
+            <div className="reveal-img aspect-square w-32 overflow-hidden md:w-40">
+              <img className="photo" loading="lazy" src="https://images.unsplash.com/photo-1627752885954-e6956866dcbf?w=500&q=80&auto=format" alt="" />
+            </div>
+            <a href="https://domifee.fr/" target="_blank" rel="noopener noreferrer" className="label border-b border-ink pb-1 hover:text-red hover:border-red">
+              Voir le site ↗
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article className="mt-40 grid grid-cols-12 gap-x-4 border-t border-ink/20 pt-10">
+        <span className="title col-span-3 text-6xl md:col-span-2 md:text-8xl">2<span data-dot className="ml-[0.04em] inline-block size-[0.17em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" /></span>
+        <div className="col-span-9 md:col-span-6">
+          <h3 className="title reveal text-5xl md:text-7xl">et si c'était vous ?</h3>
+          <p className="reveal mt-6 max-w-[42ch] leading-relaxed">
+            Votre projet pourrait être le prochain : site vitrine, application, e-commerce.
+          </p>
+          <a href="#contact" className="label mt-6 inline-block border-b border-ink pb-1 hover:text-red hover:border-red">Discutons →</a>
+        </div>
+      </article>
     </section>
   );
 }

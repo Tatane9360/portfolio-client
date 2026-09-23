@@ -1,28 +1,33 @@
 const steps = [
-  { num: '01', color: 'bg-[#FFE800]', textColor: 'text-black', shadow: 'shadow-[8px_8px_0px_0px_#f4f4f0]', title: 'Appel découverte', desc: '30 min. Gratuit. On parle de votre projet, vos objectifs, vos contraintes. Zéro engagement.' },
-  { num: '02', color: 'bg-[#FF007F]', textColor: 'text-black', shadow: 'shadow-[8px_8px_0px_0px_#f4f4f0]', title: 'Proposition claire', desc: 'Devis détaillé, planning réaliste, pas de surprises. Vous savez exactement où vous allez.' },
-  { num: '03', color: 'bg-[#00E5FF]', textColor: 'text-black', shadow: 'shadow-[8px_8px_0px_0px_#f4f4f0]', title: 'On construit ensemble', desc: 'Points réguliers, démos en live. Vous voyez votre projet prendre forme, pas de tunnel de 3 mois sans nouvelles.' },
-  { num: '04', color: 'bg-white', textColor: 'text-black', shadow: 'shadow-[8px_8px_0px_0px_#FF007F]', title: 'Lancement & suivi', desc: 'Mise en ligne, formation, et je reste dispo. Votre produit est entre de bonnes mains.' },
+  { title: 'Appel découverte', desc: '30 min. Gratuit. On parle de votre projet, vos objectifs, vos contraintes. Zéro engagement.' },
+  { title: 'Proposition claire', desc: 'Devis détaillé, planning réaliste, pas de surprises. Vous savez exactement où vous allez.' },
+  { title: 'On construit ensemble', desc: 'Points réguliers, démos en live. Vous voyez votre projet prendre forme, sans tunnel de 3 mois.' },
+  { title: 'Lancement & suivi', desc: 'Mise en ligne, formation, et je reste disponible. Votre produit est entre de bonnes mains.' },
 ];
 
+// Le cercle saute d'étape en étape : une ancre par étape.
 export default function Process() {
   return (
-    <section className="relative w-full py-32 px-4 md:px-20 bg-black text-white border-y-4 border-black z-30 overflow-hidden">
-      <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-20 text-center text-[#FFE800]">
-        Comment ça se passe
-      </h2>
-
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 items-stretch">
-        {steps.map((step) => (
-          <div
-            key={step.num}
-            className={`process-step brutalist-border ${step.color} ${step.textColor} p-8 ${step.shadow} flex flex-col gap-4`}
-          >
-            <span className="text-7xl font-black leading-none text-outline">{step.num}</span>
-            <h3 className="text-xl font-black uppercase leading-tight">{step.title}</h3>
-            <p className="font-medium text-base leading-relaxed">{step.desc}</p>
-          </div>
-        ))}
+    <section id="methode" className="grid grid-cols-12 gap-x-4 px-4 py-32 md:px-10">
+      <div className="col-span-12 md:col-span-4">
+        <h2 className="title reveal text-[18vw] md:sticky md:top-24 md:text-[7vw]">méthode</h2>
+      </div>
+      <div className="col-span-12 md:col-span-7 md:col-start-6">
+        <div className="reveal-img mb-16 aspect-[16/9] overflow-hidden">
+          <img className="photo" loading="lazy" src="https://images.unsplash.com/photo-1568992688065-536aad8a12f6?w=1200&q=80&auto=format" alt="Échange autour d'une table" />
+        </div>
+        <ol>
+          {steps.map((s, i) => (
+            <li key={s.title} className="reveal grid grid-cols-[3.5rem_1fr] gap-4 border-t border-ink/20 py-10 md:grid-cols-[6rem_1fr]">
+              <span data-dot className="mt-1 block size-6 rounded-full border border-ink/30 md:size-10" />
+              <div>
+                <p className="label text-ink/60">Étape 0{i + 1}</p>
+                <h3 className="mt-2 font-display text-3xl font-extrabold tracking-tight md:text-4xl">{s.title}</h3>
+                <p className="mt-3 max-w-[48ch] leading-relaxed text-ink/75">{s.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

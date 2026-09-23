@@ -20,41 +20,41 @@ const lignes = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-40 w-full border-t-4 border-black bg-black px-4 pt-16 pb-28 text-white md:px-20 md:pb-16">
-      <div className="mx-auto flex max-w-5xl flex-col gap-12">
+    <footer className="relative z-40 w-full bg-ink px-4 py-16 text-paper md:px-10">
+      <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-          <span className="text-3xl font-black uppercase tracking-tighter text-[#FFE800]">DEV.STUDIO</span>
+          <span className="font-display text-3xl font-extrabold tracking-tight text-red">dev.studio</span>
 
-          <div className="flex flex-col gap-3 font-bold">
+          <div className="flex flex-col gap-3">
             {legal.email && (
-              <a href={`mailto:${legal.email}`} className="underline decoration-[#FFE800] decoration-4 underline-offset-4">
+              <a href={`mailto:${legal.email}`} className="underline decoration-red underline-offset-4">
                 {legal.email}
               </a>
             )}
             {legal.telephone && (
-              <a href={`tel:${legal.telephone.replace(/\s/g, '')}`} className="underline decoration-[#FFE800] decoration-4 underline-offset-4">
+              <a href={`tel:${legal.telephone.replace(/\s/g, '')}`} className="underline decoration-red underline-offset-4">
                 {legal.telephone}
               </a>
             )}
-            <a href="#contact" className="underline decoration-[#FFE800] decoration-4 underline-offset-4">
+            <a href="#contact" className="underline decoration-red underline-offset-4">
               Démarrer un projet
             </a>
           </div>
         </div>
 
         {lignes.length > 0 && (
-          <dl className="grid grid-cols-1 gap-x-12 gap-y-3 text-sm font-bold sm:grid-cols-2">
+          <dl className="grid grid-cols-1 gap-x-12 gap-y-3 text-sm sm:grid-cols-2">
             {lignes.map(([label, value]) => (
               <div key={label} className="flex flex-col">
-                <dt className="text-white/60">{label}</dt>
+                <dt className="text-paper/60">{label}</dt>
                 <dd>{value}</dd>
               </div>
             ))}
           </dl>
         )}
 
-        <p className="text-sm font-bold text-white/60">
-          © {new Date().getFullYear()} DEV.STUDIO. Tous droits réservés.
+        <p className="text-sm text-paper/60">
+          © {new Date().getFullYear()} dev.studio. Tous droits réservés.
         </p>
       </div>
     </footer>
