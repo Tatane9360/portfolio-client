@@ -13,7 +13,7 @@ export default function Projects() {
       <article className="mt-20 grid grid-cols-12 gap-x-4 gap-y-8">
         <div className="relative col-span-12 md:col-span-7">
           <div className="reveal-img aspect-[16/10] overflow-hidden">
-            <img className="photo" loading="lazy" src="https://images.unsplash.com/photo-1765896387387-0538bc9f997e?w=1400&q=80&auto=format" alt="Aide-soignante souriante aux côtés d'une personne âgée" />
+            <img className="photo" loading="lazy" src="/images/domifee.webp" alt="Une aide à domicile et une dame âgée qui rient ensemble dans un salon" />
           </div>
         </div>
         <div className="col-span-12 flex flex-col md:col-span-5">
@@ -22,15 +22,12 @@ export default function Projects() {
             <span className="title text-6xl md:text-8xl">1<span data-dot className="ml-[0.04em] inline-block size-[0.17em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" /></span>
           </div>
           <div className="reveal mt-6 max-w-[42ch] space-y-4 leading-relaxed">
-            <p className="label text-ink/60">Site vitrine · Next.js · Aide à domicile</p>
+            <p className="label text-ink/60">Site vitrine en Next.js</p>
             <p>
               Un site pour une agence d'aide à domicile à Aubervilliers : rassurer les familles, présenter clairement les services et faciliter la prise de contact.
             </p>
           </div>
-          <div className="mt-auto flex items-end gap-4 pt-8">
-            <div className="reveal-img aspect-square w-32 overflow-hidden md:w-40">
-              <img className="photo" loading="lazy" src="https://images.unsplash.com/photo-1627752885954-e6956866dcbf?w=500&q=80&auto=format" alt="" />
-            </div>
+          <div className="mt-auto pt-8">
             <a href="https://domifee.fr/" target="_blank" rel="noopener noreferrer" className="label border-b border-ink pb-1 hover:text-red hover:border-red">
               Voir le site ↗
             </a>
@@ -46,6 +43,9 @@ export default function Projects() {
             Votre projet pourrait être le prochain : site vitrine, application, e-commerce.
           </p>
           <a href="#contact" className="label mt-6 inline-block border-b border-ink pb-1 hover:text-red hover:border-red">Discutons →</a>
+        </div>
+        <div className="reveal-img col-span-12 mt-10 aspect-[4/3] overflow-hidden md:col-span-4 md:mt-0">
+          <img className="photo" loading="lazy" src="/images/projet-maquettes.webp" alt="Maquettes de site dessinées à la main, avec des post-its" />
         </div>
       </article>
     </section>

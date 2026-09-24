@@ -29,3 +29,9 @@ dist-ssr
 
 # Captures Playwright MCP
 .playwright-mcp
+
+# Skills et réglages locaux des agents
+.agents/
+.claude/skills/
+.claude/settings.local.json
+skills-lock.json

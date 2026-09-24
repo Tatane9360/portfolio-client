@@ -12,9 +12,21 @@ export default function useGsapAnimations() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     // Lenis cadencé par le ticker GSAP : un seul rAF, ScrollTrigger lit la position lissée.
-    // Le titre (≈ 0,5em sous le haut de section) arrive là où le cercle s'amarre.
-    const lenis = new Lenis({ anchors: { offset: -Math.round(innerHeight * FOCUS - 60) } });
+    const lenis = new Lenis();
     lenis.on('scroll', ScrollTrigger.update);
+
+    // Liens d'ancre : on dépose la page là où le cercle s'amarre dans la section (même calcul que Dot),
+    // sur l'ancre [data-dot-land] si elle existe, sinon la première visible. Ex. « Discutons » : le cercle remplit « écrire ».
+    const onAnchor = (e: MouseEvent) => {
+      const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+      const section = link?.hash ? document.querySelector<HTMLElement>(link.hash) : null;
+      if (!section) return;
+      e.preventDefault();
+      const anchor = section.querySelector<HTMLElement>('[data-dot-land]') ?? [...section.querySelectorAll<HTMLElement>('[data-dot]')].find((a) => a.offsetWidth);
+      const r = (anchor ?? section).getBoundingClientRect();
+      lenis.scrollTo(anchor ? scrollY + r.top + r.height / 2 - innerHeight * FOCUS : scrollY + r.top - 60);
+    };
+    document.addEventListener('click', onAnchor);
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
@@ -45,6 +57,7 @@ export default function useGsapAnimations() {
     return () => {
       ctx.revert();
       gsap.ticker.remove(raf);
+      document.removeEventListener('click', onAnchor);
       lenis.destroy();
     };
   }, []);

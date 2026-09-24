@@ -1,7 +1,7 @@
 const principes = [
-  { title: "J'écoute d'abord", desc: "Avant d'écrire une seule ligne de code, je comprends votre business, vos clients, vos objectifs. Le code vient après la stratégie, jamais avant." },
-  { title: 'Je construis pour convertir', desc: "Un beau site, c'est bien. Un site qui transforme vos visiteurs en clients, c'est autre chose. Chaque choix de design sert votre croissance." },
-  { title: 'Je reste après la livraison', desc: "Pas de livraison puis silence radio. J'accompagne, j'itère, j'optimise. Votre produit évolue avec votre business." },
+  { title: "J'écoute d'abord", desc: "Avant d'écrire du code, je prends le temps de comprendre votre activité, vos clients et ce que vous attendez du site." },
+  { title: 'Je construis pour convertir', desc: "Chaque page a un objectif : un appel, un devis, une vente. Le design est pensé pour y mener vos visiteurs." },
+  { title: 'Je reste après la livraison', desc: "Après la mise en ligne, je reste disponible pour les corrections, les ajouts et les évolutions." },
 ];
 
 export default function Approach() {
@@ -14,7 +14,7 @@ export default function Approach() {
 
       <div className="relative col-span-8 md:col-span-4 md:col-start-9 md:row-span-2">
         <div className="reveal-img aspect-[4/5] overflow-hidden">
-          <img className="photo" loading="lazy" src="https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?w=900&q=80&auto=format" alt="Bureau avec ordinateur portable, lampe et carnets" />
+          <img className="photo" loading="lazy" src="/images/approche-bureau.webp" alt="Bureau avec ordinateur portable, lampe et carnets" />
         </div>
       </div>
 
@@ -23,7 +23,7 @@ export default function Approach() {
           Votre site ne vous ressemble pas. Le builder fait amateur. Le dernier dev a disparu au milieu du projet.
         </p>
         <p>
-          Le problème n'est jamais le code. C'est l'absence de quelqu'un qui comprend votre vision et la traduit en un produit qui travaille pour vous : votre meilleur commercial, disponible 24h/24.
+          Il vous faut quelqu'un qui comprend ce que vous voulez faire et qui le transforme en un site fiable, qui vous amène des clients.
         </p>
       </div>
 

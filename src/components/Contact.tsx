@@ -6,7 +6,7 @@ export default function Contact() {
         parlons-en<span data-dot className="ml-[0.03em] inline-block size-[0.16em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" />
       </h2>
       <div className="relative grid place-items-center">
-        <span data-dot className="block size-56 rounded-full border border-red md:size-72" />
+        <span data-dot data-dot-land className="block size-56 rounded-full border border-red md:size-72" />
         <a href="mailto:hello@devportfolio.com" className="absolute inset-0 z-40 grid place-items-center rounded-full font-display text-2xl font-extrabold text-[color-mix(in_oklab,var(--color-paper)_calc(var(--dock,0)*100%),var(--color-red))] md:text-3xl">
           écrire ↗
         </a>
