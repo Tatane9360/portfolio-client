@@ -4,7 +4,7 @@ const liens = [
   { href: '#approche', label: 'Approche' },
   { href: '#projets', label: 'Projets' },
   { href: '#methode', label: 'Méthode' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '#faq', label: 'Questions' },
 ];
 
 // Courbe du rideau : départ et arrivée lents, traversée rapide.
@@ -27,16 +27,16 @@ export default function Navbar() {
 
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-4 px-4 py-4 bg-paper text-ink md:px-10">
-      <a href="#top" aria-label="Accueil"><img src="/logo.png" alt="ES" className="h-8 w-auto" /></a>
+      <a href="#top" aria-label="Accueil"><img src="/logo-esumi.png" alt="Esumi" width="149" height="48" className="h-10 w-auto md:h-12" /></a>
       <ul className="hidden gap-8 md:flex">
         {liens.map((l) => (
           <li key={l.href}>
-            <a href={l.href} className="label hover:underline underline-offset-4">{l.label}</a>
+            <a href={l.href} className="label ink-link">{l.label}</a>
           </li>
         ))}
       </ul>
       <div className="flex items-center gap-2">
-        <a href="#contact" onClick={() => setOpen(false)} className="label border border-current rounded-full px-4 py-2 hover:bg-ink hover:text-paper transition-colors">
+        <a href="#contact" onClick={() => setOpen(false)} className="label ink-btn border border-current rounded-full px-5 py-2">
           Discutons
         </a>
         <button
@@ -45,7 +45,7 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
-          className="relative grid size-10 place-items-center rounded-full bg-red transition-transform active:scale-95 md:hidden"
+          className="relative grid size-10 place-items-center rounded-full bg-ink transition-transform active:scale-95 md:hidden"
         >
           {/* Deux traits qui se croisent en X à l'ouverture. */}
           <span className={`absolute h-0.5 w-4 bg-paper transition-transform duration-500 ${ease} ${open ? 'rotate-45' : '-translate-y-[3px]'}`} />

@@ -1,7 +1,8 @@
+// La promesse en trois temps, en escalier : chaque phrase finit par un point où l'ensō se pose.
 const principes = [
-  { title: "J'écoute d'abord", desc: "Avant d'écrire du code, je prends le temps de comprendre votre activité, vos clients et ce que vous attendez du site." },
-  { title: 'Je construis pour convertir', desc: "Chaque page a un objectif : un appel, un devis, une vente. Le design est pensé pour y mener vos visiteurs." },
-  { title: 'Je reste après la livraison', desc: "Après la mise en ligne, je reste disponible pour les corrections, les ajouts et les évolutions." },
+  { title: "j'écoute", desc: "Avant d'écrire du code, je prends le temps de comprendre votre activité, vos clients et ce que vous attendez du site.", indent: '' },
+  { title: 'je construis', desc: 'Chaque page a un but : un appel, un devis, une vente. Le design est pensé pour y mener vos visiteurs.', indent: 'md:ml-[16%]' },
+  { title: 'je reste', desc: 'Après la mise en ligne, je reste joignable pour les corrections, les ajouts et les évolutions.', indent: 'md:ml-[32%]' },
 ];
 
 export default function Approach() {
@@ -14,25 +15,26 @@ export default function Approach() {
 
       <div className="relative col-span-8 md:col-span-4 md:col-start-9 md:row-span-2">
         <div className="reveal-img aspect-[4/5] overflow-hidden">
-          <img className="photo" loading="lazy" src="/images/approche-bureau.webp" alt="Bureau avec ordinateur portable, lampe et carnets" />
+          <img className="photo" loading="lazy" src="/images/approche-boulanger.webp" alt="Une boulangerie au travail, vue depuis la vitrine" />
         </div>
       </div>
 
       <div className="reveal col-span-12 max-w-[56ch] space-y-5 text-lg leading-relaxed md:col-span-6">
-        <p className="font-display text-2xl leading-snug font-medium">
-          Votre site ne vous ressemble pas. Le builder fait amateur. Le dernier dev a disparu au milieu du projet.
+        <p className="font-display text-2xl leading-snug font-light">
+          Un site fait à la va-vite qui ne vous ressemble pas, ou un prestataire qui ne répond plus en cours de projet : c'est souvent là que l'on se rencontre.
         </p>
         <p>
           Il vous faut quelqu'un qui comprend ce que vous voulez faire et qui le transforme en un site fiable, qui vous amène des clients.
         </p>
       </div>
 
-      <ol className="col-span-12 grid gap-10 border-t border-ink/20 pt-10 md:col-span-8 md:grid-cols-3">
-        {principes.map((p, i) => (
-          <li key={p.title} className="reveal">
-            <span className="title text-5xl">{i + 1}<span data-dot className="ml-[0.04em] inline-block size-[0.17em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" /></span>
-            <h3 className="mt-4 font-display text-xl font-extrabold">{p.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink/75">{p.desc}</p>
+      <ol className="col-span-12 mt-16 space-y-20 md:space-y-24">
+        {principes.map((p) => (
+          <li key={p.title} className={`reveal grid gap-4 md:grid-cols-[auto_minmax(0,34ch)] md:justify-start md:items-end md:gap-12 ${p.indent}`}>
+            <h3 className="title whitespace-nowrap text-[15vw] md:text-[7vw]">
+              {p.title}<span data-dot className="ml-[0.04em] inline-block size-[0.14em] rounded-full bg-ink motion-safe:opacity-[calc(1-var(--dock,0))]" />
+            </h3>
+            <p className="leading-relaxed text-ink-soft md:pb-[1.2vw]">{p.desc}</p>
           </li>
         ))}
       </ol>

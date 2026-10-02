@@ -16,14 +16,14 @@ export default function FAQ() {
           </span>
         </h2>
       </div>
-      <div className="col-span-12 md:col-span-7">
+      <div className="brush-b col-span-12 md:col-span-7">
         {faqs.map((f) => (
-          <details key={f.q} className="faq-item group reveal border-t border-ink/20 last:border-b">
+          <details key={f.q} className="faq-item group reveal brush-t">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-6 [&::-webkit-details-marker]:hidden">
-              <h3 className="font-display text-xl font-extrabold tracking-tight md:text-2xl">{f.q}</h3>
-              <span aria-hidden="true" className="text-2xl text-red transition-transform duration-300 group-open:rotate-45">+</span>
+              <h3 className="font-display text-xl font-normal md:text-2xl">{f.q}</h3>
+              <span aria-hidden="true" className="text-2xl font-light text-ink-soft transition-transform duration-500 ease-ink group-open:rotate-45">+</span>
             </summary>
-            <p className="max-w-[60ch] pb-6 leading-relaxed text-ink/75">{f.a}</p>
+            <p className="max-w-[60ch] pb-6 leading-relaxed text-ink-soft">{f.a}</p>
           </details>
         ))}
       </div>

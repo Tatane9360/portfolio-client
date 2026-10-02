@@ -17,37 +17,40 @@ export default function Projects() {
           </div>
         </div>
         <div className="col-span-12 flex flex-col md:col-span-5">
-          <div className="flex items-start justify-between gap-4">
-            <h3 className="title reveal text-6xl md:text-7xl">domifée</h3>
-            <span className="title text-6xl md:text-8xl">1<span data-dot className="ml-[0.04em] inline-block size-[0.17em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" /></span>
-          </div>
+          <h3 className="title reveal text-6xl md:text-7xl">domifée</h3>
           <div className="reveal mt-6 max-w-[42ch] space-y-4 leading-relaxed">
-            <p className="label text-ink/60">Site vitrine en Next.js</p>
+            <p className="label text-ink-soft">Site vitrine sur mesure</p>
             <p>
               Un site pour une agence d'aide à domicile à Aubervilliers : rassurer les familles, présenter clairement les services et faciliter la prise de contact.
             </p>
           </div>
           <div className="mt-auto pt-8">
-            <a href="https://domifee.fr/" target="_blank" rel="noopener noreferrer" className="label border-b border-ink pb-1 hover:text-red hover:border-red">
+            <a href="https://domifee.fr/" target="_blank" rel="noopener noreferrer" className="label ink-under">
               Voir le site ↗
             </a>
           </div>
         </div>
       </article>
 
-      <article className="mt-40 grid grid-cols-12 gap-x-4 border-t border-ink/20 pt-10">
-        <span className="title col-span-3 text-6xl md:col-span-2 md:text-8xl">2<span data-dot className="ml-[0.04em] inline-block size-[0.17em] rounded-full bg-red motion-safe:opacity-[calc(1-var(--dock,0))]" /></span>
-        <div className="col-span-9 md:col-span-6">
-          <h3 className="title reveal text-5xl md:text-7xl">et si c'était vous ?</h3>
+      {/* Pas un projet : l'invitation à devenir le suivant. Volontairement non numérotée. */}
+      <aside className="mt-40 grid grid-cols-12 gap-x-4 brush-t pt-10">
+        <div className="col-span-12 md:col-span-6 md:col-start-3">
+          <h3 className="title reveal text-5xl md:text-7xl">et si c'était v
+            <span className="relative inline-block">
+              <span className="opacity-[calc(1-var(--dock,0))]">o</span>
+              <span data-dot className="absolute left-1/2 top-[0.53em] block size-[0.5em] -translate-1/2" />
+            </span>
+            us ?
+          </h3>
           <p className="reveal mt-6 max-w-[42ch] leading-relaxed">
             Votre projet pourrait être le prochain : site vitrine, application, e-commerce.
           </p>
-          <a href="#contact" className="label mt-6 inline-block border-b border-ink pb-1 hover:text-red hover:border-red">Discutons →</a>
+          <a href="#contact" className="label ink-under mt-6 inline-block">Discutons →</a>
         </div>
         <div className="reveal-img col-span-12 mt-10 aspect-[4/3] overflow-hidden md:col-span-4 md:mt-0">
-          <img className="photo" loading="lazy" src="/images/projet-maquettes.webp" alt="Maquettes de site dessinées à la main, avec des post-its" />
+          <img className="photo" loading="lazy" src="/images/projet-menuisier.webp" alt="Un menuisier souriant dans son atelier" />
         </div>
-      </article>
+      </aside>
     </section>
   );
 }

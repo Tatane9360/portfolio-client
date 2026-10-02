@@ -6,12 +6,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Point = { x: number; y: number; s: number; t: number; host: HTMLElement; dock: number };
 
-// Un seul cercle pour tout le site : il relie les ancres [data-dot] dans l'ordre du document.
+// Un seul cercle pour tout le site (l'ensō du logo) : il relie les ancres [data-dot] dans l'ordre du document.
 // Chaque ancre est « atteinte » quand elle passe à FOCUS de la hauteur d'écran ; sa largeur fixe la taille du cercle.
 // À l'approche, le parent de l'ancre reçoit --dock (0 → 1) : le CSS y pousse ou efface le texte.
 export const FOCUS = 0.4; // les liens d'ancre déposent aussi les titres à ce niveau
-const DWELL = 0.18;
-const MIN_GAP = 160; // px de scroll // part de chaque trajet où le cercle reste amarré à son ancre
+const DWELL = 0.18; // part de chaque trajet où le cercle reste amarré à son ancre
+const MIN_GAP = 160; // px de scroll
 export default function Dot() {
   const dot = useRef<HTMLDivElement>(null);
 
@@ -88,8 +88,7 @@ export default function Dot() {
 
   return (
     <div ref={dot} aria-hidden="true" className="dot pointer-events-none absolute left-0 top-0 z-30 size-[100px] -ml-[50px] -mt-[50px]">
-      <div className="absolute inset-0 rounded-full bg-red" />
-      <div className="dot-ring absolute -inset-[14%] rounded-full border border-ink/40 border-dashed" />
+      <img src="/enso.webp" alt="" draggable={false} className="absolute inset-0 size-full select-none" />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Dot from './components/Dot';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Approach from './components/Approach';
+import Stats from './components/Stats';
 import Projects from './components/Projects';
 import Process from './components/Process';
 import FAQ from './components/FAQ';
@@ -14,12 +15,13 @@ export default function App() {
   useGsapAnimations();
 
   return (
-    <div className="relative antialiased selection:bg-red selection:text-paper">
+    <div className="relative antialiased selection:bg-ink selection:text-paper">
       <Dot />
       <Navbar />
       <main>
         <Hero />
         <Approach />
+        <Stats />
         <Projects />
         <Process />
         <FAQ />
