@@ -15,7 +15,7 @@ export default function Approach() {
 
       <div className="relative col-span-8 md:col-span-4 md:col-start-9 md:row-span-2">
         <div className="reveal-img aspect-[4/5] overflow-hidden">
-          <img className="photo" loading="lazy" src="/images/approche-boulanger.webp" alt="Une boulangerie au travail, vue depuis la vitrine" />
+          <img className="photo" loading="lazy" src="/images/approche-boulanger.webp" width="880" height="1100" alt="Une boulangerie au travail, vue depuis la vitrine" />
         </div>
       </div>
 

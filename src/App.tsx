@@ -21,8 +21,8 @@ export default function App() {
       <main>
         <Hero />
         <Approach />
-        <Stats />
         <Projects />
+        <Stats />
         <Process />
         <FAQ />
         <Contact />

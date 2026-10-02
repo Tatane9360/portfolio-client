@@ -1,23 +1,24 @@
-// Trois études récentes (2025-2026), dans l'ordre du parcours d'un client : il vérifie votre site,
+// Trois études récentes (2025), dans l'ordre du parcours d'un client : il vous cherche en ligne,
 // le site amène des clients, mais la moitié des sites mobiles sont trop lents. Chaque chiffre renvoie à sa source.
+// ponytail: le rapport Shopfully est derrière un formulaire, on cite donc l'article d'EcommerceMag qui le reprend.
 const stats = [
   {
-    value: '54',
-    text: "des consommateurs vont voir le site d'une entreprise après avoir lu de bons avis à son sujet.",
-    source: 'BrightLocal, Local Consumer Review Survey, février 2026 (1 002 consommateurs, États-Unis)',
-    href: 'https://www.brightlocal.com/research/local-consumer-review-survey/',
+    value: '76',
+    text: "des Français interrogés cherchent des informations en ligne avant d'acheter, en magasin comme sur internet.",
+    source: 'Shopfully, The State of Shopping 2025, mars 2025 (9 482 utilisateurs de ses applis dans 8 pays européens, dont la France)',
+    href: 'https://www.ecommercemag.fr/Thematique/etudes-1273/Breves/shopping-francais-rationnels-connectes-481578.htm',
     place: 'md:col-span-7',
   },
   {
     value: '48',
-    text: 'des TPE-PME françaises qui ont un site citent les nouveaux clients comme son premier bénéfice.',
+    text: 'des TPE-PME françaises qui ont un site citent les nouveaux clients comme le premier bénéfice de leur site.',
     source: 'Baromètre France Num, septembre 2025 (11 021 entreprises)',
     href: 'https://www.francenum.gouv.fr/files/2025-09/Barom%C3%A8tre%20France%20Num%202025%20-%20Rapport.pdf',
     place: 'md:col-span-6 md:col-start-7',
   },
   {
     value: '52',
-    text: 'des sites, sur mobile, échouent aux Core Web Vitals : les critères de vitesse et de confort de Google.',
+    text: 'des sites, sur mobile, sont jugés trop lents ou inconfortables par Google.',
     source: 'HTTP Archive, Web Almanac 2025, données Chrome de juillet 2025',
     href: 'https://almanac.httparchive.org/en/2025/performance',
     place: 'md:col-span-7 md:col-start-2',

@@ -11,17 +11,17 @@ const steps = [
   },
   {
     title: 'Développement',
-    desc: 'Je construis un site rapide et lisible sur mobile. Vous suivez l’avancement sur une version de test, mise à jour au fil des semaines.',
+    desc: 'Je construis un site rapide et lisible sur mobile, en 2 à 4 semaines en moyenne pour un site vitrine. Vous suivez l’avancement sur une version de test, mise à jour au fil des semaines.',
     get: 'une version de test en ligne',
   },
   {
     title: 'Mise en ligne',
-    desc: 'Publication, nom de domaine, indexation sur Google, puis une prise en main pour que vous soyez autonome au quotidien.',
+    desc: 'Publication, nom de domaine, déclaration à Google, puis une prise en main pour que vous soyez autonome au quotidien.',
     get: 'votre site en ligne, et les clés',
   },
   {
     title: 'Suivi',
-    desc: 'Je reste joignable après la livraison : corrections, mises à jour, nouvelles pages quand votre activité évolue.',
+    desc: 'Après la livraison, vous gardez le même interlocuteur pour les corrections, les mises à jour et les nouvelles pages quand votre activité évolue.',
     get: 'un interlocuteur qui connaît votre projet',
   },
 ];
@@ -41,7 +41,7 @@ export default function Process() {
       </div>
       <div className="col-span-12 mt-16 md:col-span-7 md:col-start-6 md:mt-0">
         <div className="reveal-img mb-20 aspect-[16/9] overflow-hidden">
-          <img className="photo" loading="lazy" src="/images/methode-maquettes.webp" alt="Maquettes de pages web dessinées à la main sur papier" />
+          <img className="photo" loading="lazy" src="/images/methode-maquettes.webp" width="1600" height="900" alt="Maquettes de pages web dessinées à la main sur papier" />
         </div>
         <ol className="process relative">
           <span aria-hidden="true" className="process-line" />
@@ -60,6 +60,10 @@ export default function Process() {
             </li>
           ))}
         </ol>
+        <p className="reveal mt-16 pl-[4.5rem] md:pl-28">
+          Tout commence par l'appel de 30 min.{' '}
+          <a href="#contact" className="label ink-under">Discutons →</a>
+        </p>
       </div>
     </section>
   );

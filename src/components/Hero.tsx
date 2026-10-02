@@ -3,14 +3,14 @@ export default function Hero() {
     <section id="top" className="relative flex min-h-svh flex-col md:grid md:grid-cols-12 gap-x-4 px-4 pt-24 pb-10 md:px-10">
       <div aria-hidden="true" className="ink-wash pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[55vh] opacity-[0.14]" />
       <div className="col-span-12 flex justify-between label md:col-span-8">
-        <span>Développeur web & app<br />freelance</span>
-        <span className="hidden text-right md:block">Sites vitrines, apps<br />e-commerce, SaaS</span>
+        <span>Développeur web<br />freelance</span>
+        <span className="hidden text-right md:block">Sites vitrines, boutiques<br />en ligne, applications</span>
       </div>
 
-      <div className="relative mt-10 w-2/3 self-end md:w-auto md:row-span-2 md:row-start-1 md:col-span-3 md:col-start-10 md:mt-10">
+      <div className="relative mt-6 w-1/2 self-end md:w-auto md:row-span-2 md:row-start-1 md:col-span-3 md:col-start-10 md:mt-10">
         <span data-dot className="absolute -top-6 -left-6 block size-16 md:-top-10 md:-left-10 md:size-24" />
         <div className="reveal-img aspect-[3/4] overflow-hidden">
-          <img className="photo" src="/images/hero-clavier.webp" alt="Une main sur un clavier mécanique, posé sur un bureau en bois" />
+          <img className="photo" src="/images/hero-potier.webp" width="720" height="960" alt="Les mains d’un potier façonnent un vase sur le tour" />
         </div>
       </div>
 
@@ -20,9 +20,12 @@ export default function Hero() {
 
       <div className="reveal mt-8 md:row-start-2 md:col-span-6 md:mt-0 md:self-end">
         <p className="max-w-[34ch] font-display text-2xl leading-snug font-light md:text-3xl">
-          Des sites et des applications pour les indépendants et les petites entreprises. J'écoute, je construis, et je reste après la livraison.
+          Des sites vitrines, des boutiques en ligne et des applications pour les indépendants et les petites entreprises. J'écoute, je construis, et je reste après la livraison.
         </p>
-        <a href="#contact" className="label ink-btn mt-8 inline-block rounded-full border border-current px-6 py-3">Discutons</a>
+        <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <a href="#contact" className="label ink-btn inline-block rounded-full border border-current px-6 py-3">Discutons</a>
+          <span className="text-sm text-ink-soft">Appel de 30 min, gratuit et sans engagement</span>
+        </div>
       </div>
     </section>
   );

@@ -18,9 +18,6 @@ export default function Footer() {
                 {legal.telephone}
               </a>
             )}
-            <a href="#contact" className="ink-under self-start">
-              Discutons
-            </a>
           </div>
         </div>
 
