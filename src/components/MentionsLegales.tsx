@@ -21,7 +21,7 @@ export default function MentionsLegales() {
       </nav>
 
       <main className="px-4 pt-16 pb-24 md:px-10">
-        <h1 className="title text-[13vw] md:text-[7vw]">mentions légales</h1>
+        <h1 className="title text-[13vw] md:text-[7vw]">Mentions légales</h1>
 
         <div className="mt-16">
           <Section title="Éditeur du site">

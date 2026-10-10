@@ -26,14 +26,13 @@ const steps = [
   },
 ];
 
-// Frise : un trait de pinceau vertical se dessine au fil du scroll (--p, posé par useGsapAnimations)
-// et l'ensō saute d'étape en étape (une ancre [data-dot] par marqueur).
+/** Timeline: the brush line is drawn by `--p`, set in useGsapAnimations. One [data-dot] anchor per step. */
 export default function Process() {
   return (
     <section id="methode" className="grid grid-cols-12 gap-x-4 px-4 py-32 md:px-10">
       <div className="col-span-12 md:col-span-4">
         <div className="md:sticky md:top-24">
-          <h2 className="title reveal text-[18vw] md:text-[7vw]">méthode</h2>
+          <h2 className="title reveal text-[18vw] md:text-[min(7vw,10.5svh)]">Méthode</h2>
           <p className="reveal mt-6 max-w-[26ch] text-xl leading-snug font-light md:text-2xl">
             Cinq étapes, un seul interlocuteur du premier appel au suivi.
           </p>
@@ -60,10 +59,10 @@ export default function Process() {
             </li>
           ))}
         </ol>
-        <p className="reveal mt-16 pl-[4.5rem] md:pl-28">
-          Tout commence par l'appel de 30 min.{' '}
-          <a href="#contact" className="label ink-under">Discutons →</a>
-        </p>
+        <div className="reveal mt-16 flex flex-col items-start gap-4 pl-[4.5rem] md:pl-28">
+          <p>Tout commence par l'appel de 30 min.</p>
+          <a href="#contact" className="label ink-under">Parler de mon projet →</a>
+        </div>
       </div>
     </section>
   );

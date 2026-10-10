@@ -1,6 +1,4 @@
-// Trois études récentes (2025), dans l'ordre du parcours d'un client : il vous cherche en ligne,
-// le site amène des clients, mais la moitié des sites mobiles sont trop lents. Chaque chiffre renvoie à sa source.
-// ponytail: le rapport Shopfully est derrière un formulaire, on cite donc l'article d'EcommerceMag qui le reprend.
+// ponytail: the Shopfully report is gated, so we cite the EcommerceMag article that covers it.
 const stats = [
   {
     value: '76',
@@ -27,11 +25,11 @@ const stats = [
 
 export default function Stats() {
   return (
-    <section id="chiffres" aria-labelledby="chiffres-titre" className="grid grid-cols-12 gap-x-4 gap-y-24 px-4 py-32 md:gap-y-32 md:px-10">
+    <section id="chiffres" aria-labelledby="chiffres-titre" className="bg-paper-deep grid grid-cols-12 gap-x-4 gap-y-24 px-4 py-32 md:gap-y-32 md:px-10">
       <h2 id="chiffres-titre" className="sr-only">Ce que votre site dit de vous, en chiffres</h2>
       {stats.map((s, i) => (
         <figure key={s.source} className={`col-span-12 ${s.place}`}>
-          <p className="title reveal whitespace-nowrap text-[26vw] md:text-[13vw]">{s.value}<span className="text-[0.4em]">&nbsp;%</span></p>
+          <p className="title reveal whitespace-nowrap text-[26vw] md:text-[min(13vw,19.5svh)]">{s.value}<span className="text-[0.4em]">&nbsp;%</span></p>
           <figcaption className="reveal mt-6 max-w-[34ch] md:mt-8">
             <p className="text-xl leading-snug font-light md:text-2xl">
               {s.text}<sup className="ml-0.5 text-ink-soft">{i + 1}</sup>

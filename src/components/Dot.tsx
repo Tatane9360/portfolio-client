@@ -6,12 +6,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 type Point = { x: number; y: number; s: number; t: number; host: HTMLElement; dock: number };
 
-// Un seul cercle pour tout le site (l'ensō du logo) : il relie les ancres [data-dot] dans l'ordre du document.
-// Chaque ancre est « atteinte » quand elle passe à FOCUS de la hauteur d'écran ; sa largeur fixe la taille du cercle.
-// À l'approche, le parent de l'ancre reçoit --dock (0 → 1) : le CSS y pousse ou efface le texte.
-export const FOCUS = 0.4; // les liens d'ancre déposent aussi les titres à ce niveau
-const DWELL = 0.18; // part de chaque trajet où le cercle reste amarré à son ancre
-const MIN_GAP = 160; // px de scroll
+/**
+ * A single circle (the logo's ensō) travels through every [data-dot] anchor in document order.
+ * An anchor is reached when it crosses FOCUS of the viewport height; its width sets the circle size.
+ * While approaching, the anchor's parent gets `--dock` (0 → 1) so CSS can push or fade the text.
+ */
+/** Viewport fraction where an anchor is reached; anchor links scroll to the same line. */
+export const FOCUS = 0.4;
+/** Share of each leg where the circle stays docked on its anchor. */
+const DWELL = 0.18;
+/** Minimum scroll (px) between two anchors. */
+const MIN_GAP = 160;
 export default function Dot() {
   const dot = useRef<HTMLDivElement>(null);
 
@@ -25,13 +30,13 @@ export default function Dot() {
 
     const measure = () => {
       const max = ScrollTrigger.maxScroll(window);
-      // Ancres masquées (variantes mobile/desktop) ignorées : elles n'ont pas de boîte.
+      // Hidden anchors (mobile/desktop variants) have no box.
       points = [...document.querySelectorAll<HTMLElement>('[data-dot]')].filter((a) => a.offsetWidth).map((a) => {
         const r = a.getBoundingClientRect();
         const y = r.top + scrollY + r.height / 2;
         return { x: r.left + r.width / 2, y, s: r.width / 100, t: gsap.utils.clamp(0, max, y - innerHeight * FOCUS), host: a.parentElement!, dock: -1 };
       });
-      // Ancres sur une même ligne (ex. « 1. 2. 3. ») : un minimum de scroll entre elles, sinon le cercle saute.
+      // Anchors on the same line need a minimum scroll gap, otherwise the circle jumps.
       points.forEach((pt, i) => { if (i) pt.t = Math.min(max, Math.max(pt.t, points[i - 1].t + MIN_GAP)); });
     };
 
@@ -45,31 +50,30 @@ export default function Dot() {
     const update = (scroll: number) => {
       if (!points.length) return;
       let i = points.findIndex((p) => p.t > scroll) - 1;
-      if (i === -2) i = points.length - 2; // au-delà de la dernière ancre
+      if (i === -2) i = points.length - 2;
       if (i < 0) i = 0;
       const a = points[i];
       const b = points[i + 1] ?? a;
       const raw = gsap.utils.clamp(0, 1, (scroll - a.t) / (b.t - a.t || 1));
-      // Pause amarrée aux deux bouts du trajet, puis traversée.
       const p = gsap.utils.clamp(0, 1, (raw - DWELL) / (1 - 2 * DWELL));
       const e = travel(p);
-      // y linéaire : le cercle reste dans l'écran ; x et taille « easés » : la trajectoire se courbe.
+      // Linear y keeps the circle on screen; eased x and size curve the path.
       moveX(a.x + (b.x - a.x) * e);
       moveY(a.y + (b.y - a.y) * p);
       sizeX(a.s + (b.s - a.s) * e);
       sizeY(a.s + (b.s - a.s) * e);
-      // Le texte s'écarte juste avant l'arrivée et se referme au départ.
       points.forEach((pt) => setDock(pt, pt === a ? near(1 - Math.min(1, p * 2.5)) : pt === b ? near(Math.max(0, p * 2.5 - 1.5)) : 0));
     };
 
-    // Contexte GSAP : tout est annulé au nettoyage (Strict Mode rejoue l'effet en dev).
+    // gsap.context reverts everything on cleanup (Strict Mode replays effects in dev).
     const ctx = gsap.context(() => {
       measure();
-      gsap.set(el, { x: points[0]?.x, y: points[0]?.y, scale: 0 });
-      // Le scroll est déjà lissé (Lenis, inertie tactile) : un suivi court évite le double amorti.
+      gsap.set(el, { x: points[0]?.x, y: points[0]?.y, scale: (points[0]?.s ?? 1) * 0.9, autoAlpha: 0 });
+      gsap.to(el, { autoAlpha: 1, duration: 0.4, ease: 'power3.out' });
+      // Scroll is already smoothed by Lenis: a short duration avoids double easing.
       moveX = gsap.quickTo(el, 'x', { duration: 0.25, ease: 'power3.out' });
       moveY = gsap.quickTo(el, 'y', { duration: 0.25, ease: 'power3.out' });
-      // quickTo ne gère pas l'alias « scale » : un tween par axe, réutilisé à chaque frame.
+      // quickTo doesn't support the `scale` alias: one tween per axis.
       sizeX = gsap.quickTo(el, 'scaleX', { duration: 0.8, ease: 'power3.out' });
       sizeY = gsap.quickTo(el, 'scaleY', { duration: 0.8, ease: 'power3.out' });
       const st = ScrollTrigger.create({
