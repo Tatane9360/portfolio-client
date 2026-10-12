@@ -16,7 +16,7 @@ export default function MentionsLegales() {
   return (
     <>
       <nav className="flex items-center justify-between px-4 py-4 md:px-10">
-        <a href="/" aria-label="Accueil"><img src="/logo-esumi.png" alt="Esumi" width="149" height="48" className="h-10 w-auto md:h-12" /></a>
+        <a href="/" aria-label="Accueil"><img src="/logo-esumi.svg" alt="Esumi" width="139" height="48" className="h-10 w-auto md:h-12" /></a>
         <a href="/" className="label ink-under">Retour au site</a>
       </nav>
 

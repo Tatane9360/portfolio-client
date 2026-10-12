@@ -79,6 +79,9 @@ body::after {
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
+@media (width >= 64rem) {
+  .label { font-size: 0.8125rem; }
+}
 
 .photo {
   filter: grayscale(1) contrast(1.05);
@@ -111,13 +114,21 @@ body::after {
 .ink-under {
   position: relative;
 }
+
+/* 44px touch target around a text link, without moving the text or its underline. */
+.tap {
+  --tap: 0.875rem;
+  display: inline-block;
+  padding-block: var(--tap);
+  margin-block: calc(var(--tap) * -1);
+}
 .ink-link::after,
 .ink-under::after,
 .ink-under::before {
   content: '';
   position: absolute;
   inset-inline: -0.1em;
-  bottom: -0.45em;
+  bottom: calc(var(--tap, 0px) - 0.45em);
   height: 0.5em;
   background: currentColor;
   mask: var(--brush) 0 0 / 100% 100% no-repeat;
@@ -148,7 +159,7 @@ body::after {
   position: absolute;
   inset: 50% auto auto 50%;
   z-index: -1;
-  width: 150%;
+  width: 220%;
   aspect-ratio: 1;
   translate: -50% -50%;
   background: var(--color-ink);
@@ -159,7 +170,9 @@ body::after {
 }
 .ink-btn:focus-visible {
   color: var(--color-paper);
+  outline-color: var(--color-ink); /* currentColor would turn paper on paper */
 }
+nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
 .ink-btn-light::before { background: var(--color-paper); }
 .ink-btn-light:focus-visible { color: var(--color-ink); }
 .ink-btn:focus-visible::before {
@@ -240,7 +253,7 @@ summary:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   :root { --dock: 1; }
   .dot { display: none; }
-  [data-dot] { background: url('/enso.webp') center / contain no-repeat; border: 0; }
+  [data-dot] { background: url('/enso.svg') center / contain no-repeat; border: 0; }
   .ink-link::after,
   .ink-under::after,
   .ink-link:is(:hover, :focus-visible)::after,

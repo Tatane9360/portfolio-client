@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const liens = [
   { href: '#approche', label: 'Approche' },
@@ -10,6 +10,7 @@ export const liens = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let last = scrollY;
@@ -25,19 +26,27 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!open) return;
-    const close = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    const close = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setOpen(false);
+      toggle.current?.focus();
+    };
+    // The page behind the open menu must not take focus.
+    const rest = document.querySelectorAll<HTMLElement>('main, footer');
+    rest.forEach((el) => { el.inert = true; });
     document.documentElement.style.overflow = 'hidden';
     addEventListener('keydown', close);
     return () => {
+      rest.forEach((el) => { el.inert = false; });
       document.documentElement.style.overflow = '';
       removeEventListener('keydown', close);
     };
   }, [open]);
 
   return (
-    <nav onFocus={() => setHidden(false)} className={`fixed inset-x-0 top-0 z-50 flex transition-transform ease-ink motion-reduce:duration-0 ${hidden && !open ? '-translate-y-full duration-300' : 'duration-200'} items-center justify-between gap-4 px-4 py-4 bg-ink text-paper md:px-10`}>
-      <a href="#top" aria-label="Accueil"><img src="/logo-esumi.png" alt="Esumi" width="149" height="48" className="h-10 w-auto invert md:h-12" /></a>
-      <ul className="hidden gap-8 md:flex">
+    <nav onFocus={() => setHidden(false)} className={`fixed inset-x-0 top-0 z-50 flex transition-transform ease-ink motion-reduce:duration-0 ${hidden && !open ? 'md:-translate-y-full duration-300' : 'duration-200'} items-center justify-between gap-4 px-4 py-4 bg-ink text-paper md:px-10`}>
+      <a href="#top" aria-label="Accueil" className="flex min-h-11 items-center"><img src="/logo-esumi-light.svg" alt="Esumi" width="139" height="48" className="h-10 w-auto md:h-12" /></a>
+      <ul className="hidden gap-5 md:flex lg:gap-8">
         {liens.map((l) => (
           <li key={l.href}>
             <a href={l.href} className="label ink-link">{l.label}</a>
@@ -45,16 +54,17 @@ export default function Navbar() {
         ))}
       </ul>
       <div className="flex items-center gap-2">
-        <a href="#contact" onClick={() => setOpen(false)} className="label ink-btn ink-btn-light border border-current rounded-full px-5 py-2">
-          <span className="md:hidden">Mon projet</span><span className="hidden md:inline">Parler de mon projet</span>
+        <a href="#contact" onClick={() => setOpen(false)} className="label ink-btn ink-btn-light inline-flex min-h-11 items-center whitespace-nowrap border border-current rounded-full px-5 py-2 md:min-h-0">
+          <span className="lg:hidden">Mon projet</span><span className="hidden lg:inline">Parler de mon projet</span>
         </a>
         <button
+          ref={toggle}
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
-          className="relative grid size-10 place-items-center rounded-full bg-paper transition-transform active:scale-95 md:hidden"
+          className="relative grid size-11 place-items-center rounded-full bg-paper transition-transform active:scale-95 md:hidden"
         >
           <span className={`absolute h-0.5 w-4 bg-ink transition-transform duration-200 ease-ink ${open ? 'rotate-45' : '-translate-y-[3px]'}`} />
           <span className={`absolute h-0.5 w-4 bg-ink transition-transform duration-200 ease-ink ${open ? '-rotate-45' : 'translate-y-[3px]'}`} />

@@ -92,7 +92,7 @@ export default function Dot() {
 
   return (
     <div ref={dot} aria-hidden="true" className="dot pointer-events-none absolute left-0 top-0 z-30 size-[100px] -ml-[50px] -mt-[50px]">
-      <img src="/enso.webp" alt="" draggable={false} className="absolute inset-0 size-full select-none" />
+      <img src="/enso.svg" alt="" draggable={false} className="absolute inset-0 size-full select-none" />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 const steps = [
   {
     title: 'Écoute',
-    desc: 'Un appel de 30 minutes, gratuit et sans engagement, pour comprendre votre activité, vos clients et ce que le site doit vous apporter.',
+    desc: 'Un appel de 20 minutes, gratuit et sans engagement, pour comprendre votre activité, vos clients et ce que le site doit vous apporter.',
     get: 'un devis détaillé et un planning',
   },
   {
@@ -49,19 +49,19 @@ export default function Process() {
               <span className="flex justify-center">
                 <span data-dot className="mt-1 block size-6 rounded-full border border-ink/30 bg-paper md:size-10" />
               </span>
-              <div>
-                <h3 className="font-display text-3xl font-light md:text-4xl">{s.title}</h3>
-                <p className="mt-3 max-w-[48ch] leading-relaxed text-ink-soft">{s.desc}</p>
-                <p className="mt-4 text-sm">
-                  <span className="text-ink-soft">Vous repartez avec </span>{s.get}.
+              <div className="2xl:grid 2xl:grid-cols-[minmax(0,48ch)_minmax(0,1fr)] 2xl:gap-x-12">
+                <h3 className="font-display text-3xl font-light md:text-4xl 2xl:col-span-2">{s.title}</h3>
+                <p className="mt-3 max-w-[48ch] leading-relaxed text-ink-soft md:text-lg">{s.desc}</p>
+                <p className="mt-4 2xl:mt-3 2xl:text-lg">
+                  <span className="text-ink-soft 2xl:block">Vous repartez avec </span>{s.get}.
                 </p>
               </div>
             </li>
           ))}
         </ol>
         <div className="reveal mt-16 flex flex-col items-start gap-4 pl-[4.5rem] md:pl-28">
-          <p>Tout commence par l'appel de 30 min.</p>
-          <a href="#contact" className="label ink-under">Parler de mon projet →</a>
+          <p className="md:text-lg">Tout commence par l'appel de 20 min.</p>
+          <a href="#contact" className="label ink-btn self-start inline-flex min-h-11 items-center rounded-full border border-current px-6 py-3">Parler de mon projet</a>
         </div>
       </div>
     </section>

@@ -31,11 +31,16 @@ export default function useGsapAnimations() {
     const onAnchor = (e: MouseEvent) => {
       const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
       const section = link?.hash ? document.querySelector<HTMLElement>(link.hash) : null;
-      if (!section) return;
+      // Only sections get the circle-docking scroll; other targets (skip link) jump natively.
+      if (!section?.matches('section')) return;
       e.preventDefault();
       const anchor = section.querySelector<HTMLElement>('[data-dot-land]') ?? [...section.querySelectorAll<HTMLElement>('[data-dot]')].find((a) => a.offsetWidth);
       const r = (anchor ?? section).getBoundingClientRect();
       lenis.scrollTo(anchor ? scrollY + r.top + r.height / 2 - innerHeight * FOCUS : scrollY + r.top - 60);
+      section.tabIndex = -1;
+      section.style.outline = 'none';
+      section.focus({ preventScroll: true });
+      history.pushState(null, '', link!.hash);
     };
     document.addEventListener('click', onAnchor);
     const raf = (time: number) => lenis.raf(time * 1000);
@@ -73,7 +78,7 @@ export default function useGsapAnimations() {
         gsap.fromTo(list, { '--p': 0 }, { '--p': 1, ease: 'none', scrollTrigger: { trigger: list, start: 'top 60%', end: 'bottom 60%', scrub: true } });
       });
 
-      gsap.utils.toArray<HTMLElement>('.reveal-img:not(#top .reveal-img)').forEach((box) => {
+      gsap.utils.toArray<HTMLElement>('.reveal-img:not(#top .reveal-img, [data-flat])').forEach((box) => {
         gsap.fromTo(box.querySelector('img'), { yPercent: -6, scale: 1.12 }, {
           yPercent: 6, ease: 'none', scrollTrigger: { trigger: box, start: 'top bottom', end: 'bottom top', scrub: true },
         });
