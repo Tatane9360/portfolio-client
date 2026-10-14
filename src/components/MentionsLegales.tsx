@@ -41,23 +41,23 @@ export default function MentionsLegales() {
 
           <Section title="Propriété intellectuelle">
             <p>
-              Les textes, le logo et la mise en page de ce site sont la propriété de l'éditeur. Toute reproduction sans autorisation est interdite.
-              Les photographies proviennent d'Unsplash et sont utilisées selon la licence Unsplash.
+              Les textes, le logo et la mise en page de ce site sont la propriété de l’éditeur. Toute reproduction sans autorisation est interdite.
+              Les photographies proviennent d’Unsplash et sont utilisées selon la licence Unsplash.
             </p>
           </Section>
 
           <Section title="Confidentialité">
             <p>
-              Ce site ne comporte ni formulaire, ni cookie, ni outil de mesure d'audience. Aucune donnée n'est collectée pendant votre visite.
-              La police de caractères et les images sont hébergées sur ce site : aucun service tiers n'est contacté pendant la navigation.
+              Ce site ne comporte ni formulaire, ni cookie, ni outil de mesure d’audience. Aucune donnée n’est collectée pendant votre visite.
+              La police de caractères et les images sont hébergées sur ce site : aucun service tiers n’est contacté pendant la navigation.
             </p>
             <p>
-              Si vous m'écrivez par email, j'utilise votre nom, votre adresse et le contenu de votre message uniquement pour vous répondre et,
+              Si vous m’écrivez par email, j’utilise votre nom, votre adresse et le contenu de votre message uniquement pour vous répondre et,
               le cas échéant, préparer un devis. Ces échanges ne sont ni vendus ni transmis à des tiers.
-              Ils sont conservés 3 ans après notre dernier échange, sauf s'ils sont liés à un contrat, auquel cas ils suivent les durées légales de conservation.
+              Ils sont conservés 3 ans après notre dernier échange, sauf s’ils sont liés à un contrat, auquel cas ils suivent les durées légales de conservation.
             </p>
             <p>
-              Vous pouvez à tout moment demander l'accès, la rectification ou la suppression de vos données en écrivant à {aCompleter(legal.email)}.
+              Vous pouvez à tout moment demander l’accès, la rectification ou la suppression de vos données en écrivant à {aCompleter(legal.email)}.
               Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL (cnil.fr).
             </p>
           </Section>

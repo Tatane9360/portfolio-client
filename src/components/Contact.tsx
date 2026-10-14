@@ -11,7 +11,7 @@ export default function Contact() {
 
   // Cal.com's script is third-party: only loaded once the visitor gets close to the contact section.
   useEffect(() => {
-    if (!cal) console.warn('VITE_CAL_URL est vide dans .env : le bouton « Réserver un appel » ne mène nulle part.');
+    if (!cal) console.warn('VITE_CAL_URL est vide dans .env : le bouton « Réserver un appel » ouvre un email à la place.');
     if (!cal || !section.current) return;
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
@@ -33,24 +33,27 @@ export default function Contact() {
   };
 
   return (
-    <section ref={section} id="contact" className="relative flex min-h-svh flex-col items-center justify-center gap-10 overflow-hidden px-4 py-32 text-center">
+    <section ref={section} id="contact" className="relative flex min-h-[calc(100svh-var(--nav))] flex-col items-center justify-center gap-10 overflow-hidden px-4 py-16 text-center md:gap-[min(2.5rem,4svh)] md:py-[min(5rem,6svh)]">
+      {/* The hero mist, framing both sides: the page opens and closes on the same image. Mobile keeps one side to free the text. */}
+      <div aria-hidden="true" className="ink-brume pointer-events-none absolute inset-0 -z-10 -scale-x-100 opacity-[0.25]" />
+      <div aria-hidden="true" className="ink-brume pointer-events-none absolute inset-0 -z-10 hidden opacity-[0.25] lg:block" />
       <h2 className="title reveal whitespace-nowrap text-[18vw] md:text-[min(11vw,16.5svh)]">
         Parlons-en<span data-dot className="ml-[0.03em] inline-block size-[0.16em] rounded-full bg-ink motion-safe:opacity-[calc(1-var(--dock,0))]" />
       </h2>
       <p className="reveal max-w-[44ch] leading-relaxed md:text-lg">
-        Choisissez un créneau pour un appel de 20 min, gratuit et sans engagement. Vous préférez écrire ? Je vous réponds sous 24 h ouvrées.
+        Choisissez un créneau pour un appel de 20{' '}min, gratuit et sans engagement. Vous préférez écrire{' '}? Je vous réponds sous 24{' '}h ouvrées.
       </p>
       <div className="relative grid place-items-center">
-        <span data-dot data-dot-land className="block size-56 rounded-full border border-ink/20 md:size-72 motion-safe:opacity-[calc(1-var(--dock,0))]" />
+        <span data-dot data-dot-land className="block size-56 rounded-full border border-ink/40 md:size-[min(18rem,32svh)] motion-safe:opacity-[calc(1-var(--dock,0))]" />
         <a
-          href={legal.cal ?? undefined}
-          target="_blank"
+          href={legal.cal ?? mailto}
+          target={cal ? '_blank' : undefined}
           rel="noopener noreferrer"
           data-cal-link={cal?.pathname.slice(1)}
           data-cal-config='{"layout":"month_view","theme":"light"}'
           // Once the embed is ready it opens the booking popup itself; before that, the link opens cal.com.
           onClick={(e) => { if (document.documentElement.dataset.cal === 'ready') e.preventDefault(); }}
-          className="absolute inset-0 z-40 grid place-items-center rounded-full transition-transform duration-[160ms] ease-out active:scale-[0.97] font-display text-2xl leading-tight font-normal md:text-3xl"
+          className="absolute inset-0 z-40 grid place-items-center rounded-full transition-[scale,background-color] duration-[160ms] ease-out hover:bg-ink/5 active:scale-[0.97] font-display text-2xl leading-tight font-medium md:text-3xl"
         >
           <span>Réserver<br />un appel</span>
         </a>
@@ -68,7 +71,7 @@ export default function Contact() {
         )}
         <a href={mailto} className="label ink-under tap">{legal.email}</a>
         <button type="button" onClick={copy} className="label ink-link tap cursor-pointer text-ink-soft transition-transform duration-[160ms] ease-out active:scale-[0.97]">
-          <span aria-live="polite"><span key={String(copied)} className="fade-in">{copied ? 'adresse copiée' : "copier l'adresse"}</span></span>
+          <span aria-live="polite"><span key={String(copied)} className="fade-in">{copied ? 'adresse copiée' : "copier l’adresse"}</span></span>
         </button>
       </div>
     </section>

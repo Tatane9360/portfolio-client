@@ -20,6 +20,7 @@
   --color-ink: #22211e;
   --color-paper-deep: #ddd5c2;
   --color-ink-soft: #5f5b54; /* 5.3:1 contrast on paper */
+  --color-gold: #b8955a; /* decorative only, never for text */
   --font-display: 'Jost', sans-serif;
   --font-sans: 'Jost', sans-serif;
   --ease-ink: cubic-bezier(0.16, 1, 0.3, 1);
@@ -29,7 +30,7 @@
   /* Always used as masks: color comes from currentColor or tokens, never from the image. */
   --brush: url('/textures/brush.png');
   --blot: url('/textures/blot.png');
-  --mist: url('/textures/mist.webp');
+  --brume: url('/textures/brume-hero.webp');
 }
 
 html {
@@ -61,27 +62,37 @@ body::after {
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.07;
-  mix-blend-mode: multiply;
+  /* No blend mode: a multiply layer over the whole page is recomposited on every scroll frame. */
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .13 0 0 0 0 .12 0 0 0 1.4 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .title {
   font-family: var(--font-display);
   font-weight: 300;
-  line-height: 0.88;
+  line-height: 0.92;
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 .label {
-  font-size: 0.72rem;
-  font-weight: 450;
+  font-size: 0.8125rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
 }
 @media (width >= 64rem) {
-  .label { font-size: 0.8125rem; }
+  .label { font-size: 0.875rem; }
 }
+
+/* Height of the always-visible fixed navbar. */
+:root { --nav: 4.75rem; }
+@media (width >= 48rem) {
+  :root { --nav: 5rem; }
+}
+
+/* The fixed navbar must not cover a section reached by anchor (native jump in reduced motion). */
+section[id] { scroll-margin-top: var(--nav); }
 
 .photo {
   filter: grayscale(1) contrast(1.05);
@@ -199,7 +210,6 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
 /* --ink: 0 → 1 */
 .inking {
   mask: var(--blot) 42% 45% / calc(var(--ink) * 320%) calc(var(--ink) * 320%) no-repeat;
-  filter: blur(calc((1 - var(--ink)) * 8px));
 }
 
 /* --stroke: -0.4 → 1.3 */
@@ -226,20 +236,13 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
   .process-line { left: calc(3rem - 5px); }
 }
 
-.ink-wash {
+.ink-brume {
   background: var(--color-ink);
-  mask: var(--mist) center bottom / 100% 100% no-repeat, linear-gradient(to top, transparent, #000 45%);
-  mask-composite: intersect;
+  mask: var(--brume) right bottom / cover no-repeat;
 }
-.ink-mist-top::before {
-  content: '';
-  position: absolute;
-  inset-inline: 0;
-  bottom: calc(100% - 1px);
-  height: clamp(60px, 8vw, 130px);
-  background: var(--color-ink);
-  mask: var(--mist) center bottom / 100% 100% no-repeat;
-  pointer-events: none;
+/* Landscape: fit the height so the portrait mist stays on the right instead of covering the text. */
+@media (width >= 64rem) {
+  .ink-brume { mask-size: auto 100%; }
 }
 
 a:focus-visible,

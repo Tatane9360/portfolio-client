@@ -4,19 +4,34 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type Point = { x: number; y: number; s: number; t: number; host: HTMLElement; dock: number };
+type Point = { x: number; y: number; s: number; t: number; host: HTMLElement; dock: number; land: boolean };
 
 /**
  * A single circle (the logo's ensō) travels through every [data-dot] anchor in document order.
- * An anchor is reached when it crosses FOCUS of the viewport height; its width sets the circle size.
+ * An anchor is reached at dockScroll(); its width sets the circle size.
  * While approaching, the anchor's parent gets `--dock` (0 → 1) so CSS can push or fade the text.
  */
 /** Viewport fraction where an anchor is reached; anchor links scroll to the same line. */
-export const FOCUS = 0.4;
+const FOCUS = 0.4;
+
+/**
+ * Scroll position at which an anchor is reached (shared with anchor links).
+ * A [data-dot-land] anchor is reached once its whole section sits under the fixed navbar,
+ * so a full-screen section is entirely visible when the circle lands, not cut at the top.
+ */
+export function dockScroll(a: HTMLElement) {
+  if (a.hasAttribute('data-dot-land')) {
+    return a.closest('section')!.getBoundingClientRect().top + scrollY - (document.querySelector('nav')?.offsetHeight ?? 0);
+  }
+  const r = a.getBoundingClientRect();
+  return r.top + scrollY + r.height / 2 - innerHeight * FOCUS;
+}
 /** Share of each leg where the circle stays docked on its anchor. */
 const DWELL = 0.18;
 /** Minimum scroll (px) between two anchors. */
 const MIN_GAP = 160;
+/** Share of each leg's middle (around 0.5) where the circle is fully hidden while travelling. */
+const FADE = 0.85;
 export default function Dot() {
   const dot = useRef<HTMLDivElement>(null);
 
@@ -24,7 +39,7 @@ export default function Dot() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const el = dot.current!;
     let points: Point[] = [];
-    let moveX: gsap.QuickToFunc, moveY: gsap.QuickToFunc, sizeX: gsap.QuickToFunc, sizeY: gsap.QuickToFunc;
+    let moveX: gsap.QuickToFunc, moveY: gsap.QuickToFunc, sizeX: gsap.QuickToFunc, sizeY: gsap.QuickToFunc, fade: gsap.QuickToFunc;
     const travel = gsap.parseEase('power2.inOut');
     const near = gsap.parseEase('power2.out');
 
@@ -34,9 +49,13 @@ export default function Dot() {
       points = [...document.querySelectorAll<HTMLElement>('[data-dot]')].filter((a) => a.offsetWidth).map((a) => {
         const r = a.getBoundingClientRect();
         const y = r.top + scrollY + r.height / 2;
-        return { x: r.left + r.width / 2, y, s: r.width / 100, t: gsap.utils.clamp(0, max, y - innerHeight * FOCUS), host: a.parentElement!, dock: -1 };
+        return { x: r.left + r.width / 2, y, s: r.width / 100, t: gsap.utils.clamp(0, max, dockScroll(a)), host: a.parentElement!, dock: -1, land: a.hasAttribute('data-dot-land') };
       });
       // Anchors on the same line need a minimum scroll gap, otherwise the circle jumps.
+      // The landing anchor keeps its position: anchors just before it are pulled earlier instead.
+      for (let i = points.findIndex((p) => p.land); i > 0 && points[i - 1].t > points[i].t - MIN_GAP; i--) {
+        points[i - 1].t = Math.max(0, points[i].t - MIN_GAP);
+      }
       points.forEach((pt, i) => { if (i) pt.t = Math.min(max, Math.max(pt.t, points[i - 1].t + MIN_GAP)); });
     };
 
@@ -62,6 +81,8 @@ export default function Dot() {
       moveY(a.y + (b.y - a.y) * p);
       sizeX(a.s + (b.s - a.s) * e);
       sizeY(a.s + (b.s - a.s) * e);
+      // Visible only near an anchor: mid-leg the circle would cross the text between sections.
+      fade(gsap.utils.clamp(0, 1, (Math.abs(p * 2 - 1) - FADE) / (1 - FADE)));
       points.forEach((pt) => setDock(pt, pt === a ? near(1 - Math.min(1, p * 2.5)) : pt === b ? near(Math.max(0, p * 2.5 - 1.5)) : 0));
     };
 
@@ -76,6 +97,8 @@ export default function Dot() {
       // quickTo doesn't support the `scale` alias: one tween per axis.
       sizeX = gsap.quickTo(el, 'scaleX', { duration: 0.8, ease: 'power3.out' });
       sizeY = gsap.quickTo(el, 'scaleY', { duration: 0.8, ease: 'power3.out' });
+      // On the image, not the wrapper: the wrapper keeps its own entrance fade.
+      fade = gsap.quickTo(el.firstElementChild, 'opacity', { duration: 0.2, ease: 'power2.out' });
       const st = ScrollTrigger.create({
         start: 0,
         end: 'max',

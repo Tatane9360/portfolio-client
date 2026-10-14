@@ -33,7 +33,7 @@ export default function Process() {
       <div className="col-span-12 md:col-span-4">
         <div className="md:sticky md:top-24">
           <h2 className="title reveal text-[18vw] md:text-[min(7vw,10.5svh)]">Méthode</h2>
-          <p className="reveal mt-6 max-w-[26ch] text-xl leading-snug font-light md:text-2xl">
+          <p className="reveal mt-6 max-w-[26ch] text-xl leading-snug font-normal md:text-2xl">
             Cinq étapes, un seul interlocuteur du premier appel au suivi.
           </p>
         </div>
@@ -59,9 +59,8 @@ export default function Process() {
             </li>
           ))}
         </ol>
-        <div className="reveal mt-16 flex flex-col items-start gap-4 pl-[4.5rem] md:pl-28">
-          <p className="md:text-lg">Tout commence par l'appel de 20 min.</p>
-          <a href="#contact" className="label ink-btn self-start inline-flex min-h-11 items-center rounded-full border border-current px-6 py-3">Parler de mon projet</a>
+        <div className="reveal mt-16 pl-[4.5rem] md:pl-28">
+          <a href="#contact" className="label ink-btn ink-btn-light self-start inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-6 py-3 text-paper">Parler de mon projet</a>
         </div>
       </div>
     </section>

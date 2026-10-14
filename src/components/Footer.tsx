@@ -1,9 +1,9 @@
 import { legal } from '../legal';
-import { liens } from './Navbar';
+import { liens } from '../liens';
 
 export default function Footer() {
   return (
-    <footer className="ink-mist-top relative z-40 w-full bg-ink px-4 py-16 text-paper md:px-10">
+    <footer className="relative z-40 w-full bg-ink px-4 py-16 text-paper md:px-10">
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <img src="/logo-esumi-light.svg" alt="Esumi" width="162" height="56" className="h-14 w-auto self-start" loading="lazy" />

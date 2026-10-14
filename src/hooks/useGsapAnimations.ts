@@ -3,13 +3,13 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
-import { FOCUS } from '../components/Dot';
+import { dockScroll } from '../components/Dot';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function useGsapAnimations() {
   useLayoutEffect(() => {
-    // Reduced motion: plain fades only, no Lenis, masks or blur.
+    // Reduced motion: plain fades only, no Lenis or masks.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const ctx = gsap.context(() => {
         gsap.set('.reveal, .reveal-img', { autoAlpha: 0 });
@@ -23,7 +23,8 @@ export default function useGsapAnimations() {
     }
 
     // Lenis driven by the GSAP ticker: one rAF, ScrollTrigger reads the smoothed position.
-    const lenis = new Lenis();
+    // lerp 0.2 (default 0.1): smooth but follows the wheel closely, no heavy inertia.
+    const lenis = new Lenis({ lerp: 0.2 });
     lenis.on('scroll', ScrollTrigger.update);
 
     // Anchor links land where the circle docks in the section (same math as Dot),
@@ -36,7 +37,7 @@ export default function useGsapAnimations() {
       e.preventDefault();
       const anchor = section.querySelector<HTMLElement>('[data-dot-land]') ?? [...section.querySelectorAll<HTMLElement>('[data-dot]')].find((a) => a.offsetWidth);
       const r = (anchor ?? section).getBoundingClientRect();
-      lenis.scrollTo(anchor ? scrollY + r.top + r.height / 2 - innerHeight * FOCUS : scrollY + r.top - 60);
+      lenis.scrollTo(anchor ? dockScroll(anchor) : scrollY + r.top - 60);
       section.tabIndex = -1;
       section.style.outline = 'none';
       section.focus({ preventScroll: true });
@@ -58,7 +59,7 @@ export default function useGsapAnimations() {
       gsap.set(titles, { '--stroke': -0.4 });
       gsap.to('#top h1', { '--stroke': 1.3, duration: 0.9, delay: 0.15, ease: 'power3.out', onComplete: done('stroking', '--stroke') });
       ScrollTrigger.batch('.title.reveal', {
-        start: 'top 88%',
+        start: 'top 95%',
         once: true,
         onEnter: (els) => gsap.to(els, { '--stroke': 1.3, duration: 0.9, ease: 'power3.out', stagger: 0.06, onComplete: done('stroking', '--stroke') }),
       });
@@ -67,10 +68,10 @@ export default function useGsapAnimations() {
       inks.forEach((el) => el.classList.add('inking'));
       gsap.set(inks, { '--ink': 0, autoAlpha: 0 });
       ScrollTrigger.batch(inks, {
-        start: 'top 88%',
+        start: 'top 95%',
         once: true,
         onEnter: (els) => gsap.to(els, {
-          '--ink': 1, autoAlpha: 1, duration: 0.9, ease: 'expo.out', stagger: 0.08, onComplete: done('inking', '--ink'),
+          '--ink': 1, autoAlpha: 1, duration: 0.6, ease: 'expo.out', stagger: 0.05, onComplete: done('inking', '--ink'),
         }),
       });
 

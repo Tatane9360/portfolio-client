@@ -23,15 +23,15 @@ export default function App() {
       <main id="contenu">
         <Hero />
         <Approach />
-        <Projects />
         <Stats />
+        <Projects />
         <Process />
         <FAQ />
         <Contact />
       </main>
       <Footer />
       {whatsapp && (
-        <a href={whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Discuter sur WhatsApp" className="fixed right-4 bottom-4 z-40 grid size-14 place-items-center rounded-full bg-ink ring-1 ring-paper/40 transition-transform duration-[160ms] ease-out active:scale-[0.97] md:right-10 md:bottom-8">
+        <a href={whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Discuter sur WhatsApp" className="fixed right-4 bottom-4 z-40 grid size-14 place-items-center rounded-full bg-ink ring-1 ring-paper/40 transition-[scale,box-shadow] duration-[160ms] ease-out hover:ring-paper active:scale-[0.97] md:right-10 md:bottom-8">
           <img src="/whatsapp.svg" alt="" width="28" height="28" />
         </a>
       )}

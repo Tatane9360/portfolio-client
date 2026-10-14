@@ -1,28 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-
-export const liens = [
-  { href: '#approche', label: 'Approche' },
-  { href: '#projets', label: 'Projets' },
-  { href: '#methode', label: 'Méthode' },
-  { href: '#faq', label: 'Questions' },
-];
+import { liens } from '../liens';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    let last = scrollY;
-    const onScroll = () => {
-      const y = scrollY;
-      if (Math.abs(y - last) < 8) return;
-      setHidden(y > last && y > 120);
-      last = y;
-    };
-    addEventListener('scroll', onScroll, { passive: true });
-    return () => removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -43,8 +24,9 @@ export default function Navbar() {
     };
   }, [open]);
 
+  // Always visible: its height is --nav (index.css), which full-screen sections subtract.
   return (
-    <nav onFocus={() => setHidden(false)} className={`fixed inset-x-0 top-0 z-50 flex transition-transform ease-ink motion-reduce:duration-0 ${hidden && !open ? 'md:-translate-y-full duration-300' : 'duration-200'} items-center justify-between gap-4 px-4 py-4 bg-ink text-paper md:px-10`}>
+    <nav className="fixed inset-x-0 top-0 z-50 flex h-(--nav) items-center justify-between gap-4 px-4 bg-ink text-paper md:px-10">
       <a href="#top" aria-label="Accueil" className="flex min-h-11 items-center"><img src="/logo-esumi-light.svg" alt="Esumi" width="139" height="48" className="h-10 w-auto md:h-12" /></a>
       <ul className="hidden gap-5 md:flex lg:gap-8">
         {liens.map((l) => (
@@ -64,7 +46,7 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
-          className="relative grid size-11 place-items-center rounded-full bg-paper transition-transform active:scale-95 md:hidden"
+          className="relative grid size-11 place-items-center rounded-full bg-paper transition-[scale,background-color] hover:bg-paper/85 active:scale-95 md:hidden"
         >
           <span className={`absolute h-0.5 w-4 bg-ink transition-transform duration-200 ease-ink ${open ? 'rotate-45' : '-translate-y-[3px]'}`} />
           <span className={`absolute h-0.5 w-4 bg-ink transition-transform duration-200 ease-ink ${open ? '-rotate-45' : 'translate-y-[3px]'}`} />
@@ -74,7 +56,7 @@ export default function Navbar() {
       <div
         id="menu-mobile"
         inert={!open}
-        className={`absolute inset-x-0 top-full flex h-[calc(100dvh-100%)] flex-col justify-end bg-ink px-4 pb-10 text-paper transition-[clip-path] ease-ink motion-reduce:duration-0 md:hidden ${open ? 'duration-[400ms] ' : 'duration-[250ms] '}${open ? '[clip-path:inset(0_0_0_0)]' : '[clip-path:inset(0_0_100%_0)]'}`}
+        className={`absolute inset-x-0 top-full flex h-[calc(100dvh-100%)] flex-col justify-end overscroll-contain bg-ink px-4 pb-10 text-paper transition-[clip-path] ease-ink motion-reduce:duration-0 md:hidden ${open ? 'duration-[400ms] ' : 'duration-[250ms] '}${open ? '[clip-path:inset(0_0_0_0)]' : '[clip-path:inset(0_0_100%_0)]'}`}
       >
         <ul>
           {liens.map((l, i) => (
