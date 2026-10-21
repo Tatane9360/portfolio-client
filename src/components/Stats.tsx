@@ -1,10 +1,9 @@
-// ponytail: the Shopfully report is gated, so we cite the EcommerceMag article that covers it.
 const stats = [
   {
-    value: '76',
-    text: "des Français interrogés cherchent des informations en ligne avant d’acheter, en magasin comme sur internet.",
-    source: 'Shopfully, The State of Shopping 2025, mars 2025 (9 482 utilisateurs de ses applis dans 8 pays européens, dont la France)',
-    href: 'https://www.ecommercemag.fr/Thematique/etudes-1273/Breves/shopping-francais-rationnels-connectes-481578.htm',
+    value: '77',
+    text: "des Français de 12 ans et plus ont acheté en ligne au cours de l’année : vos clients sont déjà sur internet.",
+    source: 'CREDOC pour l’Arcep, Baromètre du numérique 2025, mars 2025 (4 066 personnes, données 2024)',
+    href: 'https://arcep.fr/uploads/tx_gspublication/barometre-du-numerique_edition_2025_PRESENTATION_mars2025.pdf',
   },
   {
     value: '48',
@@ -20,22 +19,27 @@ const stats = [
   },
 ];
 
-/** One row per figure: number left, statement and source right, read top to bottom like a table. */
+/** Full-width rows: outlined numeral filled with ink on scroll at the left, statement and source on the right. */
 export default function Stats() {
   return (
-    <section id="chiffres" aria-labelledby="chiffres-titre" className="bg-paper-deep px-4 py-32 md:px-10">
-      <h2 id="chiffres-titre" className="title reveal text-[13vw] md:text-[min(7vw,10.5svh)]">Pourquoi un site{' '}?</h2>
-      <div className="mt-16 md:mt-20">
+    <section id="chiffres" aria-labelledby="chiffres-titre" className="bg-paper-deep px-4 py-24 md:px-10 md:py-28">
+      <h2 id="chiffres-titre" className="title reveal text-[13vw] md:text-[min(7vw,10.5svh)]">Pourquoi un site{' '}?</h2>
+      <div className="mt-10 md:mt-14">
         {stats.map((s) => (
-          <figure key={s.source} className="brush-t grid grid-cols-12 gap-x-4 gap-y-4 py-10 md:items-end md:py-14">
-            <p className="title reveal col-span-12 whitespace-nowrap tabular-nums text-[24vw] md:col-span-5 md:text-[min(12vw,17svh)] lg:col-span-4 lg:text-[min(10vw,17svh)]">
-              {s.value}<span className="text-[0.4em]">&nbsp;%</span>
+          <figure key={s.source} className="grid gap-4 py-8 md:grid-cols-12 md:items-center md:gap-x-4 md:py-10">
+            <p className="title whitespace-nowrap tabular-nums text-[34vw] md:col-span-5 md:text-[min(20vw,26svh)] lg:col-span-4">
+              <span className="sr-only">{s.value} %</span>
+              <span aria-hidden="true" className="relative inline-block">
+                <span className="text-transparent [-webkit-text-stroke:1.5px_var(--color-ink)]">{s.value}</span>
+                <span className="ink-fill absolute inset-0">{s.value}</span>
+              </span>
+              <span aria-hidden="true" className="text-[0.3em]">&nbsp;%</span>
             </p>
-            <figcaption className="reveal col-span-12 max-w-[44ch] md:col-span-7 md:pb-[0.4em] lg:col-span-6 lg:col-start-6">
-              <p className="text-xl leading-snug text-pretty xl:text-2xl">{s.text}</p>
+            <figcaption className="reveal max-w-[46rem] md:col-span-7 lg:col-span-8">
+              <p className="text-xl leading-snug text-pretty md:text-2xl xl:text-3xl">{s.text}</p>
               <p className="mt-4 text-sm leading-relaxed text-ink-soft">
                 Source :{' '}
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="ink-link">{s.source}</a>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="underline decoration-ink/30 underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-ink">{s.source}</a>
               </p>
             </figcaption>
           </figure>

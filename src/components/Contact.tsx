@@ -1,25 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { legal, whatsapp } from '../legal';
+import { cal, calAttrs, loadCal } from '../cal';
 
 const mailto = `mailto:${legal.email}?subject=${encodeURIComponent('Mon projet de site')}&body=${encodeURIComponent('Mon activité :\nCe que j’attends du site :\nÉchéance souhaitée :\n')}`;
-
-const cal = legal.cal ? new URL(legal.cal) : null;
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const section = useRef<HTMLElement>(null);
 
-  // Cal.com's script is third-party: only loaded once the visitor gets close to the contact section.
   useEffect(() => {
     if (!cal) console.warn('VITE_CAL_URL est vide dans .env : le bouton « Réserver un appel » ouvre un email à la place.');
     if (!cal || !section.current) return;
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       io.disconnect();
-      const script = document.createElement('script');
-      script.src = '/cal-embed.js';
-      script.dataset.origin = cal.origin;
-      document.head.appendChild(script);
+      loadCal();
     }, { rootMargin: '800px' });
     io.observe(section.current);
     return () => io.disconnect();
@@ -37,25 +32,26 @@ export default function Contact() {
       {/* The hero mist, framing both sides: the page opens and closes on the same image. Mobile keeps one side to free the text. */}
       <div aria-hidden="true" className="ink-brume pointer-events-none absolute inset-0 -z-10 -scale-x-100 opacity-[0.25]" />
       <div aria-hidden="true" className="ink-brume pointer-events-none absolute inset-0 -z-10 hidden opacity-[0.25] lg:block" />
-      <h2 className="title reveal whitespace-nowrap text-[18vw] md:text-[min(11vw,16.5svh)]">
+      <h2 className="title reveal whitespace-nowrap text-[16vw] md:text-[min(11vw,16.5svh)]">
         Parlons-en<span data-dot className="ml-[0.03em] inline-block size-[0.16em] rounded-full bg-ink motion-safe:opacity-[calc(1-var(--dock,0))]" />
       </h2>
       <p className="reveal max-w-[44ch] leading-relaxed md:text-lg">
-        Choisissez un créneau pour un appel de 20{' '}min, gratuit et sans engagement. Vous préférez écrire{' '}? Je vous réponds sous 24{' '}h ouvrées.
+        {cal
+          ? <>Choisissez un créneau pour un appel de 20{' '}min, gratuit et sans engagement. Vous préférez écrire{' '}? Je vous réponds sous 24{' '}h ouvrées.</>
+          : <>Décrivez votre projet en quelques lignes, je vous réponds sous 24{' '}h ouvrées pour fixer un appel gratuit et sans engagement.</>}
       </p>
       <div className="relative grid place-items-center">
         <span data-dot data-dot-land className="block size-56 rounded-full border border-ink/40 md:size-[min(18rem,32svh)] motion-safe:opacity-[calc(1-var(--dock,0))]" />
         <a
           href={legal.cal ?? mailto}
           target={cal ? '_blank' : undefined}
-          rel="noopener noreferrer"
-          data-cal-link={cal?.pathname.slice(1)}
-          data-cal-config='{"layout":"month_view","theme":"light"}'
-          // Once the embed is ready it opens the booking popup itself; before that, the link opens cal.com.
-          onClick={(e) => { if (document.documentElement.dataset.cal === 'ready') e.preventDefault(); }}
+          rel={cal ? 'noopener noreferrer' : undefined}
+          {...calAttrs}
           className="absolute inset-0 z-40 grid place-items-center rounded-full transition-[scale,background-color] duration-[160ms] ease-out hover:bg-ink/5 active:scale-[0.97] font-display text-2xl leading-tight font-medium md:text-3xl"
         >
-          <span>Réserver<br />un appel</span>
+          {cal
+            ? <span>Réserver<br />un appel<span className="cal-onglet sr-only"> (nouvel onglet)</span></span>
+            : <span>Écrire<br />un message</span>}
         </a>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-7 md:gap-y-3">
@@ -69,7 +65,7 @@ export default function Contact() {
             WhatsApp
           </a>
         )}
-        <a href={mailto} className="label ink-under tap">{legal.email}</a>
+        <a href={mailto} className="ink-under tap">{legal.email}</a>
         <button type="button" onClick={copy} className="label ink-link tap cursor-pointer text-ink-soft transition-transform duration-[160ms] ease-out active:scale-[0.97]">
           <span aria-live="polite"><span key={String(copied)} className="fade-in">{copied ? 'adresse copiée' : "copier l’adresse"}</span></span>
         </button>

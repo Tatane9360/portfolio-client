@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
-import { dockScroll } from '../components/Dot';
+import { dockScroll } from '../dock';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +30,7 @@ export default function useGsapAnimations() {
     // Anchor links land where the circle docks in the section (same math as Dot),
     // on [data-dot-land] if present, otherwise the first visible anchor.
     const onAnchor = (e: MouseEvent) => {
+      if (e.defaultPrevented) return; // e.g. a booking link that opened the Cal.com popup
       const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
       const section = link?.hash ? document.querySelector<HTMLElement>(link.hash) : null;
       // Only sections get the circle-docking scroll; other targets (skip link) jump natively.

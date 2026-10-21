@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { dockScroll } from '../dock';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,21 +12,6 @@ type Point = { x: number; y: number; s: number; t: number; host: HTMLElement; do
  * An anchor is reached at dockScroll(); its width sets the circle size.
  * While approaching, the anchor's parent gets `--dock` (0 → 1) so CSS can push or fade the text.
  */
-/** Viewport fraction where an anchor is reached; anchor links scroll to the same line. */
-const FOCUS = 0.4;
-
-/**
- * Scroll position at which an anchor is reached (shared with anchor links).
- * A [data-dot-land] anchor is reached once its whole section sits under the fixed navbar,
- * so a full-screen section is entirely visible when the circle lands, not cut at the top.
- */
-export function dockScroll(a: HTMLElement) {
-  if (a.hasAttribute('data-dot-land')) {
-    return a.closest('section')!.getBoundingClientRect().top + scrollY - (document.querySelector('nav')?.offsetHeight ?? 0);
-  }
-  const r = a.getBoundingClientRect();
-  return r.top + scrollY + r.height / 2 - innerHeight * FOCUS;
-}
 /** Share of each leg where the circle stays docked on its anchor. */
 const DWELL = 0.18;
 /** Minimum scroll (px) between two anchors. */

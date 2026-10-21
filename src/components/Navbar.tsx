@@ -1,9 +1,20 @@
+import { calAttrs } from '../cal';
 import { useEffect, useRef, useState } from 'react';
 import { liens } from '../liens';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
+  const [actif, setActif] = useState('');
+
+  // Current section: the one crossing the middle of the viewport.
+  useEffect(() => {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActif(`#${e.target.id}`); });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -31,13 +42,13 @@ export default function Navbar() {
       <ul className="hidden gap-5 md:flex lg:gap-8">
         {liens.map((l) => (
           <li key={l.href}>
-            <a href={l.href} className="label ink-link">{l.label}</a>
+            <a href={l.href} aria-current={actif === l.href ? 'location' : undefined} className="label ink-link">{l.label}</a>
           </li>
         ))}
       </ul>
       <div className="flex items-center gap-2">
-        <a href="#contact" onClick={() => setOpen(false)} className="label ink-btn ink-btn-light inline-flex min-h-11 items-center whitespace-nowrap border border-current rounded-full px-5 py-2 md:min-h-0">
-          <span className="lg:hidden">Mon projet</span><span className="hidden lg:inline">Parler de mon projet</span>
+        <a href="#contact" {...calAttrs} onClick={(e) => { setOpen(false); calAttrs.onClick?.(e); }} className="label ink-btn ink-btn-light inline-flex min-h-11 items-center whitespace-nowrap border border-current rounded-full px-5 py-2 md:min-h-0">
+          <span className="lg:hidden">Appel gratuit</span><span className="hidden lg:inline">Réserver un appel gratuit</span>
         </a>
         <button
           ref={toggle}

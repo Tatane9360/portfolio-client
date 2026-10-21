@@ -19,7 +19,7 @@
   --color-paper: #e9e3d4;
   --color-ink: #22211e;
   --color-paper-deep: #ddd5c2;
-  --color-ink-soft: #5f5b54; /* 5.3:1 contrast on paper */
+  --color-ink-soft: #57534c; /* 6:1 on paper, 5.2:1 on paper-deep */
   --color-gold: #b8955a; /* decorative only, never for text */
   --font-display: 'Jost', sans-serif;
   --font-sans: 'Jost', sans-serif;
@@ -151,6 +151,7 @@ section[id] { scroll-margin-top: var(--nav); }
   clip-path: inset(0 100% 0 0);
   transition: clip-path 200ms ease-out;
 }
+.ink-link[aria-current]::after,
 .ink-link:focus-visible::after,
 .ink-under:focus-visible::after {
   clip-path: inset(0 0 0 0);
@@ -236,6 +237,28 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
   .process-line { left: calc(3rem - 5px); }
 }
 
+/* Stats: ink fills the outlined numeral from the bottom. Already full without scroll-driven animations. */
+@property --fill {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+.ink-fill {
+  clip-path: inset(calc((1 - var(--fill)) * 100%) 0 0 0);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ink-fill {
+      animation: remplir linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 40%;
+    }
+  }
+}
+@keyframes remplir {
+  from { --fill: 0; }
+}
+
 .ink-brume {
   background: var(--color-ink);
   mask: var(--brume) right bottom / cover no-repeat;
@@ -244,6 +267,9 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
 @media (width >= 64rem) {
   .ink-brume { mask-size: auto 100%; }
 }
+
+/* Once the Cal embed is ready, booking opens in a popup, not a tab. */
+[data-cal="ready"] .cal-onglet { display: none; }
 
 a:focus-visible,
 button:focus-visible,

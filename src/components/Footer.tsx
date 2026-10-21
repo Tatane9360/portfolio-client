@@ -30,7 +30,6 @@ export default function Footer() {
           </div>
         </div>
 
-
         <div className="flex flex-col gap-3 text-sm text-paper/60 md:flex-row md:justify-between">
           <p>© {new Date().getFullYear()} Esumi. Tous droits réservés.</p>
           <a href="/mentions-legales.html" className="ink-link tap self-start transition-colors hover:text-paper">

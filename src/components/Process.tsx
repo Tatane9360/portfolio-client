@@ -1,3 +1,4 @@
+import { calAttrs } from '../cal';
 const steps = [
   {
     title: 'Écoute',
@@ -60,7 +61,7 @@ export default function Process() {
           ))}
         </ol>
         <div className="reveal mt-16 pl-[4.5rem] md:pl-28">
-          <a href="#contact" className="label ink-btn ink-btn-light self-start inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-6 py-3 text-paper">Parler de mon projet</a>
+          <a href="#contact" {...calAttrs} className="label ink-btn ink-btn-light self-start inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-6 py-3 text-paper">Réserver un appel gratuit</a>
         </div>
       </div>
     </section>
