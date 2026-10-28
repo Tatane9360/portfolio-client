@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type MouseEvent } from 'react';
 import { legal, whatsapp } from '../legal';
 
 const champ = 'mt-2 block w-full border-b border-ink/30 bg-transparent py-3 text-lg placeholder:text-ink-soft/70 transition-colors duration-200 hover:border-ink/60 focus:border-ink focus:shadow-[0_1px_0_var(--color-ink)] focus:outline-none';
@@ -27,6 +27,15 @@ export default function Contact() {
     else location.href = `mailto:${legal.email}?subject=${encodeURIComponent('Mon projet de site')}&body=${texte}`;
   };
 
+  // The ring opens onto the form: bring the first field into view and put the cursor in it.
+  const versFormulaire = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const champ1 = document.querySelector<HTMLInputElement>('#formulaire input');
+    const doux = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    champ1?.closest('form')?.scrollIntoView({ behavior: doux ? 'smooth' : 'auto' });
+    champ1?.focus({ preventScroll: true });
+  };
+
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(legal.email);
@@ -36,26 +45,33 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative grid min-h-[calc(100svh-var(--nav))] grid-cols-12 content-center gap-x-4 gap-y-12 overflow-hidden px-4 py-16 md:px-10 md:py-[min(5rem,6svh)]">
+    <section id="contact" className="relative overflow-hidden px-4 md:px-10">
       {/* The hero mist, framing both sides: the page opens and closes on the same image. Mobile keeps one side to free the text. */}
       <div aria-hidden="true" className="ink-brume pointer-events-none absolute inset-0 -z-10 -scale-x-100 opacity-[0.25]" />
       <div aria-hidden="true" className="ink-brume pointer-events-none absolute inset-0 -z-10 hidden opacity-[0.25] lg:block" />
 
-      <div className="col-span-12 lg:col-span-5">
-        <h2 className="title reveal whitespace-nowrap text-[16vw] md:text-[min(11vw,16.5svh)] lg:text-[min(7vw,16.5svh)]">
+      {/* First screen: the circle lands in the ring, which opens onto the form below. */}
+      <div className="flex min-h-[calc(100svh-var(--nav))] flex-col items-center justify-center gap-10 py-16 text-center md:gap-[min(2.5rem,4svh)] md:py-[min(5rem,6svh)]">
+        <h2 className="title reveal whitespace-nowrap text-[16vw] md:text-[min(11vw,16.5svh)]">
           Parlons-en<span data-dot className="ml-[0.03em] inline-block size-[0.16em] rounded-full bg-ink motion-safe:opacity-[calc(1-var(--dock,0))]" />
         </h2>
-        <p className="reveal mt-8 max-w-[38ch] leading-relaxed md:text-lg">
+        <p className="reveal max-w-[44ch] leading-relaxed md:text-lg">
           Racontez-moi votre projet en quelques lignes. Je vous réponds sous 24{' '}h ouvrées, par écrit, et on s’appelle seulement si vous le souhaitez.
         </p>
-        {/* Desktop: the circle lands here, signed with the seal. Mobile goes straight to the form. */}
-        <div className="relative mt-12 hidden w-fit lg:block">
-          <span aria-hidden="true" className="sceau stamp absolute -right-2 bottom-2 z-40 w-14 rotate-6" />
-          <span data-dot data-dot-land className="block size-[min(16rem,28svh)] rounded-full border border-ink/40 motion-safe:opacity-[calc(1-var(--dock,0))]" />
+        <div className="relative grid place-items-center">
+          <span aria-hidden="true" className="sceau stamp absolute -right-2 bottom-2 z-40 w-12 rotate-6 md:w-16" />
+          <span data-dot data-dot-land className="block size-56 rounded-full border border-ink/40 md:size-[min(18rem,32svh)] motion-safe:opacity-[calc(1-var(--dock,0))]" />
+          <a
+            href="#formulaire"
+            onClick={versFormulaire}
+            className="absolute inset-0 z-40 grid place-items-center rounded-full font-display text-2xl leading-tight font-medium transition-[scale,background-color] duration-[160ms] ease-out hover:bg-ink/5 active:scale-[0.97] md:text-3xl"
+          >
+            <span>Écrire<br />un message</span>
+          </a>
         </div>
       </div>
 
-      <form onSubmit={envoyer} className="reveal col-span-12 space-y-8 lg:col-span-6 lg:col-start-7">
+      <form id="formulaire" aria-label="Votre message" onSubmit={envoyer} className="mx-auto max-w-2xl scroll-mt-[calc(var(--nav)+2rem)] space-y-8 pb-24 md:pb-32">
         <label className="group block">
           <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Votre activité et votre ville</span>
           <input name="activite" required autoComplete="organization" placeholder="Boulangerie à Nantes" className={champ} />
