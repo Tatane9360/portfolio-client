@@ -16,7 +16,7 @@ export default function Hero() {
       {/* Indigo wash climbing the right edge, behind the ensō. */}
       <div aria-hidden="true" className="ink-brume brume-derive pointer-events-none absolute inset-0 top-(--nav) -z-10 opacity-[0.34]" />
 
-      {/* Hangs from its rod right under the navbar; drops in and sways (useGsapAnimations).
+      {/* Hangs from its rod right under the navbar; drops in (index.css) and sways (useAnimations).
           Desktop: its width is capped by the screen height (the cloth is about 0.54 × its width + 28px tall),
           so the audience line, the sentence and the button still fit in the first screen under it. */}
       <div className="noren relative col-span-12 -mx-4 md:mx-0 lg:col-span-7 lg:max-w-[calc((100svh-27.5rem)*1.85)]">

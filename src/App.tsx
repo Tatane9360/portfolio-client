@@ -1,5 +1,5 @@
 import './index.css';
-import useGsapAnimations from './hooks/useGsapAnimations';
+import useAnimations from './hooks/useAnimations';
 import Dot from './components/Dot';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { whatsapp } from './legal';
 
 export default function App() {
-  useGsapAnimations();
+  useAnimations();
   // The floating button would cover the FAQ toggles and the contact links (which already offer WhatsApp).
   const [bas, setBas] = useState(false);
   useEffect(() => {

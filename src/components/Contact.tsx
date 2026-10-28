@@ -53,14 +53,14 @@ export default function Contact() {
       {/* First screen: the circle lands in the ring, which opens onto the form below. */}
       <div className="flex min-h-[calc(100svh-var(--nav))] flex-col items-center justify-center gap-10 py-16 text-center md:gap-[min(2.5rem,4svh)] md:py-[min(5rem,6svh)]">
         <h2 className="title reveal whitespace-nowrap text-[16vw] md:text-[min(11vw,16.5svh)]">
-          Parlons-en<span data-dot className="ml-[0.03em] inline-block size-[0.16em] rounded-full bg-ink motion-safe:opacity-[calc(1-var(--dock,0))]" />
+          Parlons-en<span data-dot data-dock className="ml-[0.03em] inline-block size-[0.16em] rounded-full bg-ink motion-safe:opacity-[calc(1-var(--dock,0))]" />
         </h2>
         <p className="reveal max-w-[44ch] leading-relaxed md:text-lg">
           Racontez-moi votre projet en quelques lignes. Je vous réponds sous 24{' '}h ouvrées, par écrit, et on s’appelle seulement si vous le souhaitez.
         </p>
         <div className="relative grid place-items-center">
           <span aria-hidden="true" className="sceau stamp absolute -right-2 bottom-2 z-40 w-12 rotate-6 md:w-16" />
-          <span data-dot data-dot-land className="block size-56 rounded-full border border-ink/40 md:size-[min(18rem,32svh)] motion-safe:opacity-[calc(1-var(--dock,0))]" />
+          <span data-dot data-dot-land data-dock className="block size-56 rounded-full border border-ink/40 md:size-[min(18rem,32svh)] motion-safe:opacity-[calc(1-var(--dock,0))]" />
           <a
             href="#formulaire"
             onClick={versFormulaire}

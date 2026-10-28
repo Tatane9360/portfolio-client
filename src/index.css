@@ -109,7 +109,6 @@ section[id] { scroll-margin-top: var(--nav); }
   object-fit: cover;
   width: 100%;
   height: 100%;
-  will-change: transform;
 }
 
 .stitch-t {
@@ -198,6 +197,15 @@ section[id] { scroll-margin-top: var(--nav); }
   height: 2px;
   background: var(--stitch);
   opacity: 0.5;
+}
+/* The panels unfurl from their sleeve as soon as the page paints; the sway (useAnimations) only rotates. */
+@media (prefers-reduced-motion: no-preference) {
+  .noren-pan { animation: derouler 1.1s cubic-bezier(0.25, 1, 0.5, 1) calc(100ms + var(--i) * 70ms) backwards; }
+}
+/* Explicit end: `none` (the resting value) can't be interpolated from inset(). */
+@keyframes derouler {
+  from { clip-path: inset(0% 0% 95% 0%); }
+  to { clip-path: inset(0% 0% 0% 0%); }
 }
 .noren-cloth {
   width: 100cqw;
@@ -415,17 +423,64 @@ section[id] { scroll-margin-top: var(--nav); }
   @starting-style { opacity: 0; }
 }
 
-/* --ink: 0 → 1 */
+/* Reveals (useAnimations): the start class is set before first paint, `vu` once in view,
+   and both are dropped when the motion ends. `--delai` staggers what enters together.
+   Transitions live on `.vu` only: hiding (start class) and cleanup must be instant. */
+@property --ink {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+@property --stroke {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1.3;
+}
+
+/* --ink: 0 → 1. The blot spreads from the middle. */
 .inking {
+  --ink: 0;
+  opacity: 0;
+  visibility: hidden;
   mask: var(--blot) 42% 45% / calc(var(--ink) * 320%) calc(var(--ink) * 320%) no-repeat;
+}
+.inking.vu {
+  --ink: 1;
+  opacity: 1;
+  visibility: visible;
+  transition: --ink 600ms var(--ease-ink), opacity 600ms var(--ease-ink), visibility 600ms;
+  transition-delay: var(--delai, 0ms);
 }
 
 /* --stroke: -0.4 → 1.3. A soft dye front sweeping left to right. */
 .stroking {
+  --stroke: -0.4;
   mask: linear-gradient(90deg, #000 calc(var(--stroke) * 120% - 30%), transparent calc(var(--stroke) * 120% - 10%)) 0 0 / 100% 100% no-repeat;
 }
+.stroking.vu {
+  --stroke: 1.3;
+  transition: --stroke 900ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition-delay: var(--delai, 0ms);
+}
 
-/* --p: 0 → 1, set by ScrollTrigger; 1 without animation. The process is sewn stitch by stitch. */
+/* Seals are pressed: a fast hit past full size, then they settle. */
+.pressing { opacity: 0; visibility: hidden; scale: 1.7; }
+.pressing.vu { animation: imprimer 500ms var(--delai, 0ms) both; }
+@keyframes imprimer {
+  from { opacity: 0; visibility: visible; scale: 1.7; animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  40% { opacity: 1; scale: 0.94; animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
+  to { opacity: 1; visibility: visible; scale: 1; }
+}
+
+/* Reduced motion: a plain fade. */
+.fondu { opacity: 0; visibility: hidden; }
+.fondu.vu {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 600ms cubic-bezier(0.33, 1, 0.68, 1), visibility 600ms;
+}
+
+/* --p: 0 → 1, set on scroll (useAnimations); 1 without animation. The process is sewn stitch by stitch. */
 .process-line {
   position: absolute;
   top: 1rem;
@@ -483,6 +538,19 @@ section[id] { scroll-margin-top: var(--nav); }
     }
     .feuille:nth-child(even) { --tilt: 2deg; transform-origin: 100% 0; }
   }
+  /* Photos drift inside their frame while it crosses the screen. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-img:not([data-flat]) { view-timeline: --cadre; }
+    .reveal-img:not([data-flat]) img {
+      animation: parallaxe linear both;
+      animation-timeline: --cadre;
+      animation-range: cover;
+    }
+  }
+}
+@keyframes parallaxe {
+  from { translate: 0 -6%; scale: 1.12; }
+  to { translate: 0 6%; scale: 1.12; }
 }
 @keyframes deriver {
   to { translate: 0 22%; }
@@ -518,6 +586,9 @@ summary:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
 }
+
+/* The travelling ensō (Dot) fades in once placed on its first anchor. */
+.dot { transition: opacity 400ms cubic-bezier(0.25, 1, 0.5, 1); }
 
 /* Reduced motion: each anchor shows a static ensō. */
 @media (prefers-reduced-motion: reduce) {

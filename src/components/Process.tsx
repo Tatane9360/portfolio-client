@@ -28,7 +28,7 @@ const steps = [
 ];
 
 /** Ledger of the method, one line per step like a detailed quote: step, what happens, what you leave with.
-    The stitched line is sewn by `--p` (useGsapAnimations) and threads one [data-dot] anchor per step. */
+    The stitched line is sewn by `--p` (useAnimations) and threads one [data-dot] anchor per step. */
 export default function Process() {
   return (
     <section id="methode" className="px-4 py-32 md:px-10">

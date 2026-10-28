@@ -30,7 +30,7 @@ export default function Projects() {
         Pr
         <span className="relative inline-block px-[calc(var(--dock,0)*0.08em)]">
           <span className="opacity-[calc(1-var(--dock,0))]">o</span>
-          <span data-dot className="absolute left-1/2 top-[0.42em] block size-[0.6em] -translate-1/2" />
+          <span data-dot data-dock className="absolute left-1/2 top-[0.42em] block size-[0.6em] -translate-1/2" />
         </span>
         jets
       </h2>

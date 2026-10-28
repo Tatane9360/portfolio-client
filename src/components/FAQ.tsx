@@ -34,7 +34,7 @@ export default function FAQ() {
         <h2 className="title reveal text-[17vw] md:text-[min(8vw,13svh)] lg:text-[min(7vw,13svh)]">
           <span className="relative inline-block">
             <span className="inline-block translate-x-[calc(var(--dock,0)*-0.12em)]">Questions</span>
-            <span data-dot className="absolute left-full top-[0.42em] ml-[0.06em] block size-[0.5em] -translate-y-1/2" />
+            <span data-dot data-dock className="absolute left-full top-[0.42em] ml-[0.06em] block size-[0.5em] -translate-y-1/2" />
           </span>
         </h2>
         <p className="reveal mt-8 max-w-[22ch] text-xl leading-snug md:mt-10 md:text-2xl">
