@@ -310,7 +310,7 @@ section[id] { scroll-margin-top: var(--nav); }
   display: block;
   aspect-ratio: 1;
   background: var(--color-shu);
-  mask: url('/textures/sceau.png') center / contain no-repeat;
+  mask: url('/textures/sceau.webp') center / contain no-repeat;
 }
 
 .ink-link,

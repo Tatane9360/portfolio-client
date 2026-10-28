@@ -24,7 +24,7 @@ a = gaussian_filter(np.asarray(img) / 255, 2.4)
 a = smooth(0.5, 0.56, a + 0.22 * (noise((S, S), 3) - 0.5) + 0.12 * (noise((S, S), 14) - 0.5))  # bords irréguliers
 a *= smooth(0.28, 0.4, noise((S, S), 1.6) * 0.5 + noise((S, S), 22) * 0.5)                      # encre mal transférée
 out = np.zeros((S, S, 4), np.uint8); out[..., :3] = (192, 63, 36); out[..., 3] = (a * 255).astype(np.uint8)
-Image.fromarray(out).resize((320, 320), Image.LANCZOS).save('public/textures/sceau.png', optimize=True)
+Image.fromarray(out).resize((320, 320), Image.LANCZOS).save('public/textures/sceau.webp', quality=85, method=6)
 
 # 2. Photos en cyanotype : niveaux de gris passés sur le dégradé de l'indigo (bleu de Prusse → coton).
 stops = np.array([0, 0.5, 1])
@@ -79,7 +79,7 @@ dedans = smooth(bord, bord - 0.22, r)
 lavis = dedans * (0.42 + 0.4 * noise((L, L), 70)) + 0.4 * np.exp(-((r - bord + 0.03) / 0.03) ** 2) * smooth(bord + 0.05, bord - 0.05, r)
 lavis *= 0.85 + 0.3 * noise((L, L), 1.2)
 out = np.zeros((L, L, 4), np.uint8); out[..., :3] = INDIGO; out[..., 3] = (np.clip(lavis, 0, 1) * 255).astype(np.uint8)
-Image.fromarray(out).resize((600, 600), Image.LANCZOS).save('public/textures/lavis.webp', quality=82)
+Image.fromarray(out).resize((600, 600), Image.LANCZOS).save('public/textures/lavis.webp', quality=65, alpha_quality=65, method=6)
 
 # 7. Réserve : le blanc des lettres du noren, épargné à la teinture. Même trame de coton, léger voile d'indigo qui a bavé.
 lum = coton(512, 512)[..., 0] / INDIGO[0]
