@@ -19,27 +19,27 @@ const stats = [
   },
 ];
 
-/** Full-width rows: outlined numeral filled with ink on scroll at the left, statement and source on the right. */
+/** Full-width rows on indigo cloth: pale numeral filled with dye on scroll at the left, statement and source on the right. */
 export default function Stats() {
   return (
-    <section id="chiffres" aria-labelledby="chiffres-titre" className="bg-paper-deep px-4 py-24 md:px-10 md:py-28">
-      <h2 id="chiffres-titre" className="title reveal text-[13vw] md:text-[min(7vw,10.5svh)]">Pourquoi un site{' '}?</h2>
+    <section id="chiffres" aria-labelledby="chiffres-titre" className="ourle seigaiha px-4 py-24 md:px-10 md:py-28">
+      <h2 id="chiffres-titre" className="title reveal text-[15vw] md:text-[min(8vw,13svh)]">Pourquoi un site{' '}?</h2>
       <div className="mt-10 md:mt-14">
         {stats.map((s) => (
           <figure key={s.source} className="grid gap-4 py-8 md:grid-cols-12 md:items-center md:gap-x-4 md:py-10">
-            <p className="title whitespace-nowrap tabular-nums text-[34vw] md:col-span-5 md:text-[min(20vw,26svh)] lg:col-span-4">
+            <p className="title whitespace-nowrap tabular-nums text-[34vw] md:col-span-5 md:text-[min(24vw,34svh)] lg:col-span-4">
               <span className="sr-only">{s.value} %</span>
               <span aria-hidden="true" className="relative inline-block">
-                <span className="text-transparent [-webkit-text-stroke:1.5px_var(--color-ink)]">{s.value}</span>
+                <span className="text-paper/45">{s.value}</span>
                 <span className="ink-fill absolute inset-0">{s.value}</span>
               </span>
-              <span aria-hidden="true" className="text-[0.3em]">&nbsp;%</span>
+              <span aria-hidden="true" className="text-[0.24em] text-indigo-pale">&nbsp;%</span>
             </p>
             <figcaption className="reveal max-w-[46rem] md:col-span-7 lg:col-span-8">
               <p className="text-xl leading-snug text-pretty md:text-2xl xl:text-3xl">{s.text}</p>
-              <p className="mt-4 text-sm leading-relaxed text-ink-soft">
+              <p className="mt-4 text-sm leading-relaxed text-indigo-pale">
                 Source :{' '}
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="underline decoration-ink/30 underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-ink">{s.source}</a>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="underline decoration-paper/30 underline-offset-4 transition-[text-decoration-color] duration-200 hover:decoration-paper">{s.source}</a>
               </p>
             </figcaption>
           </figure>

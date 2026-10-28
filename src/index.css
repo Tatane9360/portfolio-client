@@ -1,41 +1,47 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Jost';
-  font-weight: 100 900;
+  font-family: 'Bricolage Grotesque';
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
   font-display: swap;
-  src: url('/fonts/jost-latin.woff2') format('woff2');
+  src: url('/fonts/bricolage-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Jost';
-  font-weight: 100 900;
+  font-family: 'Bricolage Grotesque';
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
   font-display: swap;
-  src: url('/fonts/jost-latin-ext.woff2') format('woff2');
+  src: url('/fonts/bricolage-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Workshop noren: unbleached cotton ground, indigo-dyed fields, ink, and vermilion kept for seals and the main action. */
 @theme {
-  --color-paper: #e9e3d4;
-  --color-ink: #22211e;
-  --color-paper-deep: #ddd5c2;
-  --color-ink-soft: #57534c; /* 6:1 on paper, 5.2:1 on paper-deep */
-  --color-gold: #b8955a; /* decorative only, never for text */
-  --font-display: 'Jost', sans-serif;
-  --font-sans: 'Jost', sans-serif;
+  --color-paper: #f3f2ee;
+  --color-sheet: #fbfaf8;
+  --color-ink: #141d33;
+  --color-ink-soft: #4a5268; /* 7:1 on paper */
+  --color-indigo: #1f3360; /* paper on indigo 11:1 */
+  --color-indigo-pale: #a9bcd8; /* 6.4:1 on indigo */
+  --color-shu: #c03f24; /* paper on shu 4.7:1 */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-sans: 'Bricolage Grotesque', sans-serif;
   --ease-ink: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
   /* Always used as masks: color comes from currentColor or tokens, never from the image. */
-  --brush: url('/textures/brush.png');
   --blot: url('/textures/blot.png');
   --brume: url('/textures/brume-hero.webp');
+  /* Running stitch (sashiko): regular dashes, the line language of the whole page. */
+  --stitch: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 17px);
 }
 
 html {
   overflow-x: clip; /* clip, not hidden: hidden makes html/body a scroll container and breaks position: sticky */
-  scrollbar-color: var(--color-ink) var(--color-paper);
+  scrollbar-color: var(--color-indigo) var(--color-paper);
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
 }
@@ -64,20 +70,24 @@ body::after {
   pointer-events: none;
   /* No blend mode: a multiply layer over the whole page is recomposited on every scroll frame. */
   opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .13 0 0 0 0 .13 0 0 0 0 .12 0 0 0 1.4 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .11 0 0 0 0 .2 0 0 0 1.4 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Signboard lettering: heavy, condensed capitals. */
 .title {
   font-family: var(--font-display);
-  font-weight: 300;
-  line-height: 0.92;
+  font-weight: 800;
+  font-stretch: 75%;
+  font-variation-settings: 'opsz' 96; /* display cut at every size: proportions don't widen on small screens */
+  text-transform: uppercase;
+  line-height: 0.86;
   letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
 .label {
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
@@ -94,32 +104,214 @@ body::after {
 /* The fixed navbar must not cover a section reached by anchor (native jump in reduced motion). */
 section[id] { scroll-margin-top: var(--nav); }
 
+/* Photos are baked as cyanotypes (scripts/atelier.py): no runtime filter. */
 .photo {
-  filter: grayscale(1) contrast(1.05);
   object-fit: cover;
   width: 100%;
   height: 100%;
-  /* Own layer: the filter is rasterized once, parallax only moves it. */
   will-change: transform;
 }
 
-.brush-t,
-.brush-b {
+.stitch-t {
   position: relative;
 }
-.brush-t::before,
-.brush-b::after {
+.stitch-t::before {
   content: '';
   position: absolute;
   inset-inline: 0;
-  height: 9px;
-  background: currentColor;
-  opacity: 0.32;
-  mask: var(--brush) 0 0 / 100% 100% no-repeat;
+  top: 0;
+  height: 2px;
+  background: var(--stitch);
+  opacity: 0.4;
   pointer-events: none;
 }
-.brush-t::before { top: 0; }
-.brush-b::after { bottom: 0; transform: scaleX(-1); }
+
+/* Indigo fields are hemmed: a running stitch just inside the top and bottom edges. */
+.ourle {
+  position: relative;
+}
+.ourle::before,
+.ourle::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--stitch);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.ourle::before { top: 0.75rem; }
+.ourle::after { bottom: 0.75rem; }
+
+/* Indigo cloth with a seigaiha (wave) resist pattern. Rows drawn top to bottom so the lower scales overlap the upper ones. */
+.seigaiha {
+  color: var(--color-paper);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='28'%3E%3Cdefs%3E%3Cg id='s'%3E%3Ccircle r='28' fill='%231f3360'/%3E%3Cg fill='none' stroke='%23f3f2ee' stroke-opacity='.07' stroke-width='1.6'%3E%3Ccircle r='25'/%3E%3Ccircle r='19'/%3E%3Ccircle r='13'/%3E%3Ccircle r='7'/%3E%3C/g%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23s' x='28' y='-14'/%3E%3Cuse href='%23s' x='0' y='0'/%3E%3Cuse href='%23s' x='56' y='0'/%3E%3Cuse href='%23s' x='28' y='14'/%3E%3Cuse href='%23s' x='0' y='28'/%3E%3Cuse href='%23s' x='56' y='28'/%3E%3Cuse href='%23s' x='28' y='42'/%3E%3C/svg%3E") 0 0 / 56px 28px,
+    var(--color-indigo);
+}
+
+/* Hero noren: one cloth cut into --n panels. Each panel shows its own slice of the same content
+   (100cqw wide, shifted by one panel pitch), so the title and the dyed cotton run across the slits.
+   Cotton, resist-dyed hem and smoked-bamboo rod are rasters from scripts/atelier.py. */
+.noren {
+  container-type: inline-size;
+  --g: 5px;
+  --n: 4;
+}
+.noren-pans {
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+  gap: var(--g);
+}
+.noren-pan {
+  --pitch: calc(var(--i) * (100cqw + var(--g)) / var(--n) * -1);
+  --ourlet: 28px;
+  position: relative;
+  overflow: hidden;
+  transform-origin: 50% 0.6rem; /* the rod */
+  color: var(--color-paper);
+  background:
+    url('/textures/noren-ourlet.webp') var(--pitch) 100% / 56px var(--ourlet) repeat-x,
+    url('/textures/noren.webp') var(--pitch) 0 / 256px 256px,
+    var(--color-indigo);
+  box-shadow: 0 18px 30px -18px rgb(20 29 51 / 0.55);
+}
+/* Sleeve: the cloth folded over the rod and sewn shut. */
+.noren-pan::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1.25rem;
+  color: rgb(243 242 238 / 0.45);
+  background:
+    var(--stitch) 0 100% / 100% 2px no-repeat,
+    linear-gradient(rgb(0 0 0 / 0.38), rgb(0 0 0 / 0.14) 70%, rgb(0 0 0 / 0.3));
+}
+/* Hem stitch, just above the resist-dyed band; each panel is sewn on its own. */
+.noren-pan::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0.75rem;
+  bottom: calc(var(--ourlet) + 0.5rem);
+  height: 2px;
+  background: var(--stitch);
+  opacity: 0.5;
+}
+.noren-cloth {
+  width: 100cqw;
+  margin-left: var(--pitch);
+}
+/* The lettering is resist-dyed: cotton left white, its weave and a faint indigo bleed showing through.
+   Same offset in every panel, so the texture runs across the slits like the type. */
+.noren-cloth .title,
+.reserve {
+  color: transparent;
+  background: url('/textures/noren-reserve.webp') 0 0 / 256px 256px;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+/* Forced colors drop background images: the resist lettering would vanish. */
+@media (forced-colors: active) {
+  .noren-cloth .title,
+  .reserve { color: CanvasText; background: none; }
+}
+.tringle {
+  background: url('/textures/tringle.webp') center / 100% 100%;
+  box-shadow: 0 3px 6px -2px rgb(20 29 51 / 0.5);
+}
+
+/* Project sheet: a strip of the shop's noren (the label) sewn along one edge of the paper, the screenshot laid on the paper.
+   Even sheets are mirrored. Mobile: the label covers the whole sheet and the screenshot lies on the cloth.
+   Bottom padding clears the resist-dyed hem (28px) and its stitch. */
+.feuille {
+  --pad: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'tete' 'capture' 'texte';
+  padding: 2rem var(--pad) calc(28px + 2rem);
+}
+@media (width >= 48rem) {
+  .feuille {
+    --pad: 2rem;
+    --band: clamp(18rem, 28vw, 26rem);
+    grid-template-columns: calc(var(--band) - 2 * var(--pad)) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'tete capture' 'texte capture';
+    column-gap: calc(2 * var(--pad));
+    padding: var(--pad) var(--pad) calc(28px + 1.75rem);
+  }
+  .feuille:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) calc(var(--band) - 2 * var(--pad));
+    grid-template-areas: 'capture tete' 'capture texte';
+  }
+}
+@media (width >= 64rem) {
+  .feuille { --pad: 2.5rem; }
+}
+/* Same cotton and hem as the hero noren; hems and seam are running stitches in faded cotton. */
+.toile {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: rgb(243 242 238 / 0.45);
+  background:
+    var(--stitch) 0 0.75rem / 100% 2px no-repeat,
+    var(--stitch) 0 calc(100% - 28px - 0.5rem) / 100% 2px no-repeat,
+    url('/textures/noren-ourlet.webp') 0 100% / 56px 28px repeat-x,
+    url('/textures/noren.webp') 0 0 / 256px 256px,
+    var(--color-indigo);
+}
+.feuille > .sceau {
+  position: absolute;
+  z-index: 10;
+  right: 1rem;
+  bottom: calc(28px + 2rem);
+  width: 3.5rem;
+}
+@media (width >= 48rem) {
+  .toile { right: auto; width: var(--band); }
+  /* The seam that sews the label onto the paper. */
+  .toile::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    right: 0.75rem;
+    width: 2px;
+    background: repeating-linear-gradient(180deg, currentColor 0 10px, transparent 10px 17px);
+  }
+  .feuille:nth-child(even) .toile { left: auto; right: 0; }
+  .feuille:nth-child(even) .toile::after { right: auto; left: 0.75rem; }
+  .feuille > .sceau {
+    right: auto;
+    left: var(--band);
+    bottom: calc(28px + 1.75rem);
+    width: 4.5rem;
+    translate: -50% 0;
+  }
+  .feuille:nth-child(even) > .sceau { left: auto; right: var(--band); translate: 50% 0; }
+}
+
+/* Indigo wash pooled behind the hero ensō. */
+.lavis {
+  background: var(--color-indigo);
+  mask: url('/textures/lavis.webp') center / contain no-repeat;
+}
+
+/* The logo's ensō, cut from the original mark; colored by the text it sits with. */
+.logo-enso {
+  background: currentColor;
+  mask: url('/logo-enso.svg') center / contain no-repeat;
+}
+
+/* Red seal (墨, "ink") pressed like the signature on an ink painting. */
+.sceau {
+  display: block;
+  aspect-ratio: 1;
+  background: var(--color-shu);
+  mask: url('/textures/sceau.png') center / contain no-repeat;
+}
 
 .ink-link,
 .ink-under {
@@ -133,16 +325,16 @@ section[id] { scroll-margin-top: var(--nav); }
   padding-block: var(--tap);
   margin-block: calc(var(--tap) * -1);
 }
+/* Underline sewn in as a running stitch. */
 .ink-link::after,
 .ink-under::after,
 .ink-under::before {
   content: '';
   position: absolute;
-  inset-inline: -0.1em;
-  bottom: calc(var(--tap, 0px) - 0.45em);
-  height: 0.5em;
-  background: currentColor;
-  mask: var(--brush) 0 0 / 100% 100% no-repeat;
+  inset-inline: 0;
+  bottom: calc(var(--tap, 0px) - 0.35em);
+  height: 2px;
+  background: var(--stitch);
   pointer-events: none;
 }
 .ink-under::before { opacity: 0.35; }
@@ -166,6 +358,7 @@ section[id] { scroll-margin-top: var(--nav); }
   transition: color 300ms var(--ease-ink), scale 160ms ease-out;
 }
 .ink-btn:active { scale: 0.97; }
+/* The dye spreads from the center. */
 .ink-btn::before {
   content: '';
   position: absolute;
@@ -184,10 +377,22 @@ section[id] { scroll-margin-top: var(--nav); }
   color: var(--color-paper);
   outline-color: var(--color-ink); /* currentColor would turn paper on paper */
 }
-nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
-.ink-btn-light::before { background: var(--color-paper); }
-.ink-btn-light:focus-visible { color: var(--color-ink); }
 .ink-btn:focus-visible::before {
+  scale: 1;
+  opacity: 1;
+  transition-duration: 450ms;
+  transition-timing-function: var(--ease-ink);
+}
+
+/* On indigo cloth the dye is reversed: cotton spreads and the text turns indigo. */
+.ink-btn.sur-indigo::before { background: var(--color-paper); }
+.ink-btn.sur-indigo:focus-visible { color: var(--color-indigo); outline-color: var(--color-paper); }
+
+/* FAQ toggle: the dyed button driven by its whole row (keyboard focus, hover), and kept dyed while open. */
+.faq-item[open] > summary .ink-btn,
+.faq-item > summary:focus-visible .ink-btn { color: var(--color-paper); }
+.faq-item[open] > summary .ink-btn::before,
+.faq-item > summary:focus-visible .ink-btn::before {
   scale: 1;
   opacity: 1;
   transition-duration: 450ms;
@@ -199,7 +404,9 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
   .ink-link:hover::after,
   .ink-under:hover::after { clip-path: inset(0 0 0 0); transition-duration: 450ms; transition-timing-function: var(--ease-ink); }
   .ink-btn:hover { color: var(--color-paper); }
-  .ink-btn-light:hover { color: var(--color-ink); }
+  .ink-btn.sur-indigo:hover { color: var(--color-indigo); }
+  .faq-item > summary:hover .ink-btn { color: var(--color-paper); }
+  .faq-item > summary:hover .ink-btn::before { scale: 1; opacity: 1; transition-duration: 450ms; transition-timing-function: var(--ease-ink); }
   .ink-btn:hover::before { scale: 1; opacity: 1; transition-duration: 450ms; transition-timing-function: var(--ease-ink); }
 }
 
@@ -213,31 +420,28 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
   mask: var(--blot) 42% 45% / calc(var(--ink) * 320%) calc(var(--ink) * 320%) no-repeat;
 }
 
-/* --stroke: -0.4 → 1.3 */
+/* --stroke: -0.4 → 1.3. A soft dye front sweeping left to right. */
 .stroking {
-  mask:
-    linear-gradient(90deg, #000 calc(var(--stroke) * 120% - 20%), transparent calc(var(--stroke) * 120% - 20%)) 0 0 / 100% 100% no-repeat,
-    var(--brush) calc(var(--stroke) * 200% - 41.67%) 50% / 40% 100% no-repeat;
+  mask: linear-gradient(90deg, #000 calc(var(--stroke) * 120% - 30%), transparent calc(var(--stroke) * 120% - 10%)) 0 0 / 100% 100% no-repeat;
 }
 
-/* --p: 0 → 1, set by ScrollTrigger; 1 without animation. */
+/* --p: 0 → 1, set by ScrollTrigger; 1 without animation. The process is sewn stitch by stitch. */
 .process-line {
   position: absolute;
   top: 1rem;
   bottom: 3rem;
-  left: calc(1.75rem - 5px);
-  width: 10px;
-  background: var(--color-ink);
-  opacity: 0.4;
-  mask: url('/textures/brush-v.png') 0 0 / 100% 100% no-repeat;
+  left: calc(1.75rem - 1px);
+  width: 2px;
+  background: repeating-linear-gradient(180deg, var(--color-ink) 0 10px, transparent 10px 17px);
+  opacity: 0.45;
   clip-path: inset(0 0 calc((1 - var(--p, 1)) * 100%) 0);
   pointer-events: none;
 }
 @media (width >= 48rem) {
-  .process-line { left: calc(3rem - 5px); }
+  .process-line { left: calc(3rem - 1px); }
 }
 
-/* Stats: ink fills the outlined numeral from the bottom. Already full without scroll-driven animations. */
+/* Stats: dye fills the outlined numeral from the bottom. Already full without scroll-driven animations. */
 @property --fill {
   syntax: '<number>';
   inherits: false;
@@ -251,7 +455,7 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
     .ink-fill {
       animation: remplir linear both;
       animation-timeline: view();
-      animation-range: entry 100% cover 40%;
+      animation-range: entry 0% entry 100%; /* full as soon as the numeral is fully on screen */
     }
   }
 }
@@ -259,17 +463,54 @@ nav .ink-btn:focus-visible { outline-color: var(--color-paper); }
   from { --fill: 0; }
 }
 
+/* Scroll-driven depth, only where supported (static otherwise):
+   the hero mist sinks slower than the page, and each desktop project panel is laid on the pile
+   like a sheet of paper, tilted, straightening as it lands. Rotation only: the layout box never moves. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .brume-derive {
+      animation: deriver linear both;
+      animation-timeline: scroll();
+      animation-range: 0 100svh;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) and (width >= 48rem) {
+    .feuille {
+      transform-origin: 0 0;
+      animation: poser linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    .feuille:nth-child(even) { --tilt: 2deg; transform-origin: 100% 0; }
+  }
+}
+@keyframes deriver {
+  to { translate: 0 22%; }
+}
+@keyframes poser {
+  from { rotate: var(--tilt, -2deg); }
+}
+
+/* Indigo wash (sumi-e mist dyed in indigo). */
 .ink-brume {
-  background: var(--color-ink);
+  background: var(--color-indigo);
   mask: var(--brume) right bottom / cover no-repeat;
 }
 /* Landscape: fit the height so the portrait mist stays on the right instead of covering the text. */
 @media (width >= 64rem) {
   .ink-brume { mask-size: auto 100%; }
 }
+/* Hero: the section clips its bottom, so the mist dissolves before that line, even once it has sunk 22%. */
+.ink-brume.brume-derive {
+  mask:
+    var(--brume) right bottom / cover no-repeat,
+    linear-gradient(#000 58%, transparent 90%);
+  mask-composite: intersect;
+}
+@media (width >= 64rem) {
+  .ink-brume.brume-derive { mask-size: auto 100%, 100% 100%; }
+}
 
-/* Once the Cal embed is ready, booking opens in a popup, not a tab. */
-[data-cal="ready"] .cal-onglet { display: none; }
 
 a:focus-visible,
 button:focus-visible,

@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react';
 import { legal } from '../legal';
+import Logo from './Logo';
 
 const aCompleter = (v: string | null) => v ?? <span className="bg-ink px-1 text-paper">À compléter</span>;
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="brush-t py-10">
-      <h2 className="font-display text-2xl font-light md:text-3xl">{title}</h2>
+    <section className="stitch-t py-10">
+      <h2 className="font-display text-2xl font-semibold md:text-3xl">{title}</h2>
       <div className="mt-4 max-w-[65ch] space-y-4 leading-relaxed text-ink">{children}</div>
     </section>
   );
@@ -16,7 +17,7 @@ export default function MentionsLegales() {
   return (
     <>
       <nav className="flex items-center justify-between px-4 py-4 md:px-10">
-        <a href="/" aria-label="Accueil"><img src="/logo-esumi.svg" alt="Esumi" width="139" height="48" className="h-10 w-auto md:h-12" /></a>
+        <a href="/" aria-label="Esumi, accueil" className="flex min-h-11 items-center"><Logo className="text-2xl md:text-[1.75rem]" /></a>
         <a href="/" className="label ink-under">Retour au site</a>
       </nav>
 
@@ -48,11 +49,11 @@ export default function MentionsLegales() {
 
           <Section title="Confidentialité">
             <p>
-              Ce site ne comporte ni formulaire, ni cookie, ni outil de mesure d’audience. Aucune donnée n’est collectée pendant votre visite.
+              Ce site ne comporte ni cookie, ni outil de mesure d’audience. Le formulaire de contact ne transmet rien : il prépare un message que vous envoyez vous-même, par WhatsApp ou par email. Aucune donnée n’est collectée pendant votre visite.
               La police de caractères et les images sont hébergées sur ce site : aucun service tiers n’est contacté pendant la navigation.
             </p>
             <p>
-              Si vous m’écrivez par email, j’utilise votre nom, votre adresse et le contenu de votre message uniquement pour vous répondre et,
+              Si vous m’écrivez par email ou par WhatsApp (service de Meta, soumis à ses propres conditions), j’utilise votre nom, votre adresse et le contenu de votre message uniquement pour vous répondre et,
               le cas échéant, préparer un devis. Ces échanges ne sont ni vendus ni transmis à des tiers.
               Ils sont conservés 3 ans après notre dernier échange, sauf s’ils sont liés à un contrat, auquel cas ils suivent les durées légales de conservation.
             </p>

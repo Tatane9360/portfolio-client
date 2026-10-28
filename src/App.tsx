@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import Approach from './components/Approach';
 import Stats from './components/Stats';
 import Projects from './components/Projects';
+import Offres from './components/Offres';
 import Process from './components/Process';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
@@ -28,7 +29,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative antialiased selection:bg-ink selection:text-paper">
+    <div className="relative antialiased selection:bg-shu selection:text-paper">
       <a href="#contenu" className="label sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-paper focus:px-4 focus:py-3 focus:text-ink">Aller au contenu</a>
       <Dot />
       <Navbar />
@@ -37,6 +38,7 @@ export default function App() {
         <Approach />
         <Stats />
         <Projects />
+        <Offres />
         <Process />
         <FAQ />
         <Contact />

@@ -1,13 +1,13 @@
-import { calAttrs } from '../cal';
+
 const steps = [
   {
     title: 'Écoute',
-    desc: 'Un appel de 20 minutes, gratuit et sans engagement, pour comprendre votre activité, vos clients et ce que le site doit vous apporter.',
+    desc: 'Vous me racontez votre projet par message, sur WhatsApp ou par email. Je vous réponds sous 24 h ouvrées avec mes questions sur votre activité, vos clients et ce que le site doit vous apporter. On s’appelle seulement si vous le souhaitez.',
     get: 'un devis détaillé et un planning',
   },
   {
     title: 'Maquettes',
-    desc: 'Je dessine les pages clés et on les ajuste ensemble jusqu’à ce qu’elles vous ressemblent, avant la première ligne de code.',
+    desc: 'Je dessine les pages clés et on les ajuste ensemble jusqu’à ce qu’elles vous ressemblent, avant la première ligne de code. Si elles ne vous conviennent toujours pas, vous arrêtez là, sans rien payer.',
     get: 'des maquettes validées par vous',
   },
   {
@@ -27,42 +27,45 @@ const steps = [
   },
 ];
 
-/** Timeline: the brush line is drawn by `--p`, set in useGsapAnimations. One [data-dot] anchor per step. */
+/** Ledger of the method, one line per step like a detailed quote: step, what happens, what you leave with.
+    The stitched line is sewn by `--p` (useGsapAnimations) and threads one [data-dot] anchor per step. */
 export default function Process() {
   return (
-    <section id="methode" className="grid grid-cols-12 gap-x-4 px-4 py-32 md:px-10">
-      <div className="col-span-12 md:col-span-4">
-        <div className="md:sticky md:top-24">
-          <h2 className="title reveal text-[18vw] md:text-[min(7vw,10.5svh)]">Méthode</h2>
-          <p className="reveal mt-6 max-w-[26ch] text-xl leading-snug font-normal md:text-2xl">
-            Cinq étapes, un seul interlocuteur du premier appel au suivi.
+    <section id="methode" className="px-4 py-32 md:px-10">
+      <header className="grid grid-cols-12 gap-x-4 lg:items-end">
+        <div className="col-span-12 lg:col-span-7">
+          <h2 className="title reveal text-[21vw] md:text-[min(8vw,13svh)]">Méthode</h2>
+          <p className="reveal mt-6 max-w-[26ch] text-xl leading-snug md:text-2xl">
+            Cinq étapes, un seul interlocuteur du premier message au suivi.
           </p>
         </div>
-      </div>
-      <div className="col-span-12 mt-16 md:col-span-7 md:col-start-6 md:mt-0">
-        <div className="reveal-img mb-20 aspect-[16/9] overflow-hidden">
+        <div className="reveal-img col-span-12 mt-12 aspect-[16/9] overflow-hidden md:col-span-8 lg:col-span-5 lg:col-start-8 lg:mt-0">
           <img className="photo" loading="lazy" src="/images/methode-maquettes.webp" width="1600" height="900" alt="Maquettes de pages web dessinées à la main sur papier" />
         </div>
-        <ol className="process relative">
-          <span aria-hidden="true" className="process-line" />
-          {steps.map((s) => (
-            <li key={s.title} className="reveal relative grid grid-cols-[3.5rem_1fr] gap-4 pb-16 last:pb-0 md:grid-cols-[6rem_1fr]">
-              <span className="flex justify-center">
-                <span data-dot className="mt-1 block size-6 rounded-full border border-ink/30 bg-paper md:size-10" />
-              </span>
-              <div className="2xl:grid 2xl:grid-cols-[minmax(0,48ch)_minmax(0,1fr)] 2xl:gap-x-12">
-                <h3 className="font-display text-3xl font-light md:text-4xl 2xl:col-span-2">{s.title}</h3>
-                <p className="mt-3 max-w-[48ch] leading-relaxed text-ink-soft md:text-lg">{s.desc}</p>
-                <p className="mt-4 2xl:mt-3 2xl:text-lg">
-                  <span className="text-ink-soft 2xl:block">Vous repartez avec </span>{s.get}.
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <div className="reveal mt-16 pl-[4.5rem] md:pl-28">
-          <a href="#contact" {...calAttrs} className="label ink-btn ink-btn-light self-start inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-6 py-3 text-paper">Réserver un appel gratuit</a>
-        </div>
+      </header>
+
+      <ol className="process relative mt-16 md:mt-20">
+        <span aria-hidden="true" className="process-line" />
+        {steps.map((s, i) => (
+          <li key={s.title} className="reveal relative grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 md:grid-cols-[6rem_minmax(0,1fr)]">
+            <span className="flex justify-center pt-8 md:pt-10">
+              <span data-dot className="block size-6 rounded-full border border-ink/30 bg-paper md:size-10" />
+            </span>
+            {/* Ruled line of the ledger: the stitch runs under the text columns, never across the thread. */}
+            <div className={`py-8 md:py-10 lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,5fr)_minmax(0,3fr)] lg:gap-x-10 ${i ? 'stitch-t' : ''}`}>
+              <h3 className="title break-words text-[clamp(2rem,9vw,3rem)] md:text-[clamp(2.25rem,4vw,7svh)] lg:text-[clamp(1.75rem,2.6vw,3rem)]">{s.title}</h3>
+              <p className="mt-3 max-w-[48ch] leading-relaxed text-ink-soft md:text-lg lg:mt-0">{s.desc}</p>
+              <p className="mt-5 md:text-lg lg:mt-0">
+                <span className="label block text-ink-soft">Vous repartez avec</span>
+                <span className="mt-1 block font-medium">{s.get}.</span>
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div className="reveal mt-12 pl-[4.5rem] md:pl-28">
+        <a href="#contact" className="label ink-btn inline-flex min-h-11 items-center rounded-full bg-shu px-6 py-3 text-paper">Décrire mon projet</a>
       </div>
     </section>
   );

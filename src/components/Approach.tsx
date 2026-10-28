@@ -1,8 +1,8 @@
 export default function Approach() {
   return (
     <section id="approche" className="relative grid grid-cols-12 gap-x-4 gap-y-12 px-4 py-32 md:px-10">
-      <h2 className="title reveal relative col-span-12 text-[15vw] md:col-span-5 md:text-[min(7vw,10.5svh)]">
-        <span data-dot className="absolute left-0 top-[0.5em] block size-[0.55em] -translate-y-1/2" />
+      <h2 className="title reveal relative col-span-12 text-[17vw] md:col-span-5 md:text-[min(8vw,13svh)]">
+        <span data-dot className="absolute left-0 top-[0.42em] block size-[0.62em] -translate-y-1/2" />
         <span className="inline-block translate-x-[calc(var(--dock,0)*0.7em)]">L’approche</span>
       </h2>
 

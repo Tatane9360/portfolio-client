@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-28T00:00:00Z",
+  "title": "Design System: Esumi",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Coton écru",
+        "canonical": "oklch(96.1% 0.005 95)",
+        "tonalRamp": [
+          "#252421",
+          "#40403d",
+          "#5e5e5a",
+          "#7e7d7a",
+          "#9f9e9b",
+          "#c5c4c0",
+          "#e6e5e1",
+          "#f3f2ee"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Feuille blanche",
+        "canonical": "oklch(98.5% 0.003 85)",
+        "tonalRamp": [
+          "#252422",
+          "#40403e",
+          "#5e5d5c",
+          "#7e7d7b",
+          "#9f9e9c",
+          "#c5c4c2",
+          "#efeeec",
+          "#fbfaf8"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Encre indigo-noir",
+        "canonical": "oklch(23.4% 0.045 266)",
+        "tonalRamp": [
+          "#040a1e",
+          "#141d33",
+          "#353f58",
+          "#525d77",
+          "#717d99",
+          "#919ebb",
+          "#b7c4e2",
+          "#e8eefa"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Encre délavée",
+        "canonical": "oklch(44.0% 0.038 269)",
+        "tonalRamp": [
+          "#060a1b",
+          "#1d2336",
+          "#383f54",
+          "#4a5268",
+          "#747d94",
+          "#959eb7",
+          "#bac4dd",
+          "#e8edf7"
+        ]
+      },
+      "indigo": {
+        "role": "primary",
+        "displayName": "Indigo kon",
+        "canonical": "oklch(33.0% 0.084 264)",
+        "tonalRamp": [
+          "#00042d",
+          "#0f214c",
+          "#1f3360",
+          "#455c8d",
+          "#647db0",
+          "#849ed3",
+          "#a9c4f0",
+          "#dbe6f8"
+        ]
+      },
+      "indigo-pale": {
+        "role": "neutral",
+        "displayName": "Indigo pâle",
+        "canonical": "oklch(79.0% 0.045 258)",
+        "tonalRamp": [
+          "#16243a",
+          "#314058",
+          "#4e5f77",
+          "#6d7e98",
+          "#8da0bb",
+          "#a9bcd8",
+          "#c9d6e8",
+          "#eaf0f8"
+        ]
+      },
+      "shu": {
+        "role": "secondary",
+        "displayName": "Vermillon shu",
+        "canonical": "oklch(54.9% 0.170 34)",
+        "tonalRamp": [
+          "#380000",
+          "#5d0000",
+          "#820000",
+          "#a82607",
+          "#c03f24",
+          "#f57054",
+          "#ff9779",
+          "#ffd9c8"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Enseigne",
+        "purpose": "Titres de section, noms de projet, chiffres, titre du noren et menu mobile. Capitales, 800, condensée 75 %, opsz 96."
+      },
+      "headline": {
+        "displayName": "Étape",
+        "purpose": "Titres des étapes de la méthode."
+      },
+      "title": {
+        "displayName": "Voix d'accroche",
+        "purpose": "Questions de la FAQ, phrases d'accroche, ensō de réservation."
+      },
+      "body": {
+        "displayName": "Texte",
+        "purpose": "Paragraphes, 44 à 60ch."
+      },
+      "label": {
+        "displayName": "Étiquette",
+        "purpose": "Navigation, boutons, type de projet, contacts. 0.8125rem puis 0.875rem dès 64rem."
+      }
+    },
+    "shadows": [
+      {
+        "name": "tissu-suspendu",
+        "value": "0 18px 30px -18px rgb(20 29 51 / 0.55)",
+        "purpose": "Chaque lé du noren."
+      },
+      {
+        "name": "tringle",
+        "value": "0 3px 6px -2px rgb(20 29 51 / 0.5)",
+        "purpose": "La tringle de bambou."
+      },
+      {
+        "name": "feuille-posee",
+        "value": "0 -24px 48px -32px rgb(20 29 51 / 0.4)",
+        "purpose": "Feuille projet collante sur desktop."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-ink",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Arrivée d'un état : teinte des boutons (450ms), couture des liens, FAQ, menu."
+      },
+      {
+        "name": "retour",
+        "value": "160-200ms ease-out",
+        "purpose": "Retour d'état et pression (:active à 0.97)."
+      },
+      {
+        "name": "chute-du-noren",
+        "value": "1.1s power3.out, stagger 70ms",
+        "purpose": "Les lés tombent de la tringle au chargement."
+      },
+      {
+        "name": "balancement",
+        "value": "1.6s elastic.out(1, 0.3)",
+        "purpose": "Les lés se balancent selon la vitesse du scroll et le pointeur."
+      },
+      {
+        "name": "sceau",
+        "value": "0.2s power3.in à 0.94 puis 0.3s power2.out à 1, stagger 80ms",
+        "purpose": "Le sceau s'imprime."
+      },
+      {
+        "name": "feuille-qui-se-pose",
+        "value": "rotate ±2deg vers 0, animation-timeline: view(), entry 0-100%",
+        "purpose": "Les feuilles projets se posent (desktop, lié au scroll)."
+      },
+      {
+        "name": "teinture-des-chiffres",
+        "value": "--fill 0 vers 1, animation-timeline: view()",
+        "purpose": "Les chiffres se remplissent de bas en haut."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "2xl",
+        "value": "96rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Réserver un appel gratuit : pilule vermillon, la tache d'encre se répand au survol.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">Réserver un appel gratuit <svg viewBox=\"0 0 16 16\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 8h12M9 3l5 5-5 5\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:12px 28px;border-radius:9999px;background:var(--color-shu,#c03f24);color:var(--color-paper,#f3f2ee);font-family:'Bricolage Grotesque',sans-serif;font-size:.875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}.ds-btn-primary{position:relative;isolation:isolate;overflow:hidden;transition:color 300ms cubic-bezier(.16,1,.3,1),scale 160ms ease-out}.ds-btn-primary::before{content:'';position:absolute;inset:50% auto auto 50%;z-index:-1;width:220%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:var(--color-ink,#141d33);scale:.2;opacity:0;transition:scale 200ms ease-out,opacity 200ms ease-out}.ds-btn-primary:hover,.ds-btn-primary:focus-visible{color:var(--color-paper,#f3f2ee)}.ds-btn-primary:hover::before,.ds-btn-primary:focus-visible::before{scale:1;opacity:1;transition-duration:450ms;transition-timing-function:cubic-bezier(.16,1,.3,1)}.ds-btn-primary:focus-visible{outline:2px solid #141d33;outline-offset:4px}.ds-btn-primary:active{scale:.97}"
+    },
+    {
+      "name": "Bouton contour",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Action secondaire (navigation, Voir le site) : pilule cerclée d'encre, teinte d'encre au survol.",
+      "html": "<a href=\"#\" class=\"ds-btn-outline\">Voir le site <svg style=\"rotate:-45deg\" viewBox=\"0 0 16 16\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M2 8h12M9 3l5 5-5 5\"/></svg></a>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:12px;min-height:44px;padding:12px 24px;border:1px solid currentColor;border-radius:9999px;color:var(--color-ink,#141d33);font-family:'Bricolage Grotesque',sans-serif;font-size:.875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}.ds-btn-outline{position:relative;isolation:isolate;overflow:hidden;transition:color 300ms cubic-bezier(.16,1,.3,1),scale 160ms ease-out}.ds-btn-outline::before{content:'';position:absolute;inset:50% auto auto 50%;z-index:-1;width:220%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:var(--color-ink,#141d33);scale:.2;opacity:0;transition:scale 200ms ease-out,opacity 200ms ease-out}.ds-btn-outline:hover,.ds-btn-outline:focus-visible{color:var(--color-paper,#f3f2ee)}.ds-btn-outline:hover::before,.ds-btn-outline:focus-visible::before{scale:1;opacity:1;transition-duration:450ms;transition-timing-function:cubic-bezier(.16,1,.3,1)}.ds-btn-outline:focus-visible{outline:2px solid #141d33;outline-offset:4px}.ds-btn-outline:active{scale:.97}"
+    },
+    {
+      "name": "Lien cousu",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Lien de navigation : soulignement en couture qui se coud de gauche à droite.",
+      "html": "<a href=\"#\" class=\"ds-ink-link\">Projets</a>",
+      "css": ".ds-ink-link{position:relative;color:var(--color-ink,#141d33);font-family:'Bricolage Grotesque',sans-serif;font-size:.875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}.ds-ink-link::after{content:'';position:absolute;inset-inline:0;bottom:-.35em;height:2px;background:repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 17px);clip-path:inset(0 100% 0 0);transition:clip-path 200ms ease-out}.ds-ink-link:hover::after,.ds-ink-link:focus-visible::after{clip-path:inset(0 0 0 0);transition-duration:450ms;transition-timing-function:cubic-bezier(.16,1,.3,1)}.ds-ink-link:focus-visible{outline:2px solid currentColor;outline-offset:4px}"
+    },
+    {
+      "name": "Barre de navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Barre fixe sur coton : logo, liens cousus, bouton contour.",
+      "html": "<nav class=\"ds-nav\"><strong class=\"ds-nav-logo\">esumi</strong><span class=\"ds-nav-links\"><a href=\"#\">Approche</a><a href=\"#\" aria-current=\"location\">Projets</a><a href=\"#\">Méthode</a><a href=\"#\">Questions</a></span><a href=\"#\" class=\"ds-nav-cta\">Réserver un appel gratuit</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:80px;padding:0 40px;background:var(--color-paper,#f3f2ee);color:var(--color-ink,#141d33);font-family:'Bricolage Grotesque',sans-serif;}.ds-nav-logo{font-size:1.5rem;font-weight:500}.ds-nav-links{display:flex;gap:32px}.ds-nav-links a,.ds-nav-cta{color:inherit;font-size:.875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}.ds-nav-links a{position:relative}.ds-nav-links a::after{content:'';position:absolute;inset-inline:0;bottom:-.35em;height:2px;background:repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 17px);clip-path:inset(0 100% 0 0);transition:clip-path 200ms ease-out}.ds-nav-links a:hover::after,.ds-nav-links a:focus-visible::after,.ds-nav-links a[aria-current]::after{clip-path:inset(0 0 0 0);transition-duration:450ms;transition-timing-function:cubic-bezier(.16,1,.3,1)}.ds-nav-cta{border:1px solid currentColor;border-radius:9999px;padding:8px 20px;transition:background 300ms,color 300ms}.ds-nav-cta:hover,.ds-nav-cta:focus-visible{background:var(--color-ink,#141d33);color:var(--color-paper,#f3f2ee)}.ds-nav a:focus-visible{outline:2px solid currentColor;outline-offset:4px}"
+    },
+    {
+      "name": "Champ indigo ourlé",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Champ plein indigo de bord à bord, ourlé d'une couture en haut et en bas.",
+      "html": "<section class=\"ds-field\"><h2>Pourquoi un site ?</h2><p class=\"ds-field-txt\">des TPE-PME françaises qui ont un site citent les nouveaux clients comme premier bénéfice.</p><p class=\"ds-field-src\">Source : Baromètre France Num, 2025</p></section>",
+      "css": ".ds-field{position:relative;padding:96px 40px;background:var(--color-indigo,#1f3360);color:var(--color-paper,#f3f2ee);font-family:'Bricolage Grotesque',sans-serif;}.ds-field::before,.ds-field::after{content:'';position:absolute;inset-inline:0;height:2px;background:repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 17px);opacity:.4}.ds-field::before{top:.75rem}.ds-field::after{bottom:.75rem}.ds-field h2{margin:0 0 40px;font-size:4rem;font-weight:800;font-stretch:75%;text-transform:uppercase;line-height:.86}.ds-field-txt{font-size:1.5rem;line-height:1.375;margin:0}.ds-field-src{margin:16px 0 0;font-size:.875rem;color:var(--color-indigo-pale,#a9bcd8)}"
+    },
+    {
+      "name": "Feuille projet",
+      "kind": "card",
+      "refersTo": "project-sheet",
+      "description": "Feuille posée sur la pile : papier blanc, filet d'encre, ombre vers le haut, barre d'adresse encre ; se redresse en se posant.",
+      "html": "<article class=\"ds-sheet\"><h3>Domifée</h3><p class=\"ds-sheet-bar\">domifee.fr</p><div class=\"ds-sheet-shot\"></div></article>",
+      "css": ".ds-sheet{background:var(--color-sheet,#fbfaf8);color:var(--color-ink,#141d33);padding:40px;box-shadow:0 0 0 1px rgb(20 29 51/.1),0 -24px 48px -32px rgb(20 29 51/.4);font-family:'Bricolage Grotesque',sans-serif;rotate:-2deg;transform-origin:0 0;transition:rotate 600ms cubic-bezier(.16,1,.3,1)}.ds-sheet:hover{rotate:0deg}.ds-sheet h3{margin:0 0 24px;font-size:3rem;font-weight:800;font-stretch:75%;text-transform:uppercase;line-height:.86}.ds-sheet-bar{display:flex;align-items:center;height:36px;margin:0;padding:0 16px;background:var(--color-ink,#141d33);color:rgb(243 242 238/.7);font-size:.875rem}.ds-sheet-shot{aspect-ratio:16/10;background:#c9d6e8}"
+    },
+    {
+      "name": "Question FAQ",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Accordéon natif séparé par une couture ; la croix pivote de 45°.",
+      "html": "<details class=\"ds-faq\"><summary>Combien ça coûte ?<span class=\"ds-faq-x\"></span></summary><p>Un devis détaillé ligne par ligne : le prix est fixé avant le début du projet.</p></details>",
+      "css": ".ds-faq{position:relative;font-family:'Bricolage Grotesque',sans-serif;color:var(--color-ink,#141d33)}.ds-faq::before{content:'';position:absolute;inset-inline:0;top:0;height:2px;background:repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 17px);opacity:.4}.ds-faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:24px 0;list-style:none;cursor:pointer;font-size:1.5rem;font-weight:500}.ds-faq summary::-webkit-details-marker{display:none}.ds-faq summary:focus-visible{outline:2px solid currentColor;outline-offset:4px}.ds-faq-x{position:relative;flex:none;width:20px;height:20px;color:var(--color-ink-soft,#4a5268);transition:transform 300ms cubic-bezier(.16,1,.3,1)}.ds-faq-x::before,.ds-faq-x::after{content:'';position:absolute;background:currentColor}.ds-faq-x::before{inset:9px 0}.ds-faq-x::after{inset:0 9px}.ds-faq[open] .ds-faq-x{transform:rotate(45deg)}.ds-faq p{max-width:60ch;margin:0;padding-bottom:24px;line-height:1.625;color:var(--color-ink-soft,#4a5268)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le noren d'atelier",
+    "overview": "Le site est une échoppe d'artisan dans laquelle on entre : un rideau de coton teint à l'indigo, tendu sur une tringle de bambou, porte le nom de la boutique ; derrière, du coton écru, des feuilles de travail posées en pile, une méthode cousue point par point, et des sceaux vermillon qui signent ce qui est livré. Tout est matière : tissu, couture, teinture, papier, encre. Rien n'est un aplat d'interface générique.\n\nLa densité est faible et la typographie massive : de grandes capitales condensées comme des enseignes peintes, un texte courant aéré, de larges champs indigo assumés de bord à bord (bande des chiffres, menu mobile, pied de page) plutôt que des bandeaux teintés. Le mouvement suit trois verbes : le tissu se balance, les feuilles se posent, les sceaux s'impriment. Le rejet confirmé : le portfolio minimal papier crème à typographie fine, qui était l'ancien site et le défaut de la catégorie.",
+    "keyCharacteristics": [
+      "Champs indigo pleins, motif seigaiha en réserve, ourlés d'une couture.",
+      "Toute ligne est une couture sashiko en pointillés réguliers (10px de point, 7px de vide).",
+      "Titres en Bricolage Grotesque 800, condensée à 75 %, en capitales, interlignage serré.",
+      "Vermillon rare : action principale et sceaux.",
+      "Rasters fabriqués (cyanotypes, coton, ourlet, tringle, lavis, brume), jamais un filtre au runtime."
+    ],
+    "rules": [
+      {
+        "name": "La règle des carreaux de vitrail",
+        "body": "Le vermillon est une note rare : une action principale par écran, un sceau par bloc signé, les tirets de liste. Jamais en fond de section, jamais en texte courant.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle du champ assumé",
+        "body": "L'indigo se pose en champ plein de bord à bord, jamais en bande teintée à faible opacité. Seuls la brume et le lavis (des encres, en masque) ont droit à la transparence.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle de l'enseigne",
+        "body": "La display est toujours en capitales, 800, condensée à 75 % ; jamais en casse mixte, jamais en graisse fine. Une seule famille dans tout le site.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle de l'objet réel",
+        "body": "Pas d'ombre sans objet suspendu ou posé. Une carte d'interface n'a pas d'ombre ; une feuille sur une pile en a une.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** tracer chaque ligne (séparateur, soulignement, frise, ourlet) avec la couture `--stitch` : 2px, 10px de point, 7px de vide.",
+      "**Do** poser l'indigo en champ plein de bord à bord, avec le motif seigaiha et un ourlet cousu à 0.75rem des bords.",
+      "**Do** cuire les traitements d'image dans les rasters (`scripts/atelier.py`) : photos en cyanotype, textures de coton ; aucun filtre CSS au runtime.",
+      "**Do** colorer sceaux, brume, lavis et taches par masque, avec la couleur d'un token.",
+      "**Do** donner un repli statique à tout mouvement : mouvement réduit respecté, animations liées au scroll seulement sous `@supports (animation-timeline: view())`.",
+      "**Do** utiliser `--ease-ink` (`cubic-bezier(0.16, 1, 0.3, 1)`) pour l'arrivée d'un état, `ease-out` court (160–200ms) pour son retour."
+    ],
+    "donts": [
+      "**Don't** revenir au portfolio minimal papier crème à typographie fine.",
+      "**Don't** utiliser le vermillon en fond de section, en texte courant, ou pour une action secondaire.",
+      "**Don't** ajouter une deuxième famille de caractères ni composer la display en casse mixte ou en graisse fine.",
+      "**Don't** mettre une ombre sur un élément qui n'est ni suspendu ni posé.",
+      "**Don't** arrondir les tissus, feuilles, images ou champs."
+    ]
+  }
+}

@@ -1,12 +1,13 @@
-import { legal } from '../legal';
+import { legal, whatsapp } from '../legal';
 import { liens } from '../liens';
+import Logo from './Logo';
 
 export default function Footer() {
   return (
-    <footer className="relative z-40 w-full bg-ink px-4 py-16 text-paper md:px-10">
+    <footer className="ourle seigaiha relative z-40 w-full px-4 py-16 md:px-10">
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-          <img src="/logo-esumi-light.svg" alt="Esumi" width="162" height="56" className="h-14 w-auto self-start" loading="lazy" />
+          <Logo className="self-start text-[2rem]" />
 
           <nav aria-label="Pied de page">
             <ul className="flex flex-col gap-7 md:gap-3">
@@ -22,15 +23,15 @@ export default function Footer() {
                 {legal.email}
               </a>
             )}
-            {legal.telephone && (
-              <a href={`tel:${legal.telephone.replace(/\s/g, '')}`} className="ink-under tap self-start">
-                {legal.telephone}
+            {whatsapp && (
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="ink-under tap self-start">
+                WhatsApp
               </a>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 text-sm text-paper/60 md:flex-row md:justify-between">
+        <div className="flex flex-col gap-3 text-sm text-indigo-pale md:flex-row md:justify-between">
           <p>© {new Date().getFullYear()} Esumi. Tous droits réservés.</p>
           <a href="/mentions-legales.html" className="ink-link tap self-start transition-colors hover:text-paper">
             Mentions légales et confidentialité
