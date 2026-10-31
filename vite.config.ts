@@ -21,8 +21,26 @@ function seoFiles(url: string): Plugin {
   }
 }
 
+// Le CSS (~12 Ko gzip) est inséré dans le HTML : plus de feuille externe bloquant le rendu (Page Insights).
+// shortcut: tout le CSS en ligne, pas de cache séparé; à remplacer par du CSS critique seul s'il dépasse ~30 Ko gzip.
+function inlineCss(): Plugin {
+  return {
+    name: 'inline-css',
+    enforce: 'post',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        return html.replace(/<link rel="stylesheet"[^>]*href="\/([^"]+\.css)"[^>]*>/g, (tag, file) => {
+          const asset = ctx.bundle?.[file]
+          return asset?.type === 'asset' ? `<style>${asset.source}</style>` : tag
+        })
+      },
+    },
+  }
+}
+
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), seoFiles(loadEnv(mode, process.cwd()).VITE_SITE_URL)],
+  plugins: [react(), tailwindcss(), inlineCss(), seoFiles(loadEnv(mode, process.cwd()).VITE_SITE_URL)],
   build: {
     cssCodeSplit: false, // un seul CSS bloquant au lieu de deux (Lenis + Tailwind)
     rollupOptions: {
