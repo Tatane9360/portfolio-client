@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { dockScroll } from '../dock';
 
 type Point = { x: number; y: number; s: number; t: number; host: HTMLElement | null; dock: number; land: boolean };
@@ -26,7 +26,8 @@ const near = (p: number) => 1 - (1 - p) ** 3; // cubic out
 export default function Dot() {
   const dot = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // Layout effect: it replaces the still hero ensō (index.css `.avant`) before the next paint, in the same commit.
+  useLayoutEffect(() => {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const el = dot.current!;
     const img = el.firstElementChild as HTMLElement;
@@ -104,8 +105,8 @@ export default function Dot() {
 
     measure();
     update();
-    // Placed on its first anchor, slightly small, then fades in (index.css) while growing to size.
-    Object.assign(cur, to, { s: to.s * 0.9 });
+    // Shown at once, full size, on its first anchor: the prerendered still ensō was already there.
+    Object.assign(cur, to);
     place();
     el.style.opacity = '1';
 

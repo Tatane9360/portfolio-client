@@ -2,8 +2,12 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <!-- HTML pré-rendu : `avant` garde les révélations masquées jusqu'à useAnimations (index.css). Filet si le JS ne vient pas. -->
+    <script>document.documentElement.classList.add('avant'); setTimeout(() => document.documentElement.classList.remove('avant'), 6000)</script>
     <!-- LCP : masque CSS, découvert tard sans preload ; crossorigin car mask-image se charge en mode CORS. -->
     <link rel="preload" href="/textures/lavis.webp" as="image" type="image/webp" fetchpriority="high" crossorigin />
+    <!-- LCP mesuré : l'ensō (Dot.tsx) n'est demandé qu'après React ; on le charge pendant que le JS s'exécute. -->
+    <link rel="preload" href="/enso.svg" as="image" type="image/svg+xml" fetchpriority="high" />
     <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

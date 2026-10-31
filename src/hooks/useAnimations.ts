@@ -157,6 +157,8 @@ function sew() {
 
 export default function useAnimations() {
   useLayoutEffect(() => {
+    // Start classes are set below in this same task: dropping the prerender state (index.html) can't flash.
+    document.documentElement.classList.remove('avant');
     // Reduced motion: plain fades only, no smooth scroll, masks or movement.
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return reveal(all('.reveal, .reveal-img'), 'fondu', 90, 0);
 

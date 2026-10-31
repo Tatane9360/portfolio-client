@@ -620,8 +620,12 @@ summary:focus-visible {
 /* Inside a clipping parent (mobile menu rows): an outer ring would be cut off. */
 .dans-masque:focus-visible { outline-offset: -4px; }
 
-/* The travelling ensō (Dot) fades in once placed on its first anchor. */
-.dot { transition: opacity 400ms var(--ease-out-quart); }
+/* Prerendered HTML, until useAnimations takes over (index.html): reveals stay in their hidden start state,
+   and the hero shows the ensō as a still image where Dot will take its place. */
+.avant :is(.reveal, .reveal-img, .stamp) { visibility: hidden; }
+/* 2% larger than Dot: Chrome only takes a later paint as LCP if it is larger, so the still one stays the LCP. */
+.avant #top [data-dot] { position: relative; }
+.avant #top [data-dot]::before { content: ''; position: absolute; inset: -1%; background: url('/enso.svg') center / contain no-repeat; }
 
 /* Reduced motion: each anchor shows a static ensō. */
 @media (prefers-reduced-motion: reduce) {

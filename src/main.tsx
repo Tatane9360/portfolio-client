@@ -1,9 +1,13 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App.tsx'
 
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 )
+// Built pages are prerendered (vite.config.ts): React takes the HTML over. The dev server serves an empty #root.
+if (root.firstChild) hydrateRoot(root, app)
+else createRoot(root).render(app)

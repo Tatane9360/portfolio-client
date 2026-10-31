@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
-import { defineConfig, loadEnv, type Plugin } from 'vite'
+import { readFile, writeFile } from 'node:fs/promises'
+import { createServer, defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -39,8 +40,36 @@ function inlineCss(): Plugin {
   }
 }
 
+// Pages pré-rendues au build (src/entry-server.tsx) : le hero s'affiche avec le HTML, sans attendre React (LCP).
+function prerender(): Plugin {
+  let outDir = 'dist'
+  let mode = 'production'
+  return {
+    name: 'prerender',
+    apply: 'build',
+    configResolved(config) {
+      outDir = config.build.outDir
+      mode = config.mode
+    },
+    async closeBundle() {
+      const server = await createServer({ mode, server: { middlewareMode: true }, appType: 'custom', logLevel: 'error' })
+      try {
+        const { pages } = await server.ssrLoadModule('/src/entry-server.tsx')
+        for (const [file, app] of Object.entries(pages() as Record<string, string>)) {
+          const path = resolve(__dirname, outDir, file)
+          const html = await readFile(path, 'utf8')
+          if (!html.includes('<div id="root"></div>')) throw new Error(`prerender : #root vide introuvable dans ${file}`)
+          await writeFile(path, html.replace('<div id="root"></div>', () => `<div id="root">${app}</div>`))
+        }
+      } finally {
+        await server.close()
+      }
+    },
+  }
+}
+
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), inlineCss(), seoFiles(loadEnv(mode, process.cwd()).VITE_SITE_URL)],
+  plugins: [react(), tailwindcss(), inlineCss(), prerender(), seoFiles(loadEnv(mode, process.cwd()).VITE_SITE_URL)],
   build: {
     cssCodeSplit: false, // un seul CSS bloquant au lieu de deux (Lenis + Tailwind)
     rollupOptions: {
