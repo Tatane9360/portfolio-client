@@ -24,6 +24,7 @@ function seoFiles(url: string): Plugin {
 export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss(), seoFiles(loadEnv(mode, process.cwd()).VITE_SITE_URL)],
   build: {
+    cssCodeSplit: false, // un seul CSS bloquant au lieu de deux (Lenis + Tailwind)
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
