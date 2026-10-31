@@ -14,7 +14,7 @@ export default function Approach() {
 
       <div className="reveal col-span-12 max-w-[56ch] space-y-5 text-lg leading-relaxed md:col-span-4 md:row-start-2">
         <p className="font-display text-2xl leading-snug font-normal">
-          Un site fait à la va-vite qui ne vous ressemble pas, ou un prestataire qui ne répond plus en cours de projet : c’est souvent là que l’on se rencontre.
+          Un site fait à la va-vite qui ne vous ressemble pas, ou un prestataire qui ne répond plus en cours de projet&nbsp;: c’est souvent là que l’on se rencontre.
         </p>
         <p>
           Il vous faut quelqu’un qui comprend ce que vous voulez faire et qui le transforme en un site fiable, qui vous amène des clients.

@@ -10,4 +10,4 @@ export const legal = {
 };
 
 /** WhatsApp chat link, built from the French number in legal.telephone. */
-export const whatsapp = legal.telephone ? `https://wa.me/33${legal.telephone.replace(/\s/g, '').slice(1)}` : null;
+export const whatsapp = legal.telephone ? `https://wa.me/33${legal.telephone.replace(/[\s.+]/g, '').replace(/^(33|0)/, '')}` : null;

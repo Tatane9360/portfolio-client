@@ -20,6 +20,7 @@ function reveal(els: HTMLElement[], cls: string, line: number, stagger: number, 
     const el = e.currentTarget as HTMLElement;
     if (e.target === el && el.classList.contains('vu')) finish(el);
   };
+  const frames = new Set<number>();
   const io = new IntersectionObserver((entries) => {
     const entering = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement);
     const start = delay(entering);
@@ -29,10 +30,12 @@ function reveal(els: HTMLElement[], cls: string, line: number, stagger: number, 
     });
     // One frame later, so the start state has been styled and the motion runs (first paint included);
     // anything that still doesn't animate is finished at once.
-    requestAnimationFrame(() => {
+    const r1 = requestAnimationFrame(() => {
       entering.forEach((el) => el.classList.add('vu'));
-      requestAnimationFrame(() => entering.forEach((el) => { if (!el.getAnimations().length) finish(el); }));
+      const r2 = requestAnimationFrame(() => entering.forEach((el) => { if (!el.getAnimations().length) finish(el); }));
+      frames.add(r2);
     });
+    frames.add(r1);
   }, { rootMargin: `0px 0px -${100 - line}% 0px` });
   els.forEach((el) => {
     el.classList.add(cls);
@@ -42,6 +45,7 @@ function reveal(els: HTMLElement[], cls: string, line: number, stagger: number, 
   });
   return () => {
     io.disconnect();
+    frames.forEach(cancelAnimationFrame);
     els.forEach((el) => {
       el.removeEventListener('transitionend', done);
       el.removeEventListener('animationend', done);
@@ -122,20 +126,31 @@ function sway() {
 function sew() {
   const lists = all('.process');
   const sewn = lists.map(() => 0);
-  const update = () => lists.forEach((list, i) => {
-    const r = list.getBoundingClientRect();
-    const p = clamp((innerHeight * 0.6 - r.top) / r.height, 0, 1);
-    if (p <= sewn[i]) return;
-    sewn[i] = p;
-    list.style.setProperty('--p', String(p));
-  });
+  const measure = () => {
+    lists.forEach((list, i) => {
+      if (sewn[i] >= 1) return; // fully sewn: no more layout reads for this list
+      const r = list.getBoundingClientRect();
+      const p = clamp((innerHeight * 0.6 - r.top) / r.height, 0, 1);
+      if (p <= sewn[i]) return;
+      sewn[i] = p;
+      list.style.setProperty('--p', String(p));
+    });
+    if (sewn.every((p) => p >= 1)) stop();
+  };
+  // One read per frame, however many scroll events fire.
+  let raf = 0;
+  const update = () => { raf ||= requestAnimationFrame(() => { raf = 0; measure(); }); };
+  const stop = () => {
+    removeEventListener('scroll', update);
+    removeEventListener('resize', update);
+  };
   lists.forEach((list) => list.style.setProperty('--p', '0'));
-  update();
+  measure();
   addEventListener('scroll', update, { passive: true });
   addEventListener('resize', update);
   return () => {
-    removeEventListener('scroll', update);
-    removeEventListener('resize', update);
+    cancelAnimationFrame(raf);
+    stop();
     lists.forEach((list) => list.style.removeProperty('--p'));
   };
 }

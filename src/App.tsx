@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import './index.css';
 import useAnimations from './hooks/useAnimations';
 import Dot from './components/Dot';
@@ -6,12 +7,11 @@ import Hero from './components/Hero';
 import Approach from './components/Approach';
 import Stats from './components/Stats';
 import Projects from './components/Projects';
-import Offres from './components/Offres';
+import Services from './components/Services';
 import Process from './components/Process';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import { useEffect, useState } from 'react';
 import { whatsapp } from './legal';
 
 export default function App() {
@@ -38,7 +38,7 @@ export default function App() {
         <Approach />
         <Stats />
         <Projects />
-        <Offres />
+        <Services />
         <Process />
         <FAQ />
         <Contact />

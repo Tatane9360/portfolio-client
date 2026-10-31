@@ -1,30 +1,29 @@
-
 /** Questions in the order they come up: before deciding, then once the site is live. */
 const groupes = [
   {
     titre: 'Avant de commencer',
     faqs: [
-      { q: 'Site vitrine, boutique ou application : de quoi ai-je besoin ?', a: "Tout dépend de ce que font vos clients. S’ils doivent vous trouver puis vous appeler ou vous écrire, un site vitrine suffit. S’ils achètent en ligne, il faut une boutique avec paiement et suivi des commandes. Si vous ou eux répétez la même tâche chaque semaine (réservations, devis, suivi de chantier), une application web vous fera gagner du temps. On tranche ensemble dès votre premier message." },
-      { q: 'Combien coûte un site, et qu’est-ce qui fait varier le prix ?', a: "Le prix dépend du nombre de pages, des textes et photos à créer, et de ce que le site doit faire en plus : prise de rendez-vous, paiement, connexion à vos outils. Chaque formule a un prix de départ, indiqué dans les offres. Après notre premier échange, vous recevez un devis détaillé ligne par ligne, et le prix est fixé avant le début du projet. Seuls le nom de domaine et l’hébergement se paient ensuite chaque année, en général une cinquantaine d’euros pour un site vitrine." },
-      { q: 'Et si les maquettes ne me plaisent pas ?', a: "On les retouche ensemble. Si, après ces retouches, elles ne vous ressemblent toujours pas, vous arrêtez le projet et vous ne payez rien. C’est pour cela que les maquettes passent avant la première ligne de code." },
-      { q: 'J’ai déjà un site qui ne m’amène personne : faut-il tout refaire ?', a: "Pas forcément. Trois questions d’abord : vous trouve-t-on sur Google en tapant votre métier et votre ville ? Comprend-on ce que vous proposez en quelques secondes sur un téléphone ? Peut-on vous appeler ou vous écrire en un geste ? Parfois, quelques corrections suffisent. Dans ce cas, je vous le dis plutôt que de vous vendre un site neuf." },
-      { q: 'En combien de temps mon site sera-t-il en ligne ?', a: "En moyenne, 2 à 4 semaines pour un site et 1 à 3 mois pour une application. Ce qui allonge le plus les délais, ce sont les textes et les photos qui tardent : on les prévoit dès le départ. Le planning est fixé dans le devis, et vous suivez l’avancement sur une version de test." },
-      { q: 'Que dois-je mettre dans mon premier message ?', a: "Rien de technique. Dites-moi ce que le site doit vous apporter (plus d’appels, des réservations, des ventes), ce qui existe déjà (ancien site, logo, photos, fiche Google), ce qui est indispensable pour vous, et si possible un budget approximatif et une date souhaitée. Le formulaire de contact vous guide, le reste, on le voit ensemble, sans jargon." },
+      { q: 'Site vitrine, boutique ou application : de quoi ai-je besoin ?', a: "Tout dépend de ce que font vos clients. S’ils doivent vous trouver puis vous appeler ou vous écrire, un site vitrine suffit. S’ils achètent en ligne, il faut une boutique avec paiement et suivi des commandes. Si vous ou eux répétez la même tâche chaque semaine (réservations, devis, suivi de chantier), une application web vous fera gagner du temps. On tranche ensemble dès votre premier message." },
+      { q: 'Combien coûte un site, et qu’est-ce qui fait varier le prix ?', a: "Le prix dépend du nombre de pages, des textes et photos à créer, et de ce que le site doit faire en plus : prise de rendez-vous, paiement, connexion à vos outils. Je n’affiche pas de grille de prix, parce que deux activités n’ont jamais le même besoin. Après notre premier échange, vous recevez un devis détaillé ligne par ligne, et le prix est fixé avant le début du projet. Seuls le nom de domaine et l’hébergement se paient ensuite chaque année, en général une cinquantaine d’euros pour un site vitrine." },
+      { q: 'Et si les maquettes ne me plaisent pas ?', a: "On les retouche ensemble. Si, après ces retouches, elles ne vous ressemblent toujours pas, vous arrêtez le projet et vous ne payez rien. C’est pour cela que les maquettes passent avant la première ligne de code." },
+      { q: 'J’ai déjà un site qui ne m’amène personne : faut-il tout refaire ?', a: "Pas forcément. Trois questions d’abord : vous trouve-t-on sur Google en tapant votre métier et votre ville ? Comprend-on ce que vous proposez en quelques secondes sur un téléphone ? Peut-on vous appeler ou vous écrire en un geste ? Parfois, quelques corrections suffisent. Dans ce cas, je vous le dis plutôt que de vous vendre un site neuf." },
+      { q: 'En combien de temps mon site sera-t-il en ligne ?', a: "En moyenne, 2 à 4 semaines pour un site et 1 à 3 mois pour une application. Ce qui allonge le plus les délais, ce sont les textes et les photos qui tardent : on les prévoit dès le départ. Le planning est fixé dans le devis, et vous suivez l’avancement sur une version de test." },
+      { q: 'Que dois-je mettre dans mon premier message ?', a: "Rien de technique. Dites-moi ce que le site doit vous apporter (plus d’appels, des réservations, des ventes), ce qui existe déjà (ancien site, logo, photos, fiche Google), ce qui est indispensable pour vous, et si possible un budget approximatif et une date souhaitée. Le formulaire de contact vous guide, le reste, on le voit ensemble, sans jargon." },
     ],
   },
   {
     titre: 'Une fois le site en ligne',
     faqs: [
-      { q: 'Et si un jour je veux changer de prestataire ?', a: "Vous partez quand vous voulez, avec tout. Le nom de domaine et l’hébergement sont à votre nom, et je vous remets tous les accès à la mise en ligne. Vous ne dépendez jamais de moi pour récupérer votre site." },
-      { q: 'Mon site sera-t-il visible sur Google ?', a: "Je le déclare à Google à la mise en ligne et je le construis rapide sur mobile, un critère que Google regarde. Pour un commerce de quartier, votre fiche Google compte autant que le site : je vous montre comment les relier. Personne ne peut honnêtement promettre la première place, mais votre site part sur de bonnes bases." },
-      { q: 'Le suivi mensuel est-il obligatoire ?', a: "Non. Il est en option et sans engagement de durée. Sans lui, je reste joignable : les corrections et les nouvelles pages sont alors chiffrées à la demande." },
-      { q: 'Et après la mise en ligne ?', a: "Je vous fais une prise en main pour que vous soyez autonome au quotidien. Pour une correction, une nouvelle page ou une fonctionnalité, je réponds sous 24 h ouvrées." },
+      { q: 'Et si un jour je veux changer de prestataire ?', a: "Vous partez quand vous voulez, avec tout. Le nom de domaine et l’hébergement sont à votre nom, et je vous remets tous les accès à la mise en ligne. Vous ne dépendez jamais de moi pour récupérer votre site." },
+      { q: 'Mon site sera-t-il visible sur Google ?', a: "Je le déclare à Google à la mise en ligne et je le construis rapide sur mobile, un critère que Google regarde. Pour un commerce de quartier, votre fiche Google compte autant que le site : je vous montre comment les relier. Personne ne peut honnêtement promettre la première place, mais votre site part sur de bonnes bases." },
+      { q: 'Le suivi mensuel est-il obligatoire ?', a: "Non. Il est en option et sans engagement de durée. Sans lui, je reste joignable : les corrections et les nouvelles pages sont alors chiffrées à la demande." },
+      { q: 'Et après la mise en ligne ?', a: "Je vous fais une prise en main pour que vous soyez autonome au quotidien. Pour une correction, une nouvelle page ou une fonctionnalité, je réponds sous 24 h ouvrées." },
     ],
   },
 ];
 
 // Espace insécable avant ? et : pour éviter une ponctuation orpheline en début de ligne.
-const nbsp = (s: string) => s.replace(/ ([?:])/g, '\u00a0$1');
+const nbsp = (s: string) => s.replace(/ ([?:;!%])/g, '\u00a0$1').replace(/(\d) (h\b|\u00e0 |mois|semaines)/g, '$1\u00a0$2');
 
 export default function FAQ() {
   return (

@@ -23,7 +23,7 @@ Un seul interlocuteur de l'écoute au suivi ; devis détaillé et prix fixé ava
 - React 19, Vite, Tailwind v4, GSAP + ScrollTrigger, Lenis. Polices auto-hébergées (pas de Google Fonts en ligne).
 - Formulaire de contact sans serveur : il ouvre WhatsApp (si VITE_TELEPHONE est rempli) ou la messagerie avec le message rédigé.
 - Mouvement réduit respecté partout ; lien d'évitement, focus visibles.
-- Offres : site vitrine, boutique, application avec prix « à partir de » (null = « Sur devis »), suivi mensuel optionnel, garantie maquettes (src/components/Offres.tsx).
+- Services (src/components/Services.tsx, remplace les Offres depuis le 2026-10-31) : aucun prix affiché, devis détaillé après le premier message. Quatre chapitres (Être trouvé, Convaincre, Gagner du temps, Durer) + Conseil et audit + garantie maquettes. Mesure des visites et conformité (cookies, accessibilité) ajoutés par proposition : à confirmer comme compétences réellement proposées.
 
 ## Brand Commitments
 
@@ -34,7 +34,7 @@ Un seul interlocuteur de l'écoute au suivi ; devis détaillé et prix fixé ava
 
 ## Evidence on Hand
 
-- Deux projets réels avec captures : Nino Hericher (public/images/nino-hericher-site.webp), Domifée (public/images/domifee-site.webp).
+- Deux projets réels avec captures : Nino Hericher (public/images/nino-hericher-site.webp), Domifée (public/images/domifee-accueil.webp).
 - Trois chiffres sourcés (Arcep 2025, France Num 2025, Web Almanac 2025) dans src/components/Stats.tsx.
 - Photos d'illustration : public/images/approche-boulanger.webp, public/images/methode-maquettes.webp.
 - Aucun témoignage pour l'instant : ne pas en inventer. Aucun client, chiffre d'affaires ou résultat chiffré à inventer.

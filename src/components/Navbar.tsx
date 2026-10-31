@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { liens } from '../liens';
 import Logo from './Logo';
 
@@ -28,7 +28,12 @@ export default function Navbar() {
     rest.forEach((el) => { el.inert = true; });
     document.documentElement.style.overflow = 'hidden';
     addEventListener('keydown', close);
+    // Past md the menu is hidden: a menu left open would keep the page inert and frozen.
+    const large = matchMedia('(width >= 48rem)');
+    const widened = () => { if (large.matches) setOpen(false); };
+    large.addEventListener('change', widened);
     return () => {
+      large.removeEventListener('change', widened);
       rest.forEach((el) => { el.inert = false; });
       document.documentElement.style.overflow = '';
       removeEventListener('keydown', close);
@@ -37,7 +42,7 @@ export default function Navbar() {
 
   // Always visible: its height is --nav (index.css), which full-screen sections subtract.
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 flex h-(--nav) items-center justify-between gap-4 px-4 bg-paper text-ink md:px-10">
+    <nav aria-label="Navigation principale" className="fixed inset-x-0 top-0 z-50 flex h-(--nav) items-center justify-between gap-4 px-4 bg-paper text-ink md:px-10">
       <a href="#top" aria-label="Esumi, accueil" className="flex min-h-11 items-center"><Logo className="text-2xl md:text-[1.75rem]" /></a>
       <ul className="hidden gap-6 md:flex lg:gap-9">
         {liens.map((l) => (
@@ -58,18 +63,18 @@ export default function Navbar() {
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-controls="menu-mobile"
-          aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-label="Menu"
           className="relative grid size-11 place-items-center rounded-full bg-ink transition-[scale,background-color] hover:bg-ink/85 active:scale-95 md:hidden"
         >
-          <span className={`absolute h-0.5 w-4 bg-paper transition-transform duration-200 ease-ink ${open ? 'rotate-45' : '-translate-y-[3px]'}`} />
-          <span className={`absolute h-0.5 w-4 bg-paper transition-transform duration-200 ease-ink ${open ? '-rotate-45' : 'translate-y-[3px]'}`} />
+          <span className={`absolute h-0.5 w-4 bg-paper transition-transform duration-200 ease-ink motion-reduce:transition-none ${open ? 'rotate-45' : '-translate-y-[3px]'}`} />
+          <span className={`absolute h-0.5 w-4 bg-paper transition-transform duration-200 ease-ink motion-reduce:transition-none ${open ? '-rotate-45' : 'translate-y-[3px]'}`} />
         </button>
       </div>
 
       <div
         id="menu-mobile"
         inert={!open}
-        className={`absolute inset-x-0 top-full flex h-[calc(100dvh-100%)] flex-col justify-end overscroll-contain seigaiha px-4 pb-10 transition-[clip-path] ease-ink motion-reduce:duration-0 md:hidden ${open ? 'duration-[400ms] ' : 'duration-[250ms] '}${open ? '[clip-path:inset(0_0_0_0)]' : '[clip-path:inset(0_0_100%_0)]'}`}
+        className={`absolute inset-x-0 top-full flex h-[calc(100dvh-100%)] flex-col justify-end overscroll-contain seigaiha px-4 pb-10 transition-[clip-path] ease-ink motion-reduce:duration-0 md:hidden ${open ? 'duration-[400ms] [clip-path:inset(0_0_0_0)]' : 'duration-[250ms] [clip-path:inset(0_0_100%_0)]'}`}
       >
         <ul>
           {liens.map((l, i) => (
@@ -77,8 +82,9 @@ export default function Navbar() {
               <a
                 href={l.href}
                 onClick={() => setOpen(false)}
-                style={{ transitionDelay: open ? `${120 + i * 50}ms` : '0ms' }}
-                className={`title block py-1 text-[17vw] transition-transform ease-ink motion-reduce:duration-0 ${open ? 'duration-[400ms] ' : 'duration-[250ms] '}${open ? 'translate-y-0' : 'translate-y-full'}`}
+                aria-current={actif === l.href ? 'location' : undefined}
+                style={{ '--delai': open ? `${120 + i * 50}ms` : '0ms' } as CSSProperties}
+                className={`title block py-1 text-[17vw] transition-transform [transition-delay:var(--delai)] ease-ink dans-masque motion-reduce:duration-0 motion-reduce:[transition-delay:0ms] ${open ? 'translate-y-0 duration-[400ms]' : 'translate-y-full duration-[250ms]'}`}
               >
                 {l.label}
               </a>

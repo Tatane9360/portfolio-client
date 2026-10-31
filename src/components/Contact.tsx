@@ -1,7 +1,7 @@
-import { useState, type FormEvent, type MouseEvent } from 'react';
+import { useEffect, useState, type FormEvent, type MouseEvent } from 'react';
 import { legal, whatsapp } from '../legal';
 
-const champ = 'mt-2 block w-full border-b border-ink/30 bg-transparent py-3 text-lg placeholder:text-ink-soft/70 transition-colors duration-200 hover:border-ink/60 focus:border-ink focus:shadow-[0_1px_0_var(--color-ink)] focus:outline-none';
+const champ = 'mt-2 block w-full border-b border-ink/30 bg-transparent py-3 text-lg placeholder:text-ink-soft transition-colors duration-200 hover:border-ink/60 focus:border-ink focus:shadow-[0_1px_0_var(--color-ink)] focus:outline-hidden';
 
 /** The visitor's answers, laid out as the first message they send. */
 function message(f: FormData) {
@@ -18,13 +18,22 @@ function message(f: FormData) {
 /** The form sends nothing itself: it opens WhatsApp or the mail app with the message already written. */
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const [statut, setStatut] = useState('');
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = setTimeout(() => setCopied(false), 2500);
+    return () => clearTimeout(t);
+  }, [copied]);
 
   const envoyer = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const texte = encodeURIComponent(message(new FormData(e.currentTarget)));
+    const texte = encodeURIComponent(message(new FormData(e.currentTarget))).replace(/%0A/g, '%0D%0A');
     const via = (e.nativeEvent as SubmitEvent).submitter?.getAttribute('value');
     if (via === 'whatsapp' && whatsapp) window.open(`${whatsapp}?text=${texte}`, '_blank', 'noopener');
     else location.href = `mailto:${legal.email}?subject=${encodeURIComponent('Mon projet de site')}&body=${texte}`;
+    // A blocked pop-up or a missing mail app fails silently: say where to go next.
+    setStatut('Message prêt. S’il ne s’ouvre pas, utilisez les liens ci-dessous.');
   };
 
   // The ring opens onto the form: bring the first field into view and put the cursor in it.
@@ -74,7 +83,7 @@ export default function Contact() {
       <form id="formulaire" aria-label="Votre message" onSubmit={envoyer} className="mx-auto max-w-2xl scroll-mt-[calc(var(--nav)+2rem)] space-y-8 pb-24 md:pb-32">
         <label className="group block">
           <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Votre activité et votre ville</span>
-          <input name="activite" required autoComplete="organization" placeholder="Boulangerie à Nantes" className={champ} />
+          <input name="activite" required autoComplete="off" placeholder="Boulangerie à Nantes" className={champ} />
         </label>
         <label className="group block">
           <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Ce que le site doit vous apporter</span>
@@ -83,11 +92,11 @@ export default function Contact() {
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-6">
           <label className="group block">
             <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Votre site actuel <span className="normal-case tracking-normal">(facultatif)</span></span>
-            <input name="site" autoComplete="url" placeholder="www.…" className={champ} />
+            <input name="site" type="text" inputMode="url" spellCheck={false} autoComplete="url" placeholder="www.…" className={champ} />
           </label>
           <label className="group block">
             <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Pour quand <span className="normal-case tracking-normal">(facultatif)</span></span>
-            <input name="echeance" placeholder="Avant l’été, pas pressé…" className={champ} />
+            <input name="echeance" autoComplete="off" placeholder="Avant l’été, pas pressé…" className={champ} />
           </label>
         </div>
 
@@ -101,7 +110,7 @@ export default function Contact() {
             Envoyer par email
           </button>
         </div>
-        <p className="text-ink-soft">Le message s’ouvre déjà rédigé{whatsapp ? ' dans WhatsApp ou' : ' dans'} votre messagerie : il ne reste qu’à l’envoyer.</p>
+        <p role="status" className="text-ink-soft">{statut || <>Le message s’ouvre déjà rédigé{whatsapp ? ' dans WhatsApp ou' : ' dans'} votre messagerie&nbsp;: il ne reste qu’à l’envoyer.</>}</p>
 
         <div className="stitch-t flex flex-wrap items-center gap-x-6 gap-y-7 pt-6 md:gap-y-3">
           {whatsapp && (
@@ -111,8 +120,9 @@ export default function Contact() {
           )}
           <a href={`mailto:${legal.email}`} className="ink-under tap">{legal.email}</a>
           <button type="button" onClick={copy} className="label ink-link tap cursor-pointer text-ink-soft transition-transform duration-[160ms] ease-out active:scale-[0.97]">
-            <span aria-live="polite"><span key={String(copied)} className="fade-in">{copied ? 'adresse copiée' : "copier l’adresse"}</span></span>
+            <span key={String(copied)} className="fade-in">{copied ? 'adresse copiée' : "copier l’adresse"}</span>
           </button>
+          <span aria-live="polite" className="sr-only">{copied ? 'Adresse copiée' : ''}</span>
         </div>
       </form>
     </section>

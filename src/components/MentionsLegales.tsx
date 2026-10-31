@@ -16,12 +16,13 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 export default function MentionsLegales() {
   return (
     <>
-      <nav className="flex items-center justify-between px-4 py-4 md:px-10">
+      <a href="#contenu" className="label sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:bg-paper focus:px-4 focus:py-3 focus:text-ink">Aller au contenu</a>
+      <header className="flex items-center justify-between px-4 py-4 md:px-10">
         <a href="/" aria-label="Esumi, accueil" className="flex min-h-11 items-center"><Logo className="text-2xl md:text-[1.75rem]" /></a>
         <a href="/" className="label ink-under">Retour au site</a>
-      </nav>
+      </header>
 
-      <main className="px-4 pt-16 pb-24 md:px-10">
+      <main id="contenu" className="px-4 pt-16 pb-24 md:px-10">
         <h1 className="title text-[13vw] md:text-[7vw]">Mentions légales</h1>
 
         <div className="mt-16">

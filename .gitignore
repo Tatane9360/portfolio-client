@@ -29,6 +29,7 @@ dist-ssr
 
 # Captures Playwright MCP
 .playwright-mcp
+.playwright-cli
 
 # Skills et réglages locaux des agents
 .agents/

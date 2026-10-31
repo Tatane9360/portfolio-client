@@ -8,7 +8,7 @@ const FOCUS = 0.4;
  */
 export function dockScroll(a: HTMLElement) {
   if (a.hasAttribute('data-dot-land')) {
-    return a.closest('section')!.getBoundingClientRect().top + scrollY - (document.querySelector('nav')?.offsetHeight ?? 0);
+    return a.closest('section')!.getBoundingClientRect().top + scrollY - (document.querySelector('nav[aria-label="Navigation principale"]')?.offsetHeight ?? 0);
   }
   const r = a.getBoundingClientRect();
   return r.top + scrollY + r.height / 2 - innerHeight * FOCUS;

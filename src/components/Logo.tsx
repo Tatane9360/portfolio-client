@@ -2,7 +2,7 @@
 export default function Logo({ className = '' }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-[0.3em] font-bold leading-none tracking-[-0.02em] [font-stretch:87.5%] ${className}`}>
-      <span aria-hidden="true" className="logo-enso block size-[1.65em]" />
+      <span aria-hidden="true" className="logo-enso block shrink-0 size-[1.65em]" />
       esumi
     </span>
   );

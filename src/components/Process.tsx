@@ -1,8 +1,7 @@
-
 const steps = [
   {
     title: 'Écoute',
-    desc: 'Vous me racontez votre projet par message, sur WhatsApp ou par email. Je vous réponds sous 24 h ouvrées avec mes questions sur votre activité, vos clients et ce que le site doit vous apporter. On s’appelle seulement si vous le souhaitez.',
+    desc: 'Vous me racontez votre projet par message, sur WhatsApp ou par email. Je vous réponds sous 24 h ouvrées avec mes questions sur votre activité, vos clients et ce que le site doit vous apporter. On s’appelle seulement si vous le souhaitez.',
     get: 'un devis détaillé et un planning',
   },
   {
@@ -12,7 +11,7 @@ const steps = [
   },
   {
     title: 'Développement',
-    desc: 'Je construis un site rapide et lisible sur mobile, en 2 à 4 semaines en moyenne pour un site vitrine. Vous suivez l’avancement sur une version de test, mise à jour au fil des semaines.',
+    desc: 'Je construis un site rapide et lisible sur mobile, en 2 à 4 semaines en moyenne pour un site vitrine. Vous suivez l’avancement sur une version de test, mise à jour au fil des semaines.',
     get: 'une version de test en ligne',
   },
   {
@@ -31,10 +30,10 @@ const steps = [
     The stitched line is sewn by `--p` (useAnimations) and threads one [data-dot] anchor per step. */
 export default function Process() {
   return (
-    <section id="methode" className="px-4 py-32 md:px-10">
+    <section id="methode" aria-labelledby="methode-titre" className="px-4 py-32 md:px-10">
       <header className="grid grid-cols-12 gap-x-4 lg:items-end">
         <div className="col-span-12 lg:col-span-7">
-          <h2 className="title reveal text-[21vw] md:text-[min(8vw,13svh)]">Méthode</h2>
+          <h2 id="methode-titre" className="title reveal text-[21vw] md:text-[min(8vw,13svh)]">Méthode</h2>
           <p className="reveal mt-6 max-w-[26ch] text-xl leading-snug md:text-2xl">
             Cinq étapes, un seul interlocuteur du premier message au suivi.
           </p>
@@ -44,7 +43,7 @@ export default function Process() {
         </div>
       </header>
 
-      <ol className="process relative mt-16 md:mt-20">
+      <ol role="list" className="process relative mt-16 md:mt-20">
         <span aria-hidden="true" className="process-line" />
         {steps.map((s, i) => (
           <li key={s.title} className="reveal relative grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 md:grid-cols-[6rem_minmax(0,1fr)]">

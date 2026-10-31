@@ -29,6 +29,10 @@
   --font-display: 'Bricolage Grotesque', sans-serif;
   --font-sans: 'Bricolage Grotesque', sans-serif;
   --ease-ink: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --nuit: rgb(20 29 51); /* shadow tone: indigo, darker */
+  --ourlet: 28px; /* height of the hem strip */
 }
 
 :root {
@@ -46,10 +50,15 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+a,
+button,
+summary {
+  touch-action: manipulation;
+}
+
 button,
 nav a,
 .ink-btn {
-  touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -72,6 +81,8 @@ body::after {
   opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08 0 0 0 0 .11 0 0 0 0 .2 0 0 0 1.4 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+p { text-wrap: pretty; }
 
 /* Signboard lettering: heavy, condensed capitals. */
 .title {
@@ -111,24 +122,11 @@ section[id] { scroll-margin-top: var(--nav); }
   height: 100%;
 }
 
-.stitch-t {
-  position: relative;
-}
-.stitch-t::before {
-  content: '';
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: 2px;
-  background: var(--stitch);
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-/* Indigo fields are hemmed: a running stitch just inside the top and bottom edges. */
+.stitch-t,
 .ourle {
   position: relative;
 }
+.stitch-t::before,
 .ourle::before,
 .ourle::after {
   content: '';
@@ -139,6 +137,9 @@ section[id] { scroll-margin-top: var(--nav); }
   opacity: 0.4;
   pointer-events: none;
 }
+.stitch-t::before { top: 0; }
+
+/* Indigo fields are hemmed: a running stitch just inside the top and bottom edges. */
 .ourle::before { top: 0.75rem; }
 .ourle::after { bottom: 0.75rem; }
 
@@ -165,7 +166,6 @@ section[id] { scroll-margin-top: var(--nav); }
 }
 .noren-pan {
   --pitch: calc(var(--i) * (100cqw + var(--g)) / var(--n) * -1);
-  --ourlet: 28px;
   position: relative;
   overflow: hidden;
   transform-origin: 50% 0.6rem; /* the rod */
@@ -174,7 +174,7 @@ section[id] { scroll-margin-top: var(--nav); }
     url('/textures/noren-ourlet.webp') var(--pitch) 100% / 56px var(--ourlet) repeat-x,
     url('/textures/noren.webp') var(--pitch) 0 / 256px 256px,
     var(--color-indigo);
-  box-shadow: 0 18px 30px -18px rgb(20 29 51 / 0.55);
+  box-shadow: 0 18px 30px -18px color-mix(in srgb, var(--nuit) 55%, transparent);
 }
 /* Sleeve: the cloth folded over the rod and sewn shut. */
 .noren-pan::before {
@@ -200,7 +200,7 @@ section[id] { scroll-margin-top: var(--nav); }
 }
 /* The panels unfurl from their sleeve as soon as the page paints; the sway (useAnimations) only rotates. */
 @media (prefers-reduced-motion: no-preference) {
-  .noren-pan { animation: derouler 1.1s cubic-bezier(0.25, 1, 0.5, 1) calc(100ms + var(--i) * 70ms) backwards; }
+  .noren-pan { animation: derouler 1.1s var(--ease-out-quart) calc(100ms + var(--i) * 70ms) backwards; }
 }
 /* Explicit end: `none` (the resting value) can't be interpolated from inset(). */
 @keyframes derouler {
@@ -227,78 +227,115 @@ section[id] { scroll-margin-top: var(--nav); }
 }
 .tringle {
   background: url('/textures/tringle.webp') center / 100% 100%;
-  box-shadow: 0 3px 6px -2px rgb(20 29 51 / 0.5);
+  box-shadow: 0 3px 6px -2px color-mix(in srgb, var(--nuit) 50%, transparent);
 }
 
-/* Project sheet: a strip of the shop's noren (the label) sewn along one edge of the paper, the screenshot laid on the paper.
-   Even sheets are mirrored. Mobile: the label covers the whole sheet and the screenshot lies on the cloth.
-   Bottom padding clears the resist-dyed hem (28px) and its stitch. */
-.feuille {
-  --pad: 1rem;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: 'tete' 'capture' 'texte';
-  padding: 2rem var(--pad) calc(28px + 2rem);
+/* Project signs (kanban): the site, framed in indigo cloth, hangs from a smoked-bamboo rod on two cords,
+   turned in perspective toward its caption. Layers: .scene (perspective) > .balancier (scroll swing, `rotate`)
+   > .pancarte (resting tilt and keyboard focus, `transform`) so the two motions compose. */
+.scene {
+  --ry: 9deg;
+  --rz: -1deg;
+  --ep: 10px; /* board thickness */
+  perspective: 1400px;
+  perspective-origin: 50% 30%;
 }
-@media (width >= 48rem) {
-  .feuille {
-    --pad: 2rem;
-    --band: clamp(18rem, 28vw, 26rem);
-    grid-template-columns: calc(var(--band) - 2 * var(--pad)) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 'tete capture' 'texte capture';
-    column-gap: calc(2 * var(--pad));
-    padding: var(--pad) var(--pad) calc(28px + 1.75rem);
-  }
-  .feuille:nth-child(even) {
-    grid-template-columns: minmax(0, 1fr) calc(var(--band) - 2 * var(--pad));
-    grid-template-areas: 'capture tete' 'capture texte';
-  }
-}
+.enseigne:nth-child(even) .scene { --ry: -9deg; --rz: 1deg; }
 @media (width >= 64rem) {
-  .feuille { --pad: 2.5rem; }
+  .scene { --ry: 16deg; --rz: -1.5deg; }
+  .enseigne:nth-child(even) .scene { --ry: -16deg; --rz: 1.5deg; }
 }
-/* Same cotton and hem as the hero noren; hems and seam are running stitches in faded cotton. */
-.toile {
+.balancier {
+  transform-style: preserve-3d;
+  transform-origin: 50% 0;
+}
+.pancarte {
+  position: relative;
+  display: block;
+  padding-top: clamp(2.25rem, 5vw, 3.5rem); /* cord length */
+  transform-style: preserve-3d;
+  transform-origin: 50% 0;
+  transform:
+    rotateX(5deg)
+    rotateY(calc(var(--ry) * var(--droit, 1)))
+    rotateZ(calc(var(--rz) * var(--droit, 1)))
+    translateZ(var(--lift, 0px));
+  transition: transform 800ms var(--ease-ink);
+}
+.cordes {
   position: absolute;
-  inset: 0;
+  top: 0.4rem;
+  bottom: calc(100% - clamp(2.25rem, 5vw, 3.5rem) - 0.5rem);
+  inset-inline: 14%;
+  border-inline: 2px solid color-mix(in srgb, var(--nuit) 55%, transparent);
   z-index: -1;
-  color: rgb(243 242 238 / 0.45);
+}
+/* The board: indigo cotton, hem stitched just inside its edge, the screenshot mounted in it. */
+.face {
+  position: relative;
+  display: block;
+  padding: clamp(0.625rem, 1.6vw, 1.25rem) clamp(0.625rem, 1.6vw, 1.25rem) calc(var(--ourlet) + clamp(0.625rem, 1.6vw, 1.25rem));
+  transform-style: preserve-3d;
   background:
-    var(--stitch) 0 0.75rem / 100% 2px no-repeat,
-    var(--stitch) 0 calc(100% - 28px - 0.5rem) / 100% 2px no-repeat,
-    url('/textures/noren-ourlet.webp') 0 100% / 56px 28px repeat-x,
+    url('/textures/noren-ourlet.webp') 0 100% / 56px var(--ourlet) repeat-x,
     url('/textures/noren.webp') 0 0 / 256px 256px,
     var(--color-indigo);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--nuit) 35%, transparent), 0 40px 60px -30px color-mix(in srgb, var(--nuit) 55%, transparent);
 }
-.feuille > .sceau {
+.face::before {
+  content: '';
   position: absolute;
-  z-index: 10;
-  right: 1rem;
-  bottom: calc(28px + 2rem);
-  width: 3.5rem;
+  inset: 5px;
+  pointer-events: none;
+  outline: 2px dashed rgb(243 242 238 / 0.35);
+  outline-offset: -1px;
 }
-@media (width >= 48rem) {
-  .toile { right: auto; width: var(--band); }
-  /* The seam that sews the label onto the paper. */
-  .toile::after {
-    content: '';
-    position: absolute;
-    inset-block: 0;
-    right: 0.75rem;
-    width: 2px;
-    background: repeating-linear-gradient(180deg, currentColor 0 10px, transparent 10px 17px);
-  }
-  .feuille:nth-child(even) .toile { left: auto; right: 0; }
-  .feuille:nth-child(even) .toile::after { right: auto; left: 0.75rem; }
-  .feuille > .sceau {
-    right: auto;
-    left: var(--band);
-    bottom: calc(28px + 1.75rem);
-    width: 4.5rem;
-    translate: -50% 0;
-  }
-  .feuille:nth-child(even) > .sceau { left: auto; right: var(--band); translate: 50% 0; }
+/* Board edge on the side turned toward the viewer (left when the sign faces right). */
+.face::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  width: var(--ep);
+  background: #15244a;
+  transform-origin: 100% 50%;
+  transform: rotateY(-90deg);
+}
+.enseigne:nth-child(even) .face::after { right: auto; left: 100%; transform-origin: 0 50%; transform: rotateY(90deg); }
+.ecran {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nuit) 30%, transparent);
+}
+.pancarte > .sceau {
+  position: absolute;
+  right: clamp(-1.25rem, -2vw, -0.75rem);
+  bottom: clamp(0.5rem, 2vw, 1.5rem);
+  width: clamp(3rem, 6vw, 4.75rem);
+  transform: translateZ(2px);
+}
+.enseigne:nth-child(even) .pancarte > .sceau { right: auto; left: clamp(-1.25rem, -2vw, -0.75rem); }
+/* Cast on the wall below: tightens and fades as the sign lifts away. */
+.ombre {
+  position: absolute;
+  inset-inline: 12%;
+  bottom: 0;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--nuit) 28%, transparent), transparent);
+  transition: scale 800ms var(--ease-ink), opacity 800ms var(--ease-ink);
+}
+.enseigne:nth-child(even) .ombre { translate: 4% 0; }
+.enseigne:nth-child(odd) .ombre { translate: -4% 0; }
+
+/* Keyboard focus on the caption's link: the sign turns to face the visitor. The mouse does not move it. */
+.enseigne:has(.ink-btn:focus-visible) .pancarte { --droit: 0.3; --lift: 40px; }
+.enseigne:has(.ink-btn:focus-visible) .ombre { scale: 0.85; opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) {
+  .pancarte, .face, .ombre { transition: none; }
 }
 
 /* Indigo wash pooled behind the hero ensō. */
@@ -392,10 +429,6 @@ section[id] { scroll-margin-top: var(--nav); }
   transition-timing-function: var(--ease-ink);
 }
 
-/* On indigo cloth the dye is reversed: cotton spreads and the text turns indigo. */
-.ink-btn.sur-indigo::before { background: var(--color-paper); }
-.ink-btn.sur-indigo:focus-visible { color: var(--color-indigo); outline-color: var(--color-paper); }
-
 /* FAQ toggle: the dyed button driven by its whole row (keyboard focus, hover), and kept dyed while open. */
 .faq-item[open] > summary .ink-btn,
 .faq-item > summary:focus-visible .ink-btn { color: var(--color-paper); }
@@ -412,7 +445,6 @@ section[id] { scroll-margin-top: var(--nav); }
   .ink-link:hover::after,
   .ink-under:hover::after { clip-path: inset(0 0 0 0); transition-duration: 450ms; transition-timing-function: var(--ease-ink); }
   .ink-btn:hover { color: var(--color-paper); }
-  .ink-btn.sur-indigo:hover { color: var(--color-indigo); }
   .faq-item > summary:hover .ink-btn { color: var(--color-paper); }
   .faq-item > summary:hover .ink-btn::before { scale: 1; opacity: 1; transition-duration: 450ms; transition-timing-function: var(--ease-ink); }
   .ink-btn:hover::before { scale: 1; opacity: 1; transition-duration: 450ms; transition-timing-function: var(--ease-ink); }
@@ -459,7 +491,7 @@ section[id] { scroll-margin-top: var(--nav); }
 }
 .stroking.vu {
   --stroke: 1.3;
-  transition: --stroke 900ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: --stroke 900ms var(--ease-out-quart);
   transition-delay: var(--delai, 0ms);
 }
 
@@ -468,7 +500,7 @@ section[id] { scroll-margin-top: var(--nav); }
 .pressing.vu { animation: imprimer 500ms var(--delai, 0ms) both; }
 @keyframes imprimer {
   from { opacity: 0; visibility: visible; scale: 1.7; animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
-  40% { opacity: 1; scale: 0.94; animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
+  40% { opacity: 1; scale: 0.94; animation-timing-function: var(--ease-out-cubic); }
   to { opacity: 1; visibility: visible; scale: 1; }
 }
 
@@ -477,7 +509,7 @@ section[id] { scroll-margin-top: var(--nav); }
 .fondu.vu {
   opacity: 1;
   visibility: visible;
-  transition: opacity 600ms cubic-bezier(0.33, 1, 0.68, 1), visibility 600ms;
+  transition: opacity 600ms var(--ease-out-cubic), visibility 600ms;
 }
 
 /* --p: 0 → 1, set on scroll (useAnimations); 1 without animation. The process is sewn stitch by stitch. */
@@ -519,8 +551,8 @@ section[id] { scroll-margin-top: var(--nav); }
 }
 
 /* Scroll-driven depth, only where supported (static otherwise):
-   the hero mist sinks slower than the page, and each desktop project panel is laid on the pile
-   like a sheet of paper, tilted, straightening as it lands. Rotation only: the layout box never moves. */
+   the hero mist sinks slower than the page, and each project sign swings down on its cords
+   as it comes in. Rotation only: the layout box never moves. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .brume-derive {
@@ -529,14 +561,12 @@ section[id] { scroll-margin-top: var(--nav); }
       animation-range: 0 100svh;
     }
   }
-  @media (prefers-reduced-motion: no-preference) and (width >= 48rem) {
-    .feuille {
-      transform-origin: 0 0;
-      animation: poser linear both;
+  @media (prefers-reduced-motion: no-preference) {
+    .balancier {
+      animation: accrocher linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 100%;
+      animation-range: entry 10% cover 45%;
     }
-    .feuille:nth-child(even) { --tilt: 2deg; transform-origin: 100% 0; }
   }
   /* Photos drift inside their frame while it crosses the screen. */
   @media (prefers-reduced-motion: no-preference) {
@@ -555,8 +585,9 @@ section[id] { scroll-margin-top: var(--nav); }
 @keyframes deriver {
   to { translate: 0 22%; }
 }
-@keyframes poser {
-  from { rotate: var(--tilt, -2deg); }
+/* Hinged on the rod: the sign comes in tipped back and settles. */
+@keyframes accrocher {
+  from { rotate: x 38deg; }
 }
 
 /* Indigo wash (sumi-e mist dyed in indigo). */
@@ -586,9 +617,11 @@ summary:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
 }
+/* Inside a clipping parent (mobile menu rows): an outer ring would be cut off. */
+.dans-masque:focus-visible { outline-offset: -4px; }
 
 /* The travelling ensō (Dot) fades in once placed on its first anchor. */
-.dot { transition: opacity 400ms cubic-bezier(0.25, 1, 0.5, 1); }
+.dot { transition: opacity 400ms var(--ease-out-quart); }
 
 /* Reduced motion: each anchor shows a static ensō. */
 @media (prefers-reduced-motion: reduce) {
@@ -612,4 +645,9 @@ summary:focus-visible {
     transition: block-size 300ms var(--ease-ink), opacity 200ms ease-out, content-visibility 300ms allow-discrete;
   }
   .faq-item[open]::details-content { block-size: auto; opacity: 1; }
+  /* A chapter's sheet is laid onto the cloth when it opens. */
+  .feuille-posee:not([hidden]) { animation: poser 450ms var(--ease-ink) both; }
+}
+@keyframes poser {
+  from { opacity: 0; translate: 0 0.75rem; }
 }

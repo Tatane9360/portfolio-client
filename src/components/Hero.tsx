@@ -19,7 +19,7 @@ export default function Hero() {
       {/* Hangs from its rod right under the navbar; drops in (index.css) and sways (useAnimations).
           Desktop: its width is capped by the screen height (the cloth is about 0.54 × its width + 28px tall),
           so the audience line, the sentence and the button still fit in the first screen under it. */}
-      <div className="noren relative col-span-12 -mx-4 md:mx-0 lg:col-span-7 lg:max-w-[calc((100svh-27.5rem)*1.85)]">
+      <div className="noren relative col-span-12 -mx-4 md:mx-0 lg:col-span-7 lg:max-w-[max(18rem,calc((100svh-27.5rem)*1.85))]">
         {/* The rod runs through the sleeves: it shows at the ends and in the slits. */}
         <span aria-hidden="true" className="tringle absolute -inset-x-6 top-[0.25rem] h-3.5 rounded-full" />
         <div className="noren-pans relative">
@@ -27,7 +27,7 @@ export default function Hero() {
             <div key={i} className="noren-pan" style={{ '--i': i } as React.CSSProperties}>
               <div className="noren-cloth px-[5cqw] pt-[17cqw] pb-[calc(28px+max(1.75rem,6cqw))]">
                 {i === 0
-                  ? <h1 className="title"><span className="sr-only">Développeur web freelance : </span>{titre}</h1>
+                  ? <h1 className="title"><span className="sr-only">Développeur web freelance&nbsp;: </span>{titre}</h1>
                   : <p aria-hidden="true" className="title">{titre}</p>}
               </div>
             </div>

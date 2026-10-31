@@ -3,11 +3,6 @@ import { dockScroll } from '../dock';
 
 type Point = { x: number; y: number; s: number; t: number; host: HTMLElement | null; dock: number; land: boolean };
 
-/**
- * A single circle (the logo's ensō) travels through every [data-dot] anchor in document order.
- * An anchor is reached at dockScroll(); its width sets the circle size.
- * While approaching a [data-dock] anchor, its parent gets `--dock` (0 → 1) so CSS can push or fade the text.
- */
 /** Share of each leg where the circle stays docked on its anchor. */
 const DWELL = 0.18;
 /** Minimum scroll (px) between two anchors. */
@@ -23,6 +18,11 @@ const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(mi
 const travel = (p: number) => (p < 0.5 ? 4 * p ** 3 : 1 - (2 - 2 * p) ** 3 / 2); // cubic in-out
 const near = (p: number) => 1 - (1 - p) ** 3; // cubic out
 
+/**
+ * A single circle (the logo's ensō) travels through every [data-dot] anchor in document order.
+ * An anchor is reached at dockScroll(); its width sets the circle size.
+ * While approaching a [data-dock] anchor, its parent gets `--dock` (0 → 1) so CSS can push or fade the text.
+ */
 export default function Dot() {
   const dot = useRef<HTMLDivElement>(null);
 
@@ -59,6 +59,8 @@ export default function Dot() {
       pt.host.style.setProperty('--dock', String(d));
     };
 
+    const place = () => { el.style.transform = `translate(${cur.x}px, ${cur.y}px) scale(${cur.s})`; };
+
     const draw = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.1);
       last = now;
@@ -69,7 +71,7 @@ export default function Dot() {
       follow('o', LAG_FADE);
       const settled = Math.abs(to.x - cur.x) < 0.1 && Math.abs(to.y - cur.y) < 0.1 && Math.abs(to.s - cur.s) < 0.001 && Math.abs(to.o - cur.o) < 0.005;
       if (settled) Object.assign(cur, to);
-      el.style.transform = `translate(${cur.x}px, ${cur.y}px) scale(${cur.s})`;
+      place();
       img.style.opacity = String(cur.o);
       raf = settled ? 0 : requestAnimationFrame(draw);
     };
@@ -104,12 +106,14 @@ export default function Dot() {
     update();
     // Placed on its first anchor, slightly small, then fades in (index.css) while growing to size.
     Object.assign(cur, to, { s: to.s * 0.9 });
-    el.style.transform = `translate(${cur.x}px, ${cur.y}px) scale(${cur.s})`;
+    place();
     el.style.opacity = '1';
 
     // Anchors move when the layout does: images and fonts loading, resizes.
     const refresh = () => { measure(); update(); };
-    const ro = new ResizeObserver(refresh);
+    // The FAQ opening resizes the body every frame: one refresh per frame is enough.
+    let rr = 0;
+    const ro = new ResizeObserver(() => { rr ||= requestAnimationFrame(() => { rr = 0; refresh(); }); });
     ro.observe(document.body);
     addEventListener('resize', refresh);
     addEventListener('scroll', update, { passive: true });
@@ -119,6 +123,7 @@ export default function Dot() {
     return () => {
       live = false;
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(rr);
       ro.disconnect();
       removeEventListener('resize', refresh);
       removeEventListener('scroll', update);
