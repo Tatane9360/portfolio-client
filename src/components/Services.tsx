@@ -104,11 +104,11 @@ export default function Services() {
         Un site qui vous amène des clients, et tout ce qui l’entoure. Je regarde d’abord votre activité, puis je ne vous propose que ce qui vous sert.
       </p>
 
-      <ol role="list" className="mt-12 grid md:mt-16 lg:grid-cols-12 lg:grid-rows-[repeat(4,auto)_1fr] lg:gap-x-4">
+      <ol className="mt-12 grid md:mt-16 lg:grid-cols-12 lg:grid-rows-[repeat(4,auto)_1fr] lg:gap-x-4">
         {chapitres.map((c, i) => {
           const ouvert = i === actif;
           return (
-            <li key={c.titre} role="listitem" className="contents">
+            <li key={c.titre} className="contents">
               <h3 className={`reveal stitch-t lg:col-span-5 ${rangs[i]}`}>
                 <button
                   type="button"

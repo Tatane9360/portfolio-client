@@ -43,8 +43,10 @@ export default function Process() {
         </div>
       </header>
 
-      <ol role="list" className="process relative mt-16 md:mt-20">
+      {/* The thread sits beside the list, not in it: an <ol> may only hold <li>. */}
+      <div className="process relative mt-16 md:mt-20">
         <span aria-hidden="true" className="process-line" />
+        <ol>
         {steps.map((s, i) => (
           <li key={s.title} className="reveal relative grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 md:grid-cols-[6rem_minmax(0,1fr)]">
             <span className="flex justify-center pt-8 md:pt-10">
@@ -61,7 +63,8 @@ export default function Process() {
             </div>
           </li>
         ))}
-      </ol>
+        </ol>
+      </div>
 
       <div className="reveal mt-12 pl-[4.5rem] md:pl-28">
         <a href="#contact" className="label ink-btn inline-flex min-h-11 items-center rounded-full bg-shu px-6 py-3 text-paper">Décrire mon projet</a>
