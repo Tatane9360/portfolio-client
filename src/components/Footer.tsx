@@ -25,7 +25,7 @@ export default function Footer() {
             )}
             {whatsapp && (
               <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="ink-under tap self-start">
-                WhatsApp
+                WhatsApp<span className="sr-only"> (nouvel onglet)</span>
               </a>
             )}
           </div>

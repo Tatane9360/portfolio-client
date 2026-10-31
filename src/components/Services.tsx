@@ -139,7 +139,7 @@ export default function Services() {
                 <ul>
                   {c.services.map((s) => (
                     <li key={s.nom} className="stitch-t py-6 first:pt-0 first:before:hidden last:pb-0 md:py-7 md:first:pt-0 md:last:pb-0">
-                      <h4 className="text-xl leading-snug font-semibold text-balance md:text-2xl">{s.nom}</h4>
+                      <h3 className="text-xl leading-snug font-semibold text-balance md:text-2xl">{s.nom}</h3>
                       <p className="mt-2 max-w-[52ch] leading-relaxed text-ink-soft">{s.souci}</p>
                       <p className="mt-2 max-w-[52ch] leading-relaxed md:text-lg">{s.fait}</p>
                     </li>

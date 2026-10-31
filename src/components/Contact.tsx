@@ -82,20 +82,20 @@ export default function Contact() {
 
       <form id="formulaire" aria-label="Votre message" onSubmit={envoyer} className="mx-auto max-w-2xl scroll-mt-[calc(var(--nav)+2rem)] space-y-8 pb-24 md:pb-32">
         <label className="group block">
-          <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Votre activité et votre ville</span>
+          <span className="label text-ink transition-colors duration-200 group-focus-within:text-ink">Votre activité et votre ville</span>
           <input name="activite" required autoComplete="off" placeholder="Boulangerie à Nantes" className={champ} />
         </label>
         <label className="group block">
-          <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Ce que le site doit vous apporter</span>
+          <span className="label text-ink transition-colors duration-200 group-focus-within:text-ink">Ce que le site doit vous apporter</span>
           <textarea name="besoin" required rows={3} placeholder="Plus d’appels, des commandes en ligne, remplacer un vieux site…" className={`${champ} resize-y`} />
         </label>
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-6">
           <label className="group block">
-            <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Votre site actuel <span className="normal-case tracking-normal">(facultatif)</span></span>
+            <span className="label text-ink transition-colors duration-200 group-focus-within:text-ink">Votre site actuel <span className="normal-case tracking-normal">(facultatif)</span></span>
             <input name="site" type="text" inputMode="url" spellCheck={false} autoComplete="url" placeholder="www.…" className={champ} />
           </label>
           <label className="group block">
-            <span className="label text-ink-soft transition-colors duration-200 group-focus-within:text-ink">Pour quand <span className="normal-case tracking-normal">(facultatif)</span></span>
+            <span className="label text-ink transition-colors duration-200 group-focus-within:text-ink">Pour quand <span className="normal-case tracking-normal">(facultatif)</span></span>
             <input name="echeance" autoComplete="off" placeholder="Avant l’été, pas pressé…" className={champ} />
           </label>
         </div>
@@ -110,16 +110,16 @@ export default function Contact() {
             Envoyer par email
           </button>
         </div>
-        <p role="status" className="text-ink-soft">{statut || <>Le message s’ouvre déjà rédigé{whatsapp ? ' dans WhatsApp ou' : ' dans'} votre messagerie&nbsp;: il ne reste qu’à l’envoyer.</>}</p>
+        <p role="status" className="text-ink">{statut || <>Le message s’ouvre déjà rédigé{whatsapp ? ' dans WhatsApp ou' : ' dans'} votre messagerie&nbsp;: il ne reste qu’à l’envoyer.</>}</p>
 
         <div className="stitch-t flex flex-wrap items-center gap-x-6 gap-y-7 pt-6 md:gap-y-3">
           {whatsapp && (
             <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="label ink-under tap">
-              WhatsApp direct
+              WhatsApp direct<span className="sr-only"> (nouvel onglet)</span>
             </a>
           )}
           <a href={`mailto:${legal.email}`} className="ink-under tap">{legal.email}</a>
-          <button type="button" onClick={copy} className="label ink-link tap cursor-pointer text-ink-soft transition-transform duration-[160ms] ease-out active:scale-[0.97]">
+          <button type="button" onClick={copy} className="label ink-link tap cursor-pointer text-ink transition-transform duration-[160ms] ease-out active:scale-[0.97]">
             <span key={String(copied)} className="fade-in">{copied ? 'adresse copiée' : "copier l’adresse"}</span>
           </button>
           <span aria-live="polite" className="sr-only">{copied ? 'Adresse copiée' : ''}</span>
