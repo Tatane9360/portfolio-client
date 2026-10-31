@@ -145,7 +145,7 @@ function sew() {
     removeEventListener('resize', update);
   };
   lists.forEach((list) => list.style.setProperty('--p', '0'));
-  update(); // first read deferred to a frame: no forced layout in the effect
+  measure();
   addEventListener('scroll', update, { passive: true });
   addEventListener('resize', update);
   return () => {
@@ -161,9 +161,7 @@ export default function useAnimations() {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return reveal(all('.reveal, .reveal-img'), 'fondu', 90, 0);
 
     // lerp 0.2 (default 0.1): smooth but follows the wheel closely, no heavy inertia.
-    // Created one frame later: its constructor reads the layout, which the start classes below just invalidated.
-    let lenis: Lenis | undefined;
-    const lenisFrame = requestAnimationFrame(() => { lenis = new Lenis({ lerp: 0.2, autoRaf: true }); });
+    const lenis = new Lenis({ lerp: 0.2, autoRaf: true });
 
     // Anchor links land where the circle docks in the section (same math as Dot),
     // on [data-dot-land] if present, otherwise the first visible anchor.
@@ -176,9 +174,7 @@ export default function useAnimations() {
       e.preventDefault();
       const anchor = section.querySelector<HTMLElement>('[data-dot-land]') ?? [...section.querySelectorAll<HTMLElement>('[data-dot]')].find((a) => a.offsetWidth);
       const r = (anchor ?? section).getBoundingClientRect();
-      const y = anchor ? dockScroll(anchor) : scrollY + r.top - 60;
-      if (lenis) lenis.scrollTo(y);
-      else scrollTo(0, y);
+      lenis.scrollTo(anchor ? dockScroll(anchor) : scrollY + r.top - 60);
       section.tabIndex = -1;
       section.style.outline = 'none';
       section.focus({ preventScroll: true });
@@ -200,8 +196,7 @@ export default function useAnimations() {
     return () => {
       offs.forEach((off) => off());
       document.removeEventListener('click', onAnchor);
-      cancelAnimationFrame(lenisFrame);
-      lenis?.destroy();
+      lenis.destroy();
     };
   }, []);
 }
